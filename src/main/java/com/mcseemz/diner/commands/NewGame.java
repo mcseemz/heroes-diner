@@ -1,5 +1,7 @@
 package com.mcseemz.diner.commands;
 
+import com.mcseemz.diner.Renderer;
+import com.mcseemz.diner.State;
 import org.fusesource.jansi.AnsiConsole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.Availability;
@@ -16,6 +18,7 @@ import org.springframework.shell.table.TableBuilder;
 import org.springframework.shell.table.TableModel;
 import org.springframework.shell.table.TableModelBuilder;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -26,38 +29,47 @@ import static org.fusesource.jansi.Ansi.Color.*;
 public class NewGame {
 
     @Autowired
+    private State state;
+
+    @Autowired
+    private Renderer renderer;
+
+    @Autowired
     private ComponentFlow.Builder componentFlowBuilder;
 
     @ShellMethod(value = "Start a new game")
-    public String start(@ShellOption(defaultValue="World") String game) {
+    public String start(@ShellOption(defaultValue="World") String game) throws IOException {
         //todo initiate resources
         System.out.println(ansi().eraseScreen().bgGreen().fgBlack().a("New game: ").reset().a(game));
 
-        TableModel model = new TableModelBuilder<String>().addRow().addValue("Here we have a map").addValue("here we have a roster")
-                .addRow().addValue("here we have a latest report").addValue("here we have a stats")
-                .build();
+        state.newGame();
 
-        System.out.println(
-            new TableBuilder(model).addFullBorder(BorderStyle.fancy_light).build().render(80)
-        );
+//        TableModel model = new TableModelBuilder<String>().addRow().addValue("Here we have a map").addValue("here we have a roster")
+//                .addRow().addValue("here we have a latest report").addValue("here we have a stats")
+//                .build();
+//
+//        System.out.println(
+//            new TableBuilder(model).addFullBorder(BorderStyle.fancy_light).build().render(80)
+//        );
+//
+//
+//        List<SelectItem> multi1SelectItems = Arrays.asList(SelectItem.of("key1", "value1"),
+//                SelectItem.of("key2", "value2"), SelectItem.of("key3", "value3"));
+//
+//        ComponentFlow flow = componentFlowBuilder.clone().reset()
+//                .withMultiItemSelector("component multi")
+//                .name("Multi1")
+//                .selectItems(multi1SelectItems)
+//                .and().build();
+//
+//        flow.run();
 
-
-        List<SelectItem> multi1SelectItems = Arrays.asList(SelectItem.of("key1", "value1"),
-                SelectItem.of("key2", "value2"), SelectItem.of("key3", "value3"));
-
-        ComponentFlow flow = componentFlowBuilder.clone().reset()
-                .withMultiItemSelector("component multi")
-                .name("Multi1")
-                .selectItems(multi1SelectItems)
-                .and().build();
-
-        flow.run();
-
-        return "zxcv";
+        return ansi().render(renderer.renderState()).toString();
     }
 
     public Availability startAvailability() {
-        return Availability.available();
-//                : Availability.unavailable("you are not connected");
+        return state.getState() == State.GAME_STATE.editProfile
+                ? Availability.unavailable("please stop editing operation first")
+                : Availability.available();
     }
 }

@@ -1,0 +1,32 @@
+[
+  {
+    "code": "bats",
+    "name": "Bats! Many-many bats!",
+    "type": "flyers",
+    "difficulty": "*"
+  },
+  {
+    "code": "rats",
+    "name": "Rats! Many-many rats!",
+    "type": "wildlife",
+    "difficulty": "*"
+  },
+  {
+    "code": "ants",
+    "name": "Ants! So many you breath them!",
+    "type": "insects",
+    "difficulty": "*"
+  },
+  {
+    "code": "zombie2",
+    "name": "Couple of real zombies. Funny they are so clumsy",
+    "type": "undead",
+    "difficulty": "**"
+  },
+  {
+    "code": "thugs",
+    "name": "Squatters, but mean ones. Unpleasant",
+    "type": "humans",
+    "difficulty": "**"
+  }
+]
