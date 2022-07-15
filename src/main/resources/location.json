@@ -3,7 +3,6 @@
     "code": "bridge",
     "name": "Broken Bridge",
     "description": "It's dark, and seems to be empty. And it spooks.",
-    "difficulty": "*",
     "trials": [
       "bats",
       "rats"
@@ -13,7 +12,6 @@
     "code": "kitchen",
     "name": "Mama's kitchen",
     "description": "Strange name for a hot springs of unknown nature.",
-    "difficulty": "*",
     "trials": [
       "bats",
       "insects"
@@ -21,9 +19,8 @@
   },
   {
     "code": "prizon",
-    "name": "Old prizon",
+    "name": "Old prison",
     "description": "Once it was inhabited. Now - go check yourself.",
-    "difficulty": "**",
     "trials": [
       "thugs",
       "zombie2"

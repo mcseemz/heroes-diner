@@ -1,32 +1,32 @@
 [
   {
     "code": "bats",
-    "name": "Bats! Many-many bats!",
-    "type": "flyers",
+    "description": "Bats! Many-many bats!",
+    "skill": "flyers",
     "difficulty": "*"
   },
   {
     "code": "rats",
-    "name": "Rats! Many-many rats!",
-    "type": "wildlife",
+    "description": "Rats! Many-many rats!",
+    "skill": "wildlife",
     "difficulty": "*"
   },
   {
     "code": "ants",
-    "name": "Ants! So many you breath them!",
-    "type": "insects",
+    "description": "Ants! So many you breath them!",
+    "skill": "insects",
     "difficulty": "*"
   },
   {
     "code": "zombie2",
-    "name": "Couple of real zombies. Funny they are so clumsy",
-    "type": "undead",
+    "description": "Couple of real zombies. Funny they are so clumsy",
+    "skill": "undead",
     "difficulty": "**"
   },
   {
     "code": "thugs",
-    "name": "Squatters, but mean ones. Unpleasant",
-    "type": "humans",
+    "description": "Squatters, but mean ones. Unpleasant",
+    "skill": "humans",
     "difficulty": "**"
   }
 ]
