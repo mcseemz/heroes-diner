@@ -1,5 +1,6 @@
 package com.mcseemz.diner.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -33,6 +34,10 @@ public class Hero {
 
     /** what player thinks of skills */
     List<String> suggestedSkills;
+
+    /** acted in this adventure already */
+    @JsonIgnore
+    boolean isActed;
 
     public void render(StringBuilder builder) {
         builder.append(this.getName());

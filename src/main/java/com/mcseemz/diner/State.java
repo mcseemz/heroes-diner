@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Game state
@@ -59,6 +60,12 @@ public class State {
         skills = new ObjectMapper().readValue(resourceLoader.getResource("classpath:skill.json").getInputStream(), String[].class);
         trials = new ObjectMapper().readValue(resourceLoader.getResource("classpath:trial.json").getInputStream(), Trial[].class);
         locations = new ObjectMapper().readValue(resourceLoader.getResource("classpath:location.json").getInputStream(), Location[].class);
+        for (Location location : locations) {   //map codes to Trial objects
+            location.setTrialsLoaded(Arrays.stream(location.getTrials()).map(ltr ->
+                    Arrays.stream(trials).filter(tr -> tr.getCode().equals(ltr)).findFirst().orElseThrow()
+                    )
+                    .collect(Collectors.toList()));
+        }
 
         generateRoster();
 
