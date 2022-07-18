@@ -1,9 +1,12 @@
 package com.mcseemz.diner.commands;
 
+import com.mcseemz.diner.Compiler;
 import com.mcseemz.diner.Renderer;
 import com.mcseemz.diner.State;
+import com.mcseemz.diner.model.Adventure;
 import com.mcseemz.diner.model.Hero;
 import com.mcseemz.diner.model.Location;
+import com.mcseemz.diner.model.adventure.BaseEvent;
 import org.fusesource.jansi.Ansi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.Availability;
@@ -11,9 +14,9 @@ import org.springframework.shell.component.flow.ComponentFlow;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellMethodAvailability;
-import org.springframework.shell.standard.ShellOption;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import static org.fusesource.jansi.Ansi.ansi;
@@ -26,6 +29,9 @@ public class Go {
 
     @Autowired
     private Renderer renderer;
+
+    @Autowired
+    private Compiler compiler;
 
     @Autowired
     private ComponentFlow.Builder componentFlowBuilder;
@@ -46,14 +52,21 @@ public class Go {
 
         Boolean confirmed = run.getContext().get("confirm");
         if (confirmed) {
-            String result = run.getContext().get("location");
-            //todo run adventure
-            //todo compile results into text
+            String myLocation = run.getContext().get("location");
+            Location location = Arrays.stream(state.getLocations()).filter(x -> x.getCode().equals(myLocation)).findFirst().orElseThrow();
+            List<Hero> team = Arrays.stream(state.getRoster()).filter(Hero::isInTeam).collect(Collectors.toList());
+
+            //run adventure
+            Adventure adventure = new Adventure(team, location);
+            List<BaseEvent> result = adventure.run();
+            //compile results into text
+            String report = compiler.compileReport(result);
+            state.setLatestMessage(report);
             //todo update heroes with results when required
 
         }
 
-        return ansi().cursorUp(37).eraseScreen(Ansi.Erase.FORWARD).render(Renderer.postProcess(renderer.renderState())).toString();
+        return ansi().cursorUp(37).eraseScreen(Ansi.Erase.FORWARD).render(renderer.renderState()).toString();
     }
 
     @ShellMethodAvailability

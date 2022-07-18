@@ -1,5 +1,6 @@
 package com.mcseemz.diner;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.javafaker.Faker;
@@ -7,6 +8,7 @@ import com.mcseemz.diner.model.Hero;
 import com.mcseemz.diner.model.Location;
 import com.mcseemz.diner.model.Trial;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
@@ -16,6 +18,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,10 +33,13 @@ public class State {
     @Autowired
     private ResourceLoader resourceLoader;
 
+    ObjectMapper objectMapper = new ObjectMapper();
+
     /** what skills we have */
     private String[] skills;
     private Trial[] trials;
     private Location[] locations;
+    private HashMap<String,String[]> texts;
 
     /** what heroes do we have */
     private Hero[] roster;
@@ -46,6 +52,7 @@ public class State {
     private GAME_STATE state = GAME_STATE.idle;
 
     /** latest message in the game, including reports and pre-recorded */
+    @Setter
     private String latestMessage;
 
     /** what state the game can be in */
@@ -57,9 +64,9 @@ public class State {
 
     public void newGame() throws IOException {
         //make them modifiable
-        skills = new ObjectMapper().readValue(resourceLoader.getResource("classpath:skill.json").getInputStream(), String[].class);
-        trials = new ObjectMapper().readValue(resourceLoader.getResource("classpath:trial.json").getInputStream(), Trial[].class);
-        locations = new ObjectMapper().readValue(resourceLoader.getResource("classpath:location.json").getInputStream(), Location[].class);
+        skills = objectMapper.readValue(resourceLoader.getResource("classpath:skill.json").getInputStream(), String[].class);
+        trials = objectMapper.readValue(resourceLoader.getResource("classpath:trial.json").getInputStream(), Trial[].class);
+        locations = objectMapper.readValue(resourceLoader.getResource("classpath:location.json").getInputStream(), Location[].class);
         for (Location location : locations) {   //map codes to Trial objects
             location.setTrialsLoaded(Arrays.stream(location.getTrials()).map(ltr ->
                     Arrays.stream(trials).filter(tr -> tr.getCode().equals(ltr)).findFirst().orElseThrow()
@@ -67,9 +74,13 @@ public class State {
                     .collect(Collectors.toList()));
         }
 
+        //reading json as map, not a class
+        TypeReference<HashMap<String,String[]>> typeRef = new TypeReference<>() {};
+        texts = objectMapper.readValue(resourceLoader.getResource("classpath:text.json").getInputStream(), typeRef);
+        //create heroes
         generateRoster();
 
-        latestMessage = "Hey bartender! Do ou have any place of interest here, like, for a _real_ heroes?";
+        latestMessage = "Hey bartender! Do you have any place of interest here, like, for a _real_ heroes?";
         state = GAME_STATE.waiting;
 
         log.debug("read {} skills", skills.length);
@@ -116,8 +127,9 @@ public class State {
         //shuffle again to spread negative effects
         Collections.shuffle(heroes);
 
-        heroes.get(0).setInTeam(true);
-        heroes.get(1).setInTeam(true);
+        for (int i = 0; i < 5; i++) {
+            heroes.get(i).setInTeam(true);
+        }
 
         Collections.shuffle(heroes);
 

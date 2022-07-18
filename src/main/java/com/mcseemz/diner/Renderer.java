@@ -27,17 +27,26 @@ public class Renderer {
 
 //        String output = new TableBuilder(model).addFullBorder(BorderStyle.fancy_light).build().render(80);
 
-        String output = FlipTable.of(new String[] {"Locations", "Roster"}, new String[][]{ {renderLocation(), renderRoster()}, {renderLatestMessage(), renderStats()}});
+        String output = FlipTable.of(new String[] {"Locations", "Roster"}, new String[][]{
+                {
+                        postProcess(renderLocation()),
+                        postProcess(renderRoster())
+                },
+                {
+                        postProcess(renderLatestMessage()),
+                        postProcess(renderStats())
+                }
+        });
 
-        output = postProcess(output);
+//        output = postProcess(output);
         return ansi().eraseScreen().toString() + output;
     }
 
     public static String postProcess(String output) {
-        output = output.replaceAll("\\*(\\S+?)\\*","@|bold  $1 |@");
-        output = output.replaceAll("_(\\S+?)_","@|italic,underline  $1 |@");
-        output = output.replaceAll("%(\\S+?)%","@|bold,red,underline  $1 |@");
-        output = output.replaceAll("!(\\S+?)!","@|bold,red  $1 |@");
+        output = output.replaceAll("\\*(.+?)\\*","@|bold  $1 |@");
+        output = output.replaceAll("_(.+?)_","@|italic,underline  $1 |@");
+        output = output.replaceAll("%(.+?)%","@|bold,red,underline  $1 |@");
+        output = output.replaceAll("!(.+?)!","@|bold,red  $1 |@");
         return output;
     }
 

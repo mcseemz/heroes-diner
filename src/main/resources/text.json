@@ -1,0 +1,64 @@
+{
+  "first_trial_failed_no_hero": [
+    "Things went south.",
+    "I am disappointed.",
+    "Something went wrong."
+  ],
+  "first_trial_failed_with_hero": [
+    "From the start %hero% did not pay attention, and voila.",
+    "It started with %hero% screwing up.",
+    "%hero% tried to fight, but failed."
+  ],
+  "trial_failed_no_hero": [
+    "And then we failed.",
+    "Then we run out of luck.",
+    "Then Boom!"
+  ],
+  "trial_failed_with_hero": [
+    "And then %hero% failed.",
+    "Then %hero% screwed up.",
+    "Then %hero% did something wrong."
+  ],
+  "trial_failed_bats_no_hero": [
+    "There were %bats%!",
+    "Many-many %bats%!",
+    "Thousands of %bats% attacked us"
+  ],
+  "trial_failed_bats_with_hero": [
+    "%bats% put him down.",
+    "He was overwhelmed by %bats%!",
+    "%bats% just kicked him."
+  ],
+  "trial_failed_ants_no_hero": [
+    "Wild %ants%!",
+    "Mountain of %ants%!",
+    "Millions of %ants% attacked us"
+  ],
+  "trial_failed_ants_with_hero": [
+    "%ants% carried him out.",
+    "He was bitten by %ants%!",
+    "%ants% just ignored him."
+  ],
+
+  "first_trial_succeed_with_hero": [
+    "From the start %hero% showed us his class.",
+    "It started with %hero% totally win.",
+    "%hero% just kicked their asses."
+  ],
+  "trial_succeed_with_hero": [
+    "And then %hero% joined.",
+    "Then %hero% called up.",
+    "Then %hero% ripped them."
+  ],
+  "trial_succeed_bats_with_hero": [
+    "%bats% tried, but no chance.",
+    "He just swiped those %bats%!",
+    "%bats% had no chance. Clear win."
+  ],
+  "trial_succeed_ants_with_hero": [
+    "%ants% were blown away.",
+    "No matter how many %ants%, they are ashes now.",
+    "%ants% were scorched clear."
+  ]
+
+}
