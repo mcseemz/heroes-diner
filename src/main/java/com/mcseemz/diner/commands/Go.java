@@ -19,8 +19,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.fusesource.jansi.Ansi.ansi;
-
 @ShellComponent
 public class Go {
 
@@ -37,7 +35,7 @@ public class Go {
     private ComponentFlow.Builder componentFlowBuilder;
 
     @ShellMethod(value = "Adventure start")
-    public String go() {
+    public void go() {
 
         ComponentFlow.ComponentFlowResult run = componentFlowBuilder.clone().reset()
                 .withSingleItemSelector("location")
@@ -62,11 +60,12 @@ public class Go {
             //compile results into text
             String report = compiler.compileReport(result);
             state.setLatestMessage(report);
-            //todo update heroes with results when required
-
+            //update heroes with results when required
+            state.updateGameState(location, result);
         }
 
-        return ansi().cursorUp(37).eraseScreen(Ansi.Erase.FORWARD).render(renderer.renderState()).toString();
+        renderer.displayState();
+//        return ansi().cursorUp(37).eraseScreen(Ansi.Erase.FORWARD).render(renderer.renderState()).toString();
     }
 
     @ShellMethodAvailability

@@ -36,7 +36,7 @@ public class Adventure {
 
         //todo run EventBefore events. Do we need probabilities?
         //e.g. team modifiers event
-        //todo for each Trial
+        //for each Trial
         for (Trial trial : location.getTrialsLoaded()) {
             //choose hero
             Hero hero = team.stream().filter(x -> !x.isActed() && !x.isOut() && x.getSkill().equals(trial.getSkill())).findFirst().orElse(null); //or else nobody

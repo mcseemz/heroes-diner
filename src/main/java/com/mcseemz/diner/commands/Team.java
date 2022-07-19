@@ -41,7 +41,7 @@ public class Team {
         System.out.println(ansi().render(Renderer.postProcess(builder.toString())));
     }
     @ShellMethod(key = "team add", value = "Team management - add ")
-    public String teamadd(@ShellOption(defaultValue="list") String command) {
+    public void teamadd(@ShellOption(defaultValue="list") String command) {
 
         ComponentFlow.ComponentFlowResult run = componentFlowBuilder.clone().reset()
                 .withSingleItemSelector("hero")
@@ -62,7 +62,8 @@ public class Team {
             }
         }
 
-        return ansi().cursorUp(37).eraseScreen(Ansi.Erase.FORWARD).render(Renderer.postProcess(renderer.renderState())).toString();
+        renderer.displayState();
+//        return ansi().cursorUp(37).eraseScreen(Ansi.Erase.FORWARD).render(Renderer.postProcess(renderer.renderState())).toString();
     }
 
     @ShellMethodAvailability

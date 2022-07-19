@@ -7,6 +7,8 @@ import com.github.javafaker.Faker;
 import com.mcseemz.diner.model.Hero;
 import com.mcseemz.diner.model.Location;
 import com.mcseemz.diner.model.Trial;
+import com.mcseemz.diner.model.adventure.BaseEvent;
+import com.mcseemz.diner.model.adventure.TrialEvent;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -19,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -104,7 +107,7 @@ public class State {
                         .inTeam(false)
                         .isOut(false)
                         .power("*")
-                        .suggestedSkills(new ArrayList<>())
+                        .suggestedSkills(new HashSet<>())
                         .teamWork((int) Math.floor(Math.random() + 0.7))    //increase chance of teamwork
                         .skill(skill)
                         .build());
@@ -134,5 +137,37 @@ public class State {
         Collections.shuffle(heroes);
 
         roster = heroes.toArray(new Hero[0]);
+    }
+
+    /**
+     * update hero and location states based on what happened duting the adventure
+     * @param events what happened
+     * @param location where it happened
+     */
+    public void updateGameState(Location location, List<BaseEvent> events) {
+        boolean isLocationPassed = true;
+        for (BaseEvent baseEvent : events) {
+            if (baseEvent instanceof TrialEvent) {
+                TrialEvent event = (TrialEvent) baseEvent;
+                //check if it was attempted by hero, and if failed
+                Hero hero = event.getHero();
+                if (event.isPassed()) {
+                    hero.getSuggestedSkills().add(event.getTrial().getSkill());
+                } else {
+                    isLocationPassed = false;
+                }
+
+                if (hero != null) {
+                    hero.setDaysToRest(event.getNeedRest());
+                }
+            }
+        }
+
+        if (isLocationPassed) {
+            location.setPassed(true);
+        }
+
+        //run passed
+        turn++;
     }
 }

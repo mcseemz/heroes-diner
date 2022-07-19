@@ -4,9 +4,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -33,7 +36,8 @@ public class Hero {
     int teamWork;
 
     /** what player thinks of skills */
-    List<String> suggestedSkills;
+    @Getter
+    Set<String> suggestedSkills = new HashSet<>();
 
     /** acted in this adventure already */
     @JsonIgnore
