@@ -2,6 +2,7 @@ package com.mcseemz.diner;
 
 import com.mcseemz.diner.model.Hero;
 import com.mcseemz.diner.model.adventure.BaseEvent;
+import com.mcseemz.diner.model.adventure.TeamworkEvent;
 import com.mcseemz.diner.model.adventure.TrialEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -62,7 +63,23 @@ public class Compiler {
                 }
 
                 sb.append(outcomeVal).append(" ").append(enemyVal).append("\n");
-            } else {
+            } else
+            if (baseEvent instanceof TeamworkEvent) {
+                TeamworkEvent event = (TeamworkEvent) baseEvent;
+                String resource = "teamwork_" + (event.isPassed() ? "succeed_" : "failed_") + event.getLocation().getTeamtask();
+                //todo add leader notes if event has a "leader" flag and probability (?) favors
+                //all the data should be in the event, e.g. leader saw that hero had zero teamwork thus not participated
+                //maybe even depends on the leader level? how does leaders level up?
+                String[] teamworks = state.getTexts().get(resource);
+                if (teamworks == null) {
+                    throw new RuntimeException("no resource found for :" + resource);
+                }
+                String resourceVal = teamworks[random.nextInt(teamworks.length)];
+                //todo add wrapping? or is that in the rendering?
+                //todo add placeholder replacements %hero%"
+                sb.append(resourceVal).append("\n");
+            }
+            else {
                 throw new RuntimeException("unexpected event type :" + baseEvent.getClass().getSimpleName());
             }
             isFirst = false;

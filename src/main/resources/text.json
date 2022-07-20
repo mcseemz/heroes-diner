@@ -19,6 +19,7 @@
     "Then %hero% screwed up.",
     "Then %hero% did something wrong."
   ],
+
   "trial_failed_bats_no_hero": [
     "There were %bats%!",
     "Many-many %bats%!",
@@ -39,6 +40,16 @@
     "He was bitten by %ants%!",
     "%ants% just ignored him."
   ],
+  "trial_failed_rats_no_hero": [
+    "Swarm of %rats%!",
+    "There were %rats%! And their king!",
+    "%rats% attacked from below, we could not manage."
+  ],
+  "trial_failed_rats_with_hero": [
+    "%rats% ate his sword. That was the end.",
+    "He was taken by %rats%!",
+    "He afraids %rats%, actually."
+  ],
 
   "first_trial_succeed_with_hero": [
     "From the start %hero% showed us his class.",
@@ -50,6 +61,7 @@
     "Then %hero% called up.",
     "Then %hero% ripped them."
   ],
+
   "trial_succeed_bats_with_hero": [
     "%bats% tried, but no chance.",
     "He just swiped those %bats%!",
@@ -59,6 +71,45 @@
     "%ants% were blown away.",
     "No matter how many %ants%, they are ashes now.",
     "%ants% were scorched clear."
+  ],
+  "trial_succeed_rats_with_hero": [
+    "%rats% afraid of fire.",
+    "He has proper skills for %rats%.",
+    "%rats% are for beginners, he said."
+  ],
+
+
+  "teamwork_succeed_wall": [
+    "At the end there was a wall. We kicked it together and finally it gave up. Behind there was a secret room with %powerups%!"
+  ],
+  "teamwork_failed_wall": [
+    "At the end there was a wall. We kicked it together but our teamwork was not enough to break it."
+  ],
+  "teamwork_failed_wall_leader_notice": [
+    "I noticed that %hero% did nothing during the attempt",
+    "I noticed that %hero% slept all the time"
+  ],
+
+  "teamwork_succeed_door": [
+    "Then we saw a door with a complex lock. Took us a whole team to unlock it. But there we found %powerups%!"
+  ],
+  "teamwork_failed_door": [
+    "Then we saw a door with a complex lock. We tried to solve and uplock that, but our teamwork was not enough."
+  ],
+  "teamwork_failed_door_leader_notice": [
+    "I noticed that %hero% did nothing during the attempt",
+    "I noticed that %hero% slept all the time"
+  ],
+
+  "teamwork_succeed_bomb": [
+    "Then an old bomb fell to our feet. We pushed it together to the far side. That's where we found %powerups%!"
+  ],
+  "teamwork_failed_bomb": [
+    "Then an old bomb fell to our feet. We tried to push it, but our teamwork was not enough."
+  ],
+  "teamwork_failed_bomb_leader_notice": [
+    "I noticed that %hero% did nothing during the attempt",
+    "I noticed that %hero% slept all the time"
   ]
 
 }

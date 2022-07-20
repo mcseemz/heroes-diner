@@ -91,7 +91,7 @@ public class Renderer {
     public String renderRoster() {
         StringBuilder builder = new StringBuilder();
         for (Hero hero : state.getRoster()) {
-            if (hero.isInTeam()) builder.append("!*!");
+            if (hero.isInTeam()) builder.append("!>!");
             else if (hero.isOut()) builder.append("!-!");
             else builder.append("   ");
 
@@ -104,7 +104,11 @@ public class Renderer {
     }
     public String renderStats() {
         StringBuilder builder = new StringBuilder().append("Turn: ").append(state.getTurn()).append("\n")
-                .append("Locations: ").append(Arrays.stream(state.getLocations()).filter(Location::isPassed).count());
+                .append("Locations: ").append(Arrays.stream(state.getLocations()).filter(Location::isPassed).count()).append("\n");
+
+        if (state.getLatestTeamwork() >= 0) {
+            builder.append("Latest teamwork: ").append(state.getLatestTeamwork()).append("\n");
+        }
 
         return postProcess(builder.toString());
     }

@@ -8,6 +8,8 @@ import com.mcseemz.diner.model.Hero;
 import com.mcseemz.diner.model.Location;
 import com.mcseemz.diner.model.Trial;
 import com.mcseemz.diner.model.adventure.BaseEvent;
+import com.mcseemz.diner.model.adventure.HeroUpdateRecord;
+import com.mcseemz.diner.model.adventure.TeamworkEvent;
 import com.mcseemz.diner.model.adventure.TrialEvent;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,6 +25,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -57,6 +60,10 @@ public class State {
     /** latest message in the game, including reports and pre-recorded */
     @Setter
     private String latestMessage;
+
+    /** the latest teamwork that happened on a location */
+    @Setter
+    private int latestTeamwork = -1;
 
     /** what state the game can be in */
     public enum GAME_STATE {
@@ -145,26 +152,37 @@ public class State {
      * @param location where it happened
      */
     public void updateGameState(Location location, List<BaseEvent> events) {
-        boolean isLocationPassed = true;
         for (BaseEvent baseEvent : events) {
+
+            for (Map.Entry<Hero, List<HeroUpdateRecord>> update : baseEvent.getHeroUpdates().entrySet()) {
+                Hero hero = update.getKey();
+                for (HeroUpdateRecord record : update.getValue()) {
+                    switch (record.getType()) {
+                        case skill_suggest: hero.getSuggestedSkills().add((String) record.getValue());
+                            break;
+                        case skill_unsuggest:
+                            break;
+                        case isOut:
+                            break;
+                        case needRest: hero.setDaysToRest((Integer) record.getValue());
+                            break;
+                        case powerup: hero.setPower(hero.getPower() + record.getValue());
+                            break;
+                        default:
+                            throw new IllegalStateException("Unexpected value: " + record.getType());
+                    }
+                }
+            }
+
             if (baseEvent instanceof TrialEvent) {
                 TrialEvent event = (TrialEvent) baseEvent;
                 //check if it was attempted by hero, and if failed
-                Hero hero = event.getHero();
-                if (event.isPassed()) {
-                    hero.getSuggestedSkills().add(event.getTrial().getSkill());
-                } else {
-                    isLocationPassed = false;
-                }
-
-                if (hero != null) {
-                    hero.setDaysToRest(event.getNeedRest());
-                }
             }
-        }
-
-        if (isLocationPassed) {
-            location.setPassed(true);
+            if (baseEvent instanceof TeamworkEvent) {
+                TeamworkEvent event = (TeamworkEvent) baseEvent;
+                location.setPassed(location.isPassed() || event.isPassed());
+                setLatestTeamwork(event.getTeamWork());
+            }
         }
 
         //run passed

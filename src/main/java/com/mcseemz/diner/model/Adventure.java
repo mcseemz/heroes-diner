@@ -1,6 +1,7 @@
 package com.mcseemz.diner.model;
 
 import com.mcseemz.diner.model.adventure.BaseEvent;
+import com.mcseemz.diner.model.adventure.TeamworkEvent;
 import com.mcseemz.diner.model.adventure.TrialEvent;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,6 +59,11 @@ public class Adventure {
 
         }
 
+        if (isPassed) {
+            //time to run teamwork
+            TeamworkEvent event = TeamworkEvent.builder().location(location).team(team).build().run();
+            adventureEvents.add(event);
+        }
         //todo run EventAfter with probability
         return adventureEvents;
     }

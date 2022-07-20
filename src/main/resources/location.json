@@ -6,7 +6,9 @@
     "trials": [
       "bats",
       "rats"
-    ]
+    ],
+    "teamwork": 2,
+    "teamtask": "wall"
   },
   {
     "code": "kitchen",
@@ -15,7 +17,9 @@
     "trials": [
       "bats",
       "ants"
-    ]
+    ],
+    "teamwork": 2,
+    "teamtask": "door"
   },
   {
     "code": "prizon",
@@ -24,6 +28,8 @@
     "trials": [
       "thugs",
       "zombie2"
-    ]
+    ],
+    "teamwork": 3,
+    "teamtask": "bomb"
   }
 ]

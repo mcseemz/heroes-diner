@@ -44,12 +44,12 @@ public class Hero {
     boolean isActed;
 
     public void render(StringBuilder builder) {
-        builder.append(this.getName());
+        builder.append(this.getName()).append(" ").append(this.power);
         if (this.getDaysToRest() > 0) builder.append(" (rest: !").append(this.getDaysToRest()).append("!)");
-        builder.append("\n    ");
 
+        builder.append(" : ");
         for (String suggestedSkill : this.getSuggestedSkills()) {
-            builder.append(suggestedSkill).append("? ");
+            builder.append(suggestedSkill).append(" ");
         }
         builder.append("\n");
     }
