@@ -30,6 +30,7 @@
       "zombie2"
     ],
     "teamwork": 3,
-    "teamtask": "bomb"
+    "teamtask": "bomb",
+    "target": true
   }
 ]

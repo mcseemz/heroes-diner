@@ -50,6 +50,26 @@
     "He was taken by %rats%!",
     "He afraids %rats%, actually."
   ],
+  "trial_failed_thugs_no_hero": [
+    "Angry %thugs% attacked us!",
+    "There were %thugs% with their leader!",
+    "%thugs% pushed us out, we could not resist."
+  ],
+  "trial_failed_thugs_with_hero": [
+    "%thugs% broke sword. And his nose.",
+    "He was captured by %thugs%!",
+    "He tried to negotiate with %thugs%, and failed."
+  ],
+  "trial_failed_zombie2_no_hero": [
+    "Angry %zombies% attacked us!",
+    "Some %zombies% appeared of nowhere!",
+    "%zombies% came and kicked us hard."
+  ],
+  "trial_failed_zombie2_with_hero": [
+    "%zombies% bitten him to nothing.",
+    "He fightened so much of %zombies%, he cried",
+    "He tried to mimic %zombies%, but failed."
+  ],
 
   "first_trial_succeed_with_hero": [
     "From the start %hero% showed us his class.",
@@ -76,6 +96,16 @@
     "%rats% afraid of fire.",
     "He has proper skills for %rats%.",
     "%rats% are for beginners, he said."
+  ],
+  "trial_succeed_thugs_with_hero": [
+    "%thugs% never saw such fury.",
+    "He knows how to deal with thugs %thugs%.",
+    "%thugs% can feel the pain, too."
+  ],
+  "trial_succeed_zombie2_with_hero": [
+    "%zombies% were torn apart.",
+    "He cut through %zombies% like a knife on butter.",
+    "%zombies% can feel the fear, you know."
   ],
 
 

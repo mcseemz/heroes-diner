@@ -42,34 +42,62 @@ public class Team {
     }
     @ShellMethod(key = "team add", value = "Team management - add ")
     public void teamadd(@ShellOption(defaultValue="list") String command) {
+        int teamSize = state.getTeam().size();
 
-        ComponentFlow.ComponentFlowResult run = componentFlowBuilder.clone().reset()
-                .withSingleItemSelector("hero")
-                .selectItems(Arrays.stream(state.getRoster()).filter(hero -> !hero.isInTeam())
-                        .collect(Collectors.toMap(Hero::getName, Hero::getName)))
+        if (teamSize < 5) {
+            ComponentFlow.ComponentFlowResult run = componentFlowBuilder.clone().reset()
+                    .withSingleItemSelector("hero")
+                    .selectItems(Arrays.stream(state.getRoster()).filter(hero -> !hero.isInTeam())
+                            .collect(Collectors.toMap(Hero::getName, Hero::getName)))
+                    .and()
+                    .build().run();
 
-//                .withMultiItemSelector("heroes")
-//                .selectItems(Arrays.stream(state.getRoster()).map(hero -> SelectItem.of(hero.getName(), hero.getName(), !hero.isOut())).collect(Collectors.toList()))
-//                .name("Select team members")
-//                .max(5)
-                .and()
-                .build().run();
-
-        String result = run.getContext().get("hero");
-        for (Hero hero : state.getRoster()) {
-            if (hero.getName().equals(result)) {
-                hero.setInTeam(true);
+            String result = run.getContext().get("hero");
+            for (Hero hero : state.getRoster()) {
+                if (hero.getName().equals(result)) {
+                    hero.setInTeam(true);
+                }
             }
         }
 
         renderer.displayState();
-//        return ansi().cursorUp(37).eraseScreen(Ansi.Erase.FORWARD).render(Renderer.postProcess(renderer.renderState())).toString();
+
+        if (teamSize > 4) {
+            System.out.println(ansi().fgRed().a("Team is at max now").reset());
+        }
+    }
+
+    @ShellMethod(key = "team change", value = "Team management - replace ")
+    public void teamchange(@ShellOption(defaultValue="list") String command) {
+
+            ComponentFlow.ComponentFlowResult run = componentFlowBuilder.clone().reset()
+                    .withSingleItemSelector("hero1")
+                    .selectItems(state.getTeam().stream().collect(Collectors.toMap(Hero::getName, Hero::getName)))
+                    .and()
+                    .withSingleItemSelector("hero2")
+                    .selectItems(Arrays.stream(state.getRoster()).filter(hero -> !hero.isInTeam())
+                            .collect(Collectors.toMap(Hero::getName, Hero::getName)))
+                    .and()
+                    .build().run();
+
+            String result1 = run.getContext().get("hero1");
+            String result2 = run.getContext().get("hero2");
+            for (Hero hero : state.getRoster()) {
+                if (hero.getName().equals(result1)) {
+                    hero.setInTeam(false);
+                }
+                if (hero.getName().equals(result2)) {
+                    hero.setInTeam(true);
+                }
+            }
+
+        renderer.displayState();
     }
 
     @ShellMethodAvailability
     public Availability teamAvailability() {
-        return state.getState() == State.GAME_STATE.idle
-                ? Availability.unavailable("you need to be in the game first")
-                : Availability.available();
+        return state.getState() == State.GAME_STATE.waiting
+                ? Availability.available()
+                : Availability.unavailable("you need to be in the game first");
     }
 }

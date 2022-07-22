@@ -70,6 +70,7 @@ public class State {
         idle,
         waiting,    //waiting for use command
         editProfile,
+        passed, //game finished
     }
 
     public void newGame() throws IOException {
@@ -187,5 +188,14 @@ public class State {
 
         //run passed
         turn++;
+
+        if (location.isPassed() && location.isTarget()) {
+            state = GAME_STATE.passed;
+        }
     }
+
+    public List<Hero> getTeam() {
+        return Arrays.stream(getRoster()).filter(Hero::isInTeam).collect(Collectors.toList());
+    }
+
 }

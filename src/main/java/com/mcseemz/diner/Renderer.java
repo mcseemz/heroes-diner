@@ -6,13 +6,12 @@ import com.mcseemz.diner.model.Location;
 import com.mcseemz.diner.model.Trial;
 import org.fusesource.jansi.Ansi;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.shell.table.BorderStyle;
-import org.springframework.shell.table.TableBuilder;
-import org.springframework.shell.table.TableModel;
-import org.springframework.shell.table.TableModelBuilder;
 import org.springframework.stereotype.Component;
 
+import java.text.BreakIterator;
 import java.util.Arrays;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static org.fusesource.jansi.Ansi.ansi;
 
@@ -36,11 +35,21 @@ public class Renderer {
         return ansi().eraseScreen().toString() + output;
     }
 
+    public void splitString(String string) {
+        int maxLenght = 10;
+        Pattern p = Pattern.compile("\\G\\s*(.{1,"+maxLenght+"})(?=\\s|$)", Pattern.DOTALL);
+        Matcher m = p.matcher(string);
+        while (m.find())
+            System.out.println(m.group(1));
+    }
+
     public void displayState() {
         int COL_1 = 2;
         int COL_2 = 90;
         int ROW_1 = 2;
         int ROW_2 = 26;
+
+        int ROW_2_HEIGHT = 0;
 
         System.out.print(ansi().cursor(1, 1).eraseScreen(Ansi.Erase.FORWARD));
         System.out.print(ansi().cursor(ROW_1,COL_1));
@@ -51,14 +60,20 @@ public class Renderer {
         for (String str : renderRoster().split("\n")) {
             System.out.print(ansi().cursorToColumn(COL_2).render(str).cursorDownLine());
         }
+
         System.out.print(ansi().cursor(ROW_2,COL_1));
         for (String str : renderLatestMessage().split("\n")) {
             System.out.print(ansi().cursorToColumn(COL_1).render(str).cursorDownLine());
         }
+        ROW_2_HEIGHT = renderLatestMessage().split("\n").length;
+
         System.out.print(ansi().cursor(ROW_2,COL_2));
         for (String str : renderStats().split("\n")) {
             System.out.print(ansi().cursorToColumn(COL_2).render(str).cursorDownLine());
         }
+        ROW_2_HEIGHT = Math.max(ROW_2_HEIGHT, renderStats().split("\n").length);
+
+        System.out.print(ansi().cursor(ROW_2,COL_1).cursorDownLine(ROW_2_HEIGHT + 1));
     }
 
     public static String postProcess(String output) {

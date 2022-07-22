@@ -19,6 +19,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static org.fusesource.jansi.Ansi.ansi;
+
 @ShellComponent
 public class Go {
 
@@ -66,12 +68,16 @@ public class Go {
 
         renderer.displayState();
 //        return ansi().cursorUp(37).eraseScreen(Ansi.Erase.FORWARD).render(renderer.renderState()).toString();
+
+        if (state.getState() == State.GAME_STATE.passed) {
+            System.out.println(ansi().bg(Ansi.Color.GREEN).a("You finished the game! Congrats!").reset());
+        }
     }
 
     @ShellMethodAvailability
     public Availability goAvailability() {
-        return state.getState() == State.GAME_STATE.idle
-                ? Availability.unavailable("you need to be in the game first")
-                : Availability.available();
+        return state.getState() == State.GAME_STATE.waiting
+                ? Availability.available()
+                : Availability.unavailable("you need to be in the game first");
     }
 }

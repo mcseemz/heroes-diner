@@ -21,6 +21,9 @@ public class Location {
     /** how they show teamwork. related to text resources */
     String teamtask;
 
+    /** is this the end of the game */
+    boolean target;
+
     /** we initiated trials to manage them easier */
     @JsonIgnore
     List<Trial> trialsLoaded;
