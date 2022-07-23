@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.text.BreakIterator;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -19,6 +21,9 @@ import static org.fusesource.jansi.Ansi.ansi;
 public class Renderer {
     @Autowired
     private State state;
+
+    private final int COL1_WIDTH = 85;
+
 
     public String renderState() {
         String output = FlipTable.of(new String[] {"Locations", "Roster"}, new String[][]{
@@ -35,43 +40,52 @@ public class Renderer {
         return ansi().eraseScreen().toString() + output;
     }
 
-    public void splitString(String string) {
-        int maxLenght = 10;
-        Pattern p = Pattern.compile("\\G\\s*(.{1,"+maxLenght+"})(?=\\s|$)", Pattern.DOTALL);
+    public List<String> splitString(String string) {
+        Pattern p = Pattern.compile("\\G\\s*(.{1,"+COL1_WIDTH+"})(?=\\s|$)", Pattern.DOTALL);
         Matcher m = p.matcher(string);
+
+        List<String> result = new ArrayList<>();
         while (m.find())
-            System.out.println(m.group(1));
+            result.add(m.group(1));
+
+        return result;
     }
 
     public void displayState() {
         int COL_1 = 2;
-        int COL_2 = 90;
+        int COL_2 = COL_1 + COL1_WIDTH;
         int ROW_1 = 2;
         int ROW_2 = 26;
-
-        int ROW_2_HEIGHT = 0;
 
         System.out.print(ansi().cursor(1, 1).eraseScreen(Ansi.Erase.FORWARD));
         System.out.print(ansi().cursor(ROW_1,COL_1));
         for (String str : renderLocation().split("\n")) {
-            System.out.print(ansi().cursorToColumn(COL_1).render(str).cursorDownLine());
+            System.out.print(ansi().cursorToColumn(COL_1).render(postProcess(str)).cursorDownLine());
         }
         System.out.print(ansi().cursor(ROW_1,COL_2));
         for (String str : renderRoster().split("\n")) {
-            System.out.print(ansi().cursorToColumn(COL_2).render(str).cursorDownLine());
+            System.out.print(ansi().cursorToColumn(COL_2).render(postProcess(str)).cursorDownLine());
         }
 
         System.out.print(ansi().cursor(ROW_2,COL_1));
-        for (String str : renderLatestMessage().split("\n")) {
-            System.out.print(ansi().cursorToColumn(COL_1).render(str).cursorDownLine());
+        int ROW_2_HEIGHT_1 = 1;
+        for (String message : renderLatestMessage().split("\n")) {
+            for (String str : splitString(message)) {
+                System.out.print(ansi().cursorToColumn(COL_1).render(str).cursorDownLine());
+                ROW_2_HEIGHT_1++;
+            }
         }
-        ROW_2_HEIGHT = renderLatestMessage().split("\n").length;
 
         System.out.print(ansi().cursor(ROW_2,COL_2));
-        for (String str : renderStats().split("\n")) {
-            System.out.print(ansi().cursorToColumn(COL_2).render(str).cursorDownLine());
+        int ROW_2_HEIGHT_2 = 1;
+        for (String message : renderStats().split("\n")) {
+            for (String str : splitString(message)) {
+                System.out.print(ansi().cursorToColumn(COL_2).render(str).cursorDownLine());
+                ROW_2_HEIGHT_2++;
+            }
         }
-        ROW_2_HEIGHT = Math.max(ROW_2_HEIGHT, renderStats().split("\n").length);
+
+        int ROW_2_HEIGHT = Math.max(ROW_2_HEIGHT_1, ROW_2_HEIGHT_2);
 
         System.out.print(ansi().cursor(ROW_2,COL_1).cursorDownLine(ROW_2_HEIGHT + 1));
     }
@@ -81,25 +95,20 @@ public class Renderer {
         output = output.replaceAll("_(.+?)_","@|italic,underline  $1 |@");
         output = output.replaceAll("%(.+?)%","@|bold,red,underline  $1 |@");
         output = output.replaceAll("!(.+?)!","@|bold,red  $1 |@");
+
+        //skill markup
+        output = output.replaceAll("\\+(\\S+?)\\+","@|green  +$1 |@");
+        output = output.replaceAll("-(\\S+?)-","@|black,faint -$1 |@");
+        output = output.replaceAll("\\?(\\S+?)\\?","@|cyan  ?$1 |@");
+        output = output.replaceAll("\\.(\\S+?)\\.","@|red  .$1 |@");
+
         return output;
     }
 
     public String renderLocation() {
         StringBuilder builder = new StringBuilder();
         for (Location location : state.getLocations()) {
-            //check for hardest difficulty
-            String hardest = "!";
-            for (String locationTrial : location.getTrials()) {
-                for (Trial stateTrial : state.getTrials()) {
-                    if (locationTrial.equals(stateTrial.getCode())
-                            && stateTrial.getDifficulty().compareTo(hardest) > 0) {
-                        hardest = stateTrial.getDifficulty();
-                    }
-                }
-            }
-            builder.append(location.getName()).append(" ").append(hardest).append(location.isPassed() ? " (passed)" : "").append("\n");
-            builder.append("  ").append(location.getDescription());
-            builder.append("\n");
+            location.render(builder, state);
         }
         return postProcess(builder.toString());
     }

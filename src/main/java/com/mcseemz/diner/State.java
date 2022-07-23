@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.javafaker.Faker;
 import com.mcseemz.diner.model.Hero;
 import com.mcseemz.diner.model.Location;
+import com.mcseemz.diner.model.SkillSuggestion;
 import com.mcseemz.diner.model.Trial;
 import com.mcseemz.diner.model.adventure.BaseEvent;
 import com.mcseemz.diner.model.adventure.HeroUpdateRecord;
@@ -91,7 +92,7 @@ public class State {
         //create heroes
         generateRoster();
 
-        latestMessage = "Hey bartender! Do you have any place of interest here, like, for a _real_ heroes?";
+        latestMessage = "Hey bartender! We are _real_ heroes. Do you have any place of interest here for us?";
         state = GAME_STATE.waiting;
 
         log.debug("read {} skills", skills.length);
@@ -159,7 +160,9 @@ public class State {
                 Hero hero = update.getKey();
                 for (HeroUpdateRecord record : update.getValue()) {
                     switch (record.getType()) {
-                        case skill_suggest: hero.getSuggestedSkills().add((String) record.getValue());
+                        case skill_suggest: hero.getSuggestedSkills().add(
+                                SkillSuggestion.builder().code((String) record.getValue())
+                                        .certainty(SkillSuggestion.Certainty.not_found).build());
                             break;
                         case skill_unsuggest:
                             break;
@@ -177,7 +180,23 @@ public class State {
 
             if (baseEvent instanceof TrialEvent) {
                 TrialEvent event = (TrialEvent) baseEvent;
+
+                location.getSkillsKnown().add(SkillSuggestion.builder().code(event.getTrial().getSkill())
+                        .certainty(SkillSuggestion.Certainty.found).build());
+
                 //check if it was attempted by hero, and if failed
+                if (event.getHero() != null) {
+                    event.getHero().getSuggestedSkills().add(SkillSuggestion.builder().code(event.getTrial().getSkill())
+                            .certainty(SkillSuggestion.Certainty.found).build());
+                } else {
+                    //if no hero found for a skill, then non has it.
+                    //todo race condition here, as we get team from the state, and it could be updated already
+                    // (someone kicked out of team by hero updates above)
+                    for (Hero hero : getTeam()) {
+                        hero.getSuggestedSkills().add(SkillSuggestion.builder().code(event.getTrial().getSkill())
+                                .certainty(SkillSuggestion.Certainty.not_found).build());
+                    }
+                }
             }
             if (baseEvent instanceof TeamworkEvent) {
                 TeamworkEvent event = (TeamworkEvent) baseEvent;

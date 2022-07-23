@@ -37,7 +37,7 @@ public class Hero {
 
     /** what player thinks of skills */
     @Getter
-    Set<String> suggestedSkills = new HashSet<>();
+    Set<SkillSuggestion> suggestedSkills = new HashSet<>();
 
     /** acted in this adventure already */
     @JsonIgnore
@@ -48,7 +48,7 @@ public class Hero {
         if (this.getDaysToRest() > 0) builder.append(" (rest: !").append(this.getDaysToRest()).append("!)");
 
         builder.append(" : ");
-        for (String suggestedSkill : this.getSuggestedSkills()) {
+        for (SkillSuggestion suggestedSkill : this.getSuggestedSkills()) {
             builder.append(suggestedSkill).append(" ");
         }
         builder.append("\n");
