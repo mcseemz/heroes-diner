@@ -109,6 +109,10 @@
   ],
 
 
+  "teamwork_succeed_oracle_paper": [
+    "In a cave we saw a Paper Oracle. It peered through us and said: \nThere are 2 of you who does not play well with the team. \nThere are 2 of you who are leaders. Two leaders in the team means trouble.\nThere are 5 different skills that you are capable of. Only 4 will be required for Sonesta.\nYou can find an old map in the drawer. Go and test your skills and tell everything to bartender."
+  ],
+
   "teamwork_succeed_wall": [
     "At the end there was a wall. We kicked it together and finally it gave up."
   ],
@@ -171,6 +175,19 @@
     "Aaaand %Path to Oracle%!",
     "And of course %Location of Oracle%!"
   ],
+  "first_teamwork_found_map": [
+    "It is where we found %location%!",
+    "We looked and we found %location%!",
+    "There under the lock was %location%!"
+  ],
+  "teamwork_found_map": [
+    "Also, map of %location%!",
+    "Aaaand path to %location%!",
+    "And of course location of %location%!",
+    "And location of %location%!"
+  ],
+
+
   "first_teamwork_found_hint_target": [
     "So we got a %hint%!",
     "We were gifted a %hint%!",

@@ -40,18 +40,21 @@ public class TeamworkEvent extends BaseEvent implements EventAfter {
         if (teamWork >= location.getTeamwork().getMin()) {
             isPassed = true;
 
-            //update stats
-            for (Hero hero : team) {
-                heroUpdates.compute(hero, (x, records) -> {
-                            records = records == null
-                                    ? new ArrayList<>()
-                                    : records;
-                            records.add(new HeroUpdateRecord(PropertyType.powerup, "", "*"));
-                            return records;
-                        }
-                );
+            //update stats for powerups
+            for (String bonus : location.getTeamwork().getBonus()) {
+                if (bonus.equals("powerups")) {
+                    for (Hero hero : team) {
+                        heroUpdates.compute(hero, (x, records) -> {
+                                    records = records == null
+                                            ? new ArrayList<>()
+                                            : records;
+                                    records.add(new HeroUpdateRecord(PropertyType.powerup, "", "*"));
+                                    return records;
+                                }
+                        );
+                    }
+                }
             }
-
         }
 
         return this;

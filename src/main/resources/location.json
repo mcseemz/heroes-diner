@@ -1,5 +1,26 @@
 [
   {
+    "code": "oracle0",
+    "name": "Wooden Oracle",
+    "description": "That's where the adventure starts. Type %go% and press Enter.",
+    "trials": [
+    ],
+    "teamwork": {
+      "leader": false,
+      "min": 0,
+      "task": "oracle_paper",
+      "bonus": [
+        "map_bridge",
+        "map_kitchen",
+        "map_prizon",
+        "map_target"
+      ]
+    },
+    "visible": true,
+    "onlyonce": true
+  },
+
+  {
     "code": "bridge",
     "name": "Broken Bridge",
     "description": "It's dark, and seems to be empty. And it spooks.",
@@ -15,7 +36,7 @@
         "map_oracle1"
       ]
     },
-    "visible": true
+    "visible": false
   },
   {
     "code": "kitchen",
@@ -33,7 +54,7 @@
         "map_oracle1"
       ]
     },
-    "visible": true
+    "visible": false
   },
   {
     "code": "prizon",
@@ -51,7 +72,7 @@
         "map_oracle1"
       ]
     },
-    "visible": true
+    "visible": false
   },
   {
     "code": "oracle1",
@@ -85,7 +106,7 @@
       "bonus": [
       ]
     },
-    "visible": true,
+    "visible": false,
     "target": true
   }
 ]

@@ -1,12 +1,14 @@
 package com.mcseemz.diner;
 
 import com.mcseemz.diner.model.Hero;
+import com.mcseemz.diner.model.Location;
 import com.mcseemz.diner.model.adventure.BaseEvent;
 import com.mcseemz.diner.model.adventure.TeamworkEvent;
 import com.mcseemz.diner.model.adventure.TrialEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -81,13 +83,24 @@ public class Compiler {
                 if (event.isPassed()) {
                     boolean isFirstBonus = true;
                     for (String bonus : event.getLocation().getTeamwork().getBonus()) {
-                        resource = (isFirstBonus ? "first_" : "") + "teamwork_found_" + bonus;
+                        if (bonus.startsWith("map_")) {
+                            resource = (isFirstBonus ? "first_" : "") + "teamwork_found_map";
+                        } else {
+                            resource = (isFirstBonus ? "first_" : "") + "teamwork_found_" + bonus;
+                        }
 
                         String[] bonuses = state.getTexts().get(resource);
                         if (bonuses == null) {
                             throw new RuntimeException("no resource found for :" + resource);
                         }
                         String bonusVal = bonuses[random.nextInt(bonuses.length)];
+
+                        if (bonus.startsWith("map_")) { //resolve map
+                            String locname = bonus.split("_")[1];
+                            Location location = Arrays.stream(state.getLocations()).filter(x -> x.getCode().equals(locname)).findFirst().orElseThrow();
+                            bonusVal = bonusVal.replace("%location%", "%" + location.getName() + "%");
+                        }
+
                         sb.append(bonusVal).append(" ");
 
                         isFirstBonus = false;
