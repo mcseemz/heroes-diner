@@ -21,12 +21,12 @@
     "code": "zombie2",
     "description": "Couple of real zombies. Funny they are so clumsy",
     "skill": "undead",
-    "difficulty": "**"
+    "difficulty": "*"
   },
   {
     "code": "thugs",
     "description": "Squatters, but mean ones. Unpleasant",
     "skill": "humans",
-    "difficulty": "**"
+    "difficulty": "*"
   }
 ]

@@ -66,7 +66,7 @@ public class Compiler {
             } else
             if (baseEvent instanceof TeamworkEvent) {
                 TeamworkEvent event = (TeamworkEvent) baseEvent;
-                String resource = "teamwork_" + (event.isPassed() ? "succeed_" : "failed_") + event.getLocation().getTeamtask();
+                String resource = "teamwork_" + (event.isPassed() ? "succeed_" : "failed_") + event.getLocation().getTeamwork().getTask();
                 //todo add leader notes if event has a "leader" flag and probability (?) favors
                 //all the data should be in the event, e.g. leader saw that hero had zero teamwork thus not participated
                 //maybe even depends on the leader level? how does leaders level up?
@@ -75,9 +75,26 @@ public class Compiler {
                     throw new RuntimeException("no resource found for :" + resource);
                 }
                 String resourceVal = teamworks[random.nextInt(teamworks.length)];
-                //todo add wrapping? or is that in the rendering?
                 //todo add placeholder replacements %hero%"
                 sb.append(resourceVal).append("\n");
+
+                if (event.isPassed()) {
+                    boolean isFirstBonus = true;
+                    for (String bonus : event.getLocation().getTeamwork().getBonus()) {
+                        resource = (isFirstBonus ? "first_" : "") + "teamwork_found_" + bonus;
+
+                        String[] bonuses = state.getTexts().get(resource);
+                        if (bonuses == null) {
+                            throw new RuntimeException("no resource found for :" + resource);
+                        }
+                        String bonusVal = bonuses[random.nextInt(bonuses.length)];
+                        sb.append(bonusVal).append(" ");
+
+                        isFirstBonus = false;
+                    }
+                }
+                sb.append("\n");
+
             }
             else {
                 throw new RuntimeException("unexpected event type :" + baseEvent.getClass().getSimpleName());

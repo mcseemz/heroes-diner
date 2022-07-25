@@ -27,6 +27,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -162,7 +163,7 @@ public class State {
                     switch (record.getType()) {
                         case skill_suggest: hero.getSuggestedSkills().add(
                                 SkillSuggestion.builder().code((String) record.getValue())
-                                        .certainty(SkillSuggestion.Certainty.not_found).build());
+                                        .certainty(SkillSuggestion.Certainty.found).build());
                             break;
                         case skill_unsuggest:
                             break;
@@ -202,11 +203,38 @@ public class State {
                 TeamworkEvent event = (TeamworkEvent) baseEvent;
                 location.setPassed(location.isPassed() || event.isPassed());
                 setLatestTeamwork(event.getTeamWork());
+
+                if (event.isPassed()) { //check if we need a hint
+                    for (String bonus : location.getTeamwork().getBonus()) {
+                        if (bonus.startsWith("map_")) {
+                            String toshow = bonus.split("_")[1];
+                            Arrays.stream(locations).filter(x -> x.getCode().equals(toshow)).findFirst().orElseThrow().setVisible(true);
+                        }
+                        if (bonus.startsWith("hint_")) {    //we found hint to location skills
+                            String toshow = bonus.split("_")[1];
+                            Location locToHint = Arrays.stream(locations).filter(x -> x.getCode().equals(toshow)).findFirst().orElseThrow();
+                            Set<String> skillsRequired = locToHint.getSkillsRequired();
+                            Set<SkillSuggestion> skillsKnown = locToHint.getSkillsKnown();
+                            //find skills that is not yet known
+                            skillsKnown.stream().map(SkillSuggestion::getCode).collect(Collectors.toList()).forEach(skillsRequired::remove);
+                            if (!skillsRequired.isEmpty()) {
+                                ArrayList<String> strings = new ArrayList<>(skillsRequired);
+                                Collections.shuffle(strings);
+                                skillsKnown.add(SkillSuggestion.builder().code(strings.get(0)).certainty(SkillSuggestion.Certainty.unsure).build());
+                            }
+                        }
+                    }
+                }
             }
         }
 
         //run passed
         turn++;
+
+        //if this is oracle it is cannot be passed twice, should go invisible
+        if (location.isPassed() && location.isOnlyonce()) {
+            location.setVisible(false);
+        }
 
         if (location.isPassed() && location.isTarget()) {
             state = GAME_STATE.passed;

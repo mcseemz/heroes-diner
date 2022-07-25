@@ -37,7 +37,7 @@ public class TeamworkEvent extends BaseEvent implements EventAfter {
             teamWork += hero.getTeamWork();
         }
 
-        if (teamWork >= location.getTeamwork()) {
+        if (teamWork >= location.getTeamwork().getMin()) {
             isPassed = true;
 
             //update stats

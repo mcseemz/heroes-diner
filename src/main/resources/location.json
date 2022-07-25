@@ -7,8 +7,15 @@
       "bats",
       "rats"
     ],
-    "teamwork": 2,
-    "teamtask": "wall"
+    "teamwork": {
+      "min": 2,
+      "task": "wall",
+      "bonus": [
+        "powerups",
+        "map_oracle1"
+      ]
+    },
+    "visible": true
   },
   {
     "code": "kitchen",
@@ -18,8 +25,15 @@
       "bats",
       "ants"
     ],
-    "teamwork": 2,
-    "teamtask": "door"
+    "teamwork": {
+      "min": 2,
+      "task": "door",
+      "bonus": [
+        "powerups",
+        "map_oracle1"
+      ]
+    },
+    "visible": true
   },
   {
     "code": "prizon",
@@ -29,8 +43,49 @@
       "thugs",
       "zombie2"
     ],
-    "teamwork": 3,
-    "teamtask": "bomb",
+    "teamwork": {
+      "min": 3,
+      "task": "bomb",
+      "bonus": [
+        "powerups",
+        "map_oracle1"
+      ]
+    },
+    "visible": true
+  },
+  {
+    "code": "oracle1",
+    "name": "Wooden Oracle",
+    "description": "It hints you on the trials at The End. But your team should have a leader!",
+    "trials": [
+    ],
+    "teamwork": {
+      "leader": true,
+      "min": 2,
+      "task": "oracle",
+      "bonus": [
+        "hint_target"
+      ]
+    },
+    "visible": false,
+    "onlyonce": true
+  },
+  {
+    "code": "target",
+    "name": "Drakula's Castle",
+    "description": "That is the target! !!Pass it!!!",
+    "trials": [
+      "bats",
+      "ants"
+    ],
+    "teamwork": {
+      "leader": true,
+      "min": 4,
+      "task": "door",
+      "bonus": [
+      ]
+    },
+    "visible": true,
     "target": true
   }
 ]

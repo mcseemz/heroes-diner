@@ -2,6 +2,7 @@ package com.mcseemz.diner.commands;
 
 import com.mcseemz.diner.Renderer;
 import com.mcseemz.diner.State;
+import lombok.extern.slf4j.Slf4j;
 import org.fusesource.jansi.Ansi;
 import org.fusesource.jansi.AnsiConsole;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import java.io.IOException;
 
 import static org.fusesource.jansi.Ansi.*;
 
+@Slf4j
 @ShellComponent
 public class NewGame {
 
@@ -35,6 +37,7 @@ public class NewGame {
         //todo initiate resources
         System.out.println(ansi().eraseScreen().bgGreen().fgBlack().a("New game: ").reset().a(game));
 
+        log.debug("asdf!");
         state.newGame();
 
 //        return ansi().render(renderer.renderState()).toString();

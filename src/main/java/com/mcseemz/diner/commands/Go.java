@@ -41,7 +41,7 @@ public class Go {
 
         ComponentFlow.ComponentFlowResult run = componentFlowBuilder.clone().reset()
                 .withSingleItemSelector("location")
-                .selectItems(Arrays.stream(state.getLocations())
+                .selectItems(Arrays.stream(state.getLocations()).filter(x -> x.isVisible() && !x.isOnlyonce())
                         .collect(Collectors.toMap(Location::getName, Location::getCode)))
                 .and()
                 .withConfirmationInput("confirm")

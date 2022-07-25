@@ -16,7 +16,10 @@ import org.springframework.shell.standard.ShellMethodAvailability;
 import org.springframework.shell.standard.ShellOption;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -93,6 +96,23 @@ public class Team {
 
         renderer.displayState();
     }
+
+    @ShellMethod(key = "team swap", value = "Team management - swap ")
+    public void teamswap(@ShellOption(defaultValue="list") String command) {
+        List<Hero> roster = new ArrayList<>(Arrays.asList(state.getRoster()));
+        List<Hero> team = state.getTeam();
+
+        roster.removeAll(team);
+        Collections.shuffle(roster);
+
+        team.forEach(x -> x.setInTeam(false));
+        for (int i = 0; i < 5; i++) {
+            roster.get(i).setInTeam(true);
+        }
+
+        renderer.displayState();
+    }
+
 
     @ShellMethodAvailability
     public Availability teamAvailability() {

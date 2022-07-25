@@ -110,7 +110,7 @@
 
 
   "teamwork_succeed_wall": [
-    "At the end there was a wall. We kicked it together and finally it gave up. Behind there was a secret room with %powerups%!"
+    "At the end there was a wall. We kicked it together and finally it gave up."
   ],
   "teamwork_failed_wall": [
     "At the end there was a wall. We kicked it together but our teamwork was not enough to break it."
@@ -121,7 +121,7 @@
   ],
 
   "teamwork_succeed_door": [
-    "Then we saw a door with a complex lock. Took us a whole team to unlock it. But there we found %powerups%!"
+    "Then we saw a door with a complex lock. Took us a whole team to unlock it."
   ],
   "teamwork_failed_door": [
     "Then we saw a door with a complex lock. We tried to solve and uplock that, but our teamwork was not enough."
@@ -130,9 +130,18 @@
     "I noticed that %hero% did nothing during the attempt",
     "I noticed that %hero% slept all the time"
   ],
+  "teamwork_succeed_oracle": [
+    "There was a statue that spread darkness around. Only through leadership we could manage there!"
+  ],
+  "teamwork_failed_oracle": [
+    "There was a statue that spread darkness around. We got lost without leader and failed."
+  ],
+  "teamwork_failed_oracle_leader_notice": [
+    "I noticed general bad team work. I wnt another team."
+  ],
 
   "teamwork_succeed_bomb": [
-    "Then an old bomb fell to our feet. We pushed it together to the far side. That's where we found %powerups%!"
+    "Then an old bomb fell to our feet. We pushed it together to the far side."
   ],
   "teamwork_failed_bomb": [
     "Then an old bomb fell to our feet. We tried to push it, but our teamwork was not enough."
@@ -140,6 +149,31 @@
   "teamwork_failed_bomb_leader_notice": [
     "I noticed that %hero% did nothing during the attempt",
     "I noticed that %hero% slept all the time"
-  ]
+  ],
 
+  "first_teamwork_found_powerups": [
+    "That's where we found %powerups%!",
+    "But there we found %powerups%!",
+    "Behind there was a secret room with %powerups%!"
+  ],
+  "teamwork_found_powerups": [
+    "And there were %powerups%.",
+    "Also, %powerups%.",
+    "Plus, %powerups%."
+  ],
+  "first_teamwork_found_map_oracle1": [
+    "It is where we found %Map of Wooden Oracle%!",
+    "But there we found %Path to Oracle%!",
+    "There under the lock was %Location of Oracle%!"
+  ],
+  "teamwork_found_map_oracle1": [
+    "Also, %Map of Wooden Oracle%!",
+    "Aaaand %Path to Oracle%!",
+    "And of course %Location of Oracle%!"
+  ],
+  "first_teamwork_found_hint_target": [
+    "So we got a %hint%!",
+    "We were gifted a %hint%!",
+    "%Hint% was spoken by so misterious voice!"
+  ]
 }

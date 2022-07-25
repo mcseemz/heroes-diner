@@ -4,6 +4,7 @@ import com.jakewharton.fliptables.FlipTable;
 import com.mcseemz.diner.model.Hero;
 import com.mcseemz.diner.model.Location;
 import com.mcseemz.diner.model.Trial;
+import lombok.extern.slf4j.Slf4j;
 import org.fusesource.jansi.Ansi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -17,6 +18,7 @@ import java.util.regex.Pattern;
 
 import static org.fusesource.jansi.Ansi.ansi;
 
+@Slf4j
 @Component
 public class Renderer {
     @Autowired
@@ -41,12 +43,36 @@ public class Renderer {
     }
 
     public List<String> splitString(String string) {
-        Pattern p = Pattern.compile("\\G\\s*(.{1,"+COL1_WIDTH+"})(?=\\s|$)", Pattern.DOTALL);
+        Pattern p = Pattern.compile("\\G\\s*(.{1,"+COL1_WIDTH+"})(?=\\s|$|\\|@)", Pattern.DOTALL);
         Matcher m = p.matcher(string);
 
-        List<String> result = new ArrayList<>();
+        List<String> processed = new ArrayList<>();
         while (m.find())
-            result.add(m.group(1));
+            processed.add(m.group(1));
+
+        List<String> result = new ArrayList<>();
+        String state = "";
+        for (String str : processed) {
+            log.debug("processed string: {}", str);
+
+            String target = str;
+
+            if (str.lastIndexOf("|@") < str.lastIndexOf("@|") && str.lastIndexOf("@|") >= 0) {
+                 target = str + "|@";
+            }
+            if ((!str.contains("@|") || str.indexOf("@|") > str.indexOf("|@")) && str.contains("|@")) {
+                target = state + " " + str;
+            }
+
+            //update state at the end
+            if (str.lastIndexOf("@|") >= 0) {
+                state = str.substring(str.lastIndexOf("@|"), str.indexOf(" ", str.lastIndexOf("@|")));
+            }
+
+            log.debug("target string: {}, state: {}", target, state);
+
+            result.add(target);
+        }
 
         return result;
     }
@@ -94,7 +120,7 @@ public class Renderer {
         output = output.replaceAll("\\*(.+?)\\*","@|bold  $1 |@");
         output = output.replaceAll("_(.+?)_","@|italic,underline  $1 |@");
         output = output.replaceAll("%(.+?)%","@|bold,red,underline  $1 |@");
-        output = output.replaceAll("!(.+?)!","@|bold,red  $1 |@");
+        output = output.replaceAll("!!(.+?)!!","@|bold,red  $1 |@");
 
         //skill markup
         output = output.replaceAll("\\+(\\S+?)\\+","@|green  +$1 |@");
@@ -108,15 +134,17 @@ public class Renderer {
     public String renderLocation() {
         StringBuilder builder = new StringBuilder();
         for (Location location : state.getLocations()) {
-            location.render(builder, state);
+            if (location.isVisible()) {
+                location.render(builder, state);
+            }
         }
         return postProcess(builder.toString());
     }
     public String renderRoster() {
         StringBuilder builder = new StringBuilder();
         for (Hero hero : state.getRoster()) {
-            if (hero.isInTeam()) builder.append("!>!");
-            else if (hero.isOut()) builder.append("!-!");
+            if (hero.isInTeam()) builder.append("!!>!!");
+            else if (hero.isOut()) builder.append("!!-!!");
             else builder.append("   ");
 
             hero.render(builder);

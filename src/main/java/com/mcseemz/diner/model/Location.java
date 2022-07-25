@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.fusesource.jansi.Ansi;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -24,12 +25,14 @@ public class Location {
     /** trials and teamwork passed */
     boolean isPassed;
     /** how much teamwork is needed to unlock */
-    int teamwork;
-    /** how they show teamwork. related to text resources */
-    String teamtask;
+    Teamwork teamwork;
 
     /** is this the end of the game */
     boolean target;
+    /** is this location visible on a map now */
+    boolean visible;
+    /** available to pass only once */
+    boolean onlyonce;
 
     /** we initiated trials to manage them easier */
     @JsonIgnore
@@ -40,15 +43,21 @@ public class Location {
 
     public String getDifficulty(State state) {
         String hardest = "!";
-        for (String locationTrial : getTrials()) {
-            for (Trial stateTrial : state.getTrials()) {
-                if (locationTrial.equals(stateTrial.getCode())
-                        && stateTrial.getDifficulty().compareTo(hardest) > 0) {
-                    hardest = stateTrial.getDifficulty();
-                }
+        for (Trial trial : getTrialsLoaded()) {
+            if (trial.getDifficulty().compareTo(hardest) > 0) {
+                hardest = trial.getDifficulty();
             }
         }
+
         return hardest;
+    }
+
+    public Set<String> getSkillsRequired() {
+        Set<String> skillsRequired = new HashSet<>();
+        for (Trial trial : getTrialsLoaded()) {
+            skillsRequired.add(trial.getSkill());
+        }
+        return skillsRequired;
     }
 
     public void render(StringBuilder builder, State state) {
@@ -60,6 +69,18 @@ public class Location {
                 .append("\n");
         builder.append("    ").append(getDescription());
         builder.append("\n");
+    }
+
+    @Data
+    public static class Teamwork {
+        /** is leader required for this teamwork */
+        boolean leader;
+        /** minimum teamwork to pass */
+        int min;
+        /** task for team work */
+        String task;
+        /** bonuses to get */
+        String[] bonus;
     }
 
 }
