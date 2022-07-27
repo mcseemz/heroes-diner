@@ -7,8 +7,11 @@ import com.mcseemz.diner.model.Adventure;
 import com.mcseemz.diner.model.Hero;
 import com.mcseemz.diner.model.Location;
 import com.mcseemz.diner.model.adventure.BaseEvent;
+import lombok.SneakyThrows;
 import org.fusesource.jansi.Ansi;
+import org.jline.reader.LineReader;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.shell.Availability;
 import org.springframework.shell.component.flow.ComponentFlow;
 import org.springframework.shell.standard.ShellComponent;
@@ -36,6 +39,11 @@ public class Go {
     @Autowired
     private ComponentFlow.Builder componentFlowBuilder;
 
+    @Autowired
+    @Lazy
+    LineReader lineReader;
+
+    @SneakyThrows
     @ShellMethod(value = "Adventure start")
     public void go() {
 
@@ -70,7 +78,18 @@ public class Go {
 //        return ansi().cursorUp(37).eraseScreen(Ansi.Erase.FORWARD).render(renderer.renderState()).toString();
 
         if (state.getState() == State.GAME_STATE.passed) {
+            System.out.print(ansi().cursor(1, 1).eraseScreen(Ansi.Erase.FORWARD));
+
             System.out.println(ansi().bg(Ansi.Color.GREEN).a("You finished the game! Congrats!").reset());
+            for (String the_beginning : state.getTexts().get("the_end")) {
+                System.out.println(ansi().render(the_beginning));
+
+                int read = lineReader.getTerminal().reader().read();
+                if (read == 'q') {
+                    break;
+                }
+            }
+
         }
     }
 

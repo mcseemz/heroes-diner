@@ -65,7 +65,7 @@ public class Location {
 
         builder.append(isPassed() ? ansi().fg(Ansi.Color.GREEN).a("+ ").reset() : "  ").append(getName())
                 .append(" ").append(difficulty)
-                .append(" : ").append(getSkillsKnown().stream().sorted().map(SkillSuggestion::toString).collect(Collectors.joining(" ")))
+                .append(getSkillsKnown().size() > 0 ? " : " : "").append(getSkillsKnown().stream().sorted().map(SkillSuggestion::toString).collect(Collectors.joining(" ")))
                 .append("\n");
         builder.append("    ").append(getDescription());
         builder.append("\n");

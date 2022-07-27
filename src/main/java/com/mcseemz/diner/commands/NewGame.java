@@ -5,7 +5,9 @@ import com.mcseemz.diner.State;
 import lombok.extern.slf4j.Slf4j;
 import org.fusesource.jansi.Ansi;
 import org.fusesource.jansi.AnsiConsole;
+import org.jline.reader.LineReader;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.shell.Availability;
 import org.springframework.shell.Shell;
 import org.springframework.shell.command.CommandContext;
@@ -30,17 +32,26 @@ public class NewGame {
     private Renderer renderer;
 
     @Autowired
+    @Lazy
+    LineReader lineReader;
+
+    @Autowired
     private ComponentFlow.Builder componentFlowBuilder;
 
     @ShellMethod(value = "Start a new game")
     public void start(@ShellOption(defaultValue="World") String game) throws IOException {
-        //todo initiate resources
-        System.out.println(ansi().eraseScreen().bgGreen().fgBlack().a("New game: ").reset().a(game));
-
-        log.debug("asdf!");
         state.newGame();
 
-//        return ansi().render(renderer.renderState()).toString();
+        System.out.print(ansi().cursor(1, 1).eraseScreen(Ansi.Erase.FORWARD));
+        for (String the_beginning : state.getTexts().get("the_beginning")) {
+            System.out.println(ansi().render(the_beginning));
+
+            int read = lineReader.getTerminal().reader().read();
+            if (read == 'q') {
+                break;
+            }
+        }
+
 
         renderer.displayState();
     }

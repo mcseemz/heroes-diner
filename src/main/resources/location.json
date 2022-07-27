@@ -1,7 +1,7 @@
 [
   {
-    "code": "oracle0",
-    "name": "Wooden Oracle",
+    "code": "PaperOracle",
+    "name": "Paper Oracle",
     "description": "That's where the adventure starts. Type %go% and press Enter.",
     "trials": [
     ],
@@ -32,8 +32,7 @@
       "min": 2,
       "task": "wall",
       "bonus": [
-        "powerups",
-        "map_oracle1"
+        "powerups"
       ]
     },
     "visible": false
@@ -50,8 +49,7 @@
       "min": 2,
       "task": "door",
       "bonus": [
-        "powerups",
-        "map_oracle1"
+        "powerups"
       ]
     },
     "visible": false
@@ -69,13 +67,13 @@
       "task": "bomb",
       "bonus": [
         "powerups",
-        "map_oracle1"
+        "map_WoodenOracle"
       ]
     },
     "visible": false
   },
   {
-    "code": "oracle1",
+    "code": "WoodenOracle",
     "name": "Wooden Oracle",
     "description": "It hints you on the trials at The End. But your team should have a leader!",
     "trials": [

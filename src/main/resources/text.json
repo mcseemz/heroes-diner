@@ -192,5 +192,18 @@
     "So we got a %hint%!",
     "We were gifted a %hint%!",
     "%Hint% was spoken by so misterious voice!"
+  ],
+
+  "the_beginning": [
+    "@|italic type \"q\" if you don't want to hear the story. Progress with \"Enter\" |@",
+    "One moonless night 12 strangers appeared at the door of Heroes Bar, Worchester.",
+    "\"Oh mighty bartender, \" - they said, - \"help us rest and prepare to win that Sonesta hotels! And we will pay you generously.\"",
+    "\"I will mix you a drink that will give you 12 dreams\" - said bartender. \"And in the end you will know the team that is best suited for that. Money first.\"",
+    "They paid, they drank, and he went on:\nAs we are in fantasy bar, I send some of you to Paper Oracle first. It will tell you who you really are."
+  ],
+  "the_end": [
+    "They woke up early, all in the same ward. Officer was kind and smiley.",
+    "\"I don't know what you guys drank last night,\" - he said.\n\"I just know that sometimes it's hard to look each other in the eye after such team building parties.\"",
+    "They paid their fine and went out."
   ]
 }

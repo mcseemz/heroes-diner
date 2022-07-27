@@ -3,6 +3,7 @@ package com.mcseemz.diner.commands;
 import com.mcseemz.diner.Renderer;
 import com.mcseemz.diner.State;
 import com.mcseemz.diner.model.Hero;
+import com.mcseemz.diner.model.SkillSuggestion;
 import org.fusesource.jansi.Ansi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.Availability;
@@ -96,6 +97,52 @@ public class Team {
 
         renderer.displayState();
     }
+
+    @ShellMethod(key = "team kick", value = "Team management - kick out person")
+    public void teamkick(@ShellOption(defaultValue="list") String command) {
+
+        ComponentFlow.ComponentFlowResult run = componentFlowBuilder.clone().reset()
+                .withSingleItemSelector("hero")
+                .selectItems(state.getTeam().stream().collect(Collectors.toMap(Hero::getName, Hero::getName)))
+                .and()
+                .build().run();
+
+        String result = run.getContext().get("hero");
+        for (Hero hero : state.getRoster()) {
+            if (hero.getName().equals(result)) {
+                hero.setOut(true);
+            }
+        }
+
+        renderer.displayState();
+    }
+
+    @ShellMethod(key = "team skill", value = "Team management - suggest skill")
+    public void teamsuggest(@ShellOption(defaultValue="list") String command) {
+
+        ComponentFlow.ComponentFlowResult run = componentFlowBuilder.clone().reset()
+                .withSingleItemSelector("hero")
+                .selectItems(state.getTeam().stream().collect(Collectors.toMap(Hero::getName, Hero::getName)))
+                .and()
+                .withSingleItemSelector("skill")
+                .selectItems(Arrays.stream(state.getSkills())
+                        .collect(Collectors.toMap(x -> x, x -> x)))
+                .and()
+                .build().run();
+
+        String result1 = run.getContext().get("hero");
+        String skill = run.getContext().get("skill");
+        for (Hero hero : state.getRoster()) {
+            if (hero.getName().equals(result1)) {
+                SkillSuggestion skillFound = hero.getSuggestedSkills().stream().filter(x -> x.getCode().equals(skill)).findFirst().orElse(null);
+                if (skillFound == null)
+                hero.getSuggestedSkills().add(SkillSuggestion.builder().code(skill).certainty(SkillSuggestion.Certainty.unsure).build());
+            }
+        }
+
+        renderer.displayState();
+    }
+
 
     @ShellMethod(key = "team swap", value = "Team management - swap ")
     public void teamswap(@ShellOption(defaultValue="list") String command) {

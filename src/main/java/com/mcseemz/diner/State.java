@@ -93,7 +93,7 @@ public class State {
         //create heroes
         generateRoster();
 
-        latestMessage = "Hey bartender! We are _real_ heroes. Do you have any place of interest here for us?";
+        latestMessage = "@|italic type \"go\" and press Enter. Choose Paper Oracle |@ \n@|italic type \"help\" to see list of available commands|@";
         state = GAME_STATE.waiting;
 
         log.debug("read {} skills", skills.length);
