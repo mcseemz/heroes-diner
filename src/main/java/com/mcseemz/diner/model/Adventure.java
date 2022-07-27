@@ -59,7 +59,7 @@ public class Adventure {
 
         }
 
-        if (isPassed) {
+        if (isPassed && !location.isPassed()) { //only once per location
             //time to run teamwork
             TeamworkEvent event = TeamworkEvent.builder().location(location).team(team).build().run();
             adventureEvents.add(event);

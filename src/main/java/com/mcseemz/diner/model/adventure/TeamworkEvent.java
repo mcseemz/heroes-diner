@@ -32,9 +32,14 @@ public class TeamworkEvent extends BaseEvent implements EventAfter {
 
     public TeamworkEvent run() {
 
-        //todo should leader add to teamwork?
+        Hero badHero = null;
+        Hero leaderHero = null;
+
+        //leader adds to teamwork
         for (Hero hero : team) {
             teamWork += hero.getTeamWork();
+            if (hero.getTeamWork()<1) badHero = hero;
+            if (hero.getSkill().equals("leadership")) leaderHero = hero;
         }
 
         if (teamWork >= location.getTeamwork().getMin()) {
@@ -44,18 +49,25 @@ public class TeamworkEvent extends BaseEvent implements EventAfter {
             for (String bonus : location.getTeamwork().getBonus()) {
                 if (bonus.equals("powerups")) {
                     for (Hero hero : team) {
-                        heroUpdates.compute(hero, (x, records) -> {
-                                    records = records == null
-                                            ? new ArrayList<>()
-                                            : records;
-                                    records.add(new HeroUpdateRecord(PropertyType.powerup, "", "*"));
-                                    return records;
-                                }
-                        );
+                        heroUpdates.add(HeroUpdateRecord.builder()
+                                .hero(hero).type(PropertyType.powerup).value("*").build());
                     }
                 }
             }
         }
+
+        //leader note
+        if (leaderHero != null && badHero != null) {
+            //weak leader cannot identify bad actor
+            switch (leaderHero.getPower().length()) {
+                case 1:
+                case 2:  leaderNotes.add(HeroUpdateRecord.builder().type(PropertyType.bad_actor).build());
+                        break;
+                default: leaderNotes.add(HeroUpdateRecord.builder().type(PropertyType.bad_actor).hero(badHero).build());
+                        break;
+            }
+        }
+
 
         return this;
     }

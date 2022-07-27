@@ -5,9 +5,6 @@ import com.mcseemz.diner.model.Trial;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-
-import java.util.ArrayList;
 
 @Builder
 @Getter
@@ -31,14 +28,8 @@ public class TrialEvent extends BaseEvent {
         if (hero != null && hero.getPower().compareTo(trial.getDifficulty()) >= 0) {
             isPassed = true;
 
-            heroUpdates.compute(hero, (x, records) -> {
-                records = records == null
-                       ? new ArrayList<>()
-                       : records;
-                records.add(new HeroUpdateRecord(PropertyType.skill_suggest, "", trial.getSkill()));
-                return records;
-                }
-            );
+            heroUpdates.add(HeroUpdateRecord.builder()
+                    .hero(hero).type(PropertyType.skill_suggest).value(trial.getSkill()).build());
         }
 
         return this;

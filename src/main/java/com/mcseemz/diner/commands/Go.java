@@ -52,14 +52,14 @@ public class Go {
                 .selectItems(Arrays.stream(state.getLocations()).filter(x -> x.isVisible() && (!x.isPassed() || !x.isOnlyonce()) )
                         .collect(Collectors.toMap(Location::getName, Location::getCode)))
                 .and()
-                .withConfirmationInput("confirm")
-                .defaultValue(true)
-                .name("Are you sure you want to run this location with this team")
-                .and()
+//                .withConfirmationInput("confirm")
+//                .defaultValue(true)
+//                .name("Are you sure you want to run this location with this team")
+//                .and()
                 .build().run();
 
-        Boolean confirmed = run.getContext().get("confirm");
-        if (confirmed) {
+//        Boolean confirmed = run.getContext().get("confirm");
+//        if (confirmed) {
             String myLocation = run.getContext().get("location");
             Location location = Arrays.stream(state.getLocations()).filter(x -> x.getCode().equals(myLocation)).findFirst().orElseThrow();
             List<Hero> team = Arrays.stream(state.getRoster()).filter(Hero::isInTeam).collect(Collectors.toList());
@@ -72,7 +72,7 @@ public class Go {
             state.setLatestMessage(report);
             //update heroes with results when required
             state.updateGameState(location, result);
-        }
+//        }
 
         renderer.displayState();
 //        return ansi().cursorUp(37).eraseScreen(Ansi.Erase.FORWARD).render(renderer.renderState()).toString();

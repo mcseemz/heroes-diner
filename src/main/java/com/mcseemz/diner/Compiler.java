@@ -2,7 +2,9 @@ package com.mcseemz.diner;
 
 import com.mcseemz.diner.model.Hero;
 import com.mcseemz.diner.model.Location;
+import com.mcseemz.diner.model.SkillSuggestion;
 import com.mcseemz.diner.model.adventure.BaseEvent;
+import com.mcseemz.diner.model.adventure.HeroUpdateRecord;
 import com.mcseemz.diner.model.adventure.TeamworkEvent;
 import com.mcseemz.diner.model.adventure.TrialEvent;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,17 +48,8 @@ public class Compiler {
                 outcome += hero == null ? "no_hero" : "with_hero";
                 enemy += hero == null ? "no_hero" : "with_hero";
 
-                String[] outcomes = state.getTexts().get(outcome);
-                if (outcomes == null) {
-                    throw new RuntimeException("no resource found for :" + outcome);
-                }
-                String outcomeVal = outcomes[random.nextInt(outcomes.length)];
-
-                String[] enemies = state.getTexts().get(enemy);
-                if (enemies == null) {
-                    throw new RuntimeException("no resource found for :" + enemy);
-                }
-                String enemyVal = enemies[random.nextInt(enemies.length)];
+                String outcomeVal = getRandomLine(outcome);
+                String enemyVal = getRandomLine(enemy);
 
                 //post_process
                 if (hero != null) {
@@ -69,14 +62,8 @@ public class Compiler {
             if (baseEvent instanceof TeamworkEvent) {
                 TeamworkEvent event = (TeamworkEvent) baseEvent;
                 String resource = "teamwork_" + (event.isPassed() ? "succeed_" : "failed_") + event.getLocation().getTeamwork().getTask();
-                //todo add leader notes if event has a "leader" flag and probability (?) favors
-                //all the data should be in the event, e.g. leader saw that hero had zero teamwork thus not participated
-                //maybe even depends on the leader level? how does leaders level up?
-                String[] teamworks = state.getTexts().get(resource);
-                if (teamworks == null) {
-                    throw new RuntimeException("no resource found for :" + resource);
-                }
-                String resourceVal = teamworks[random.nextInt(teamworks.length)];
+                String resourceVal = getRandomLine(resource);
+
                 //todo add placeholder replacements %hero%"
                 sb.append(resourceVal).append("\n");
 
@@ -89,11 +76,7 @@ public class Compiler {
                             resource = (isFirstBonus ? "first_" : "") + "teamwork_found_" + bonus;
                         }
 
-                        String[] bonuses = state.getTexts().get(resource);
-                        if (bonuses == null) {
-                            throw new RuntimeException("no resource found for :" + resource);
-                        }
-                        String bonusVal = bonuses[random.nextInt(bonuses.length)];
+                        String bonusVal = getRandomLine(resource);
 
                         if (bonus.startsWith("map_")) { //resolve map
                             String locname = bonus.split("_")[1];
@@ -108,6 +91,29 @@ public class Compiler {
                 }
                 sb.append("\n");
 
+                //add leader notes if event has a "leader" flag and probability (?) favors
+                //all the data should be in the event, e.g. leader saw that hero had zero teamwork thus not participated
+                //maybe even depends on the leader level? how does leaders level up?
+                for (HeroUpdateRecord update : baseEvent.getLeaderNotes()) {
+                    Hero hero = update.getHero();
+
+                    switch (update.getType()) {
+                        case bad_actor: {
+                            resource = "leader_bad_teamwork";
+                            if (hero != null) {
+                                resource += "_hero";
+                            }
+
+                            String note = getRandomLine(resource).replace("%hero%", hero != null ? hero.getName() : "");
+                            sb.append("(leader): ").append(note).append("\n");
+                            break;
+                        }
+                        default:
+                            throw new IllegalStateException("Unexpected value: " + update.getType());
+                    }
+                }
+
+
             }
             else {
                 throw new RuntimeException("unexpected event type :" + baseEvent.getClass().getSimpleName());
@@ -116,5 +122,14 @@ public class Compiler {
         }
 
         return sb.toString();
+    }
+
+    /** get random line from resource */
+    private String getRandomLine(String resource) {
+        String[] bonuses = state.getTexts().get(resource);
+        if (bonuses == null) {
+            throw new RuntimeException("no resource found for :" + resource);
+        }
+        return bonuses[random.nextInt(bonuses.length)];
     }
 }

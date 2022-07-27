@@ -51,7 +51,9 @@ public class Team {
         if (teamSize < 5) {
             ComponentFlow.ComponentFlowResult run = componentFlowBuilder.clone().reset()
                     .withSingleItemSelector("hero")
-                    .selectItems(Arrays.stream(state.getRoster()).filter(hero -> !hero.isInTeam())
+                    .selectItems(Arrays.stream(state.getRoster())
+                            .filter(hero -> !hero.isInTeam())
+                            .filter(hero -> !hero.isOut())
                             .collect(Collectors.toMap(Hero::getName, Hero::getName)))
                     .and()
                     .build().run();
@@ -79,7 +81,9 @@ public class Team {
                     .selectItems(state.getTeam().stream().collect(Collectors.toMap(Hero::getName, Hero::getName)))
                     .and()
                     .withSingleItemSelector("hero2")
-                    .selectItems(Arrays.stream(state.getRoster()).filter(hero -> !hero.isInTeam())
+                    .selectItems(Arrays.stream(state.getRoster())
+                            .filter(hero -> !hero.isInTeam())
+                            .filter(hero -> !hero.isOut())
                             .collect(Collectors.toMap(Hero::getName, Hero::getName)))
                     .and()
                     .build().run();
@@ -111,6 +115,7 @@ public class Team {
         for (Hero hero : state.getRoster()) {
             if (hero.getName().equals(result)) {
                 hero.setOut(true);
+                hero.setInTeam(false);
             }
         }
 
@@ -134,7 +139,8 @@ public class Team {
         String skill = run.getContext().get("skill");
         for (Hero hero : state.getRoster()) {
             if (hero.getName().equals(result1)) {
-                SkillSuggestion skillFound = hero.getSuggestedSkills().stream().filter(x -> x.getCode().equals(skill)).findFirst().orElse(null);
+                SkillSuggestion skillFound = hero.getSuggestedSkills().stream()
+                        .filter(x -> x.getCode().equals(skill)).findFirst().orElse(null);
                 if (skillFound == null)
                 hero.getSuggestedSkills().add(SkillSuggestion.builder().code(skill).certainty(SkillSuggestion.Certainty.unsure).build());
             }
@@ -149,13 +155,13 @@ public class Team {
         List<Hero> roster = new ArrayList<>(Arrays.asList(state.getRoster()));
         List<Hero> team = state.getTeam();
 
-        roster.removeAll(team);
-        Collections.shuffle(roster);
-
         team.forEach(x -> x.setInTeam(false));
-        for (int i = 0; i < 5; i++) {
-            roster.get(i).setInTeam(true);
-        }
+
+        roster.removeAll(team);
+        roster.removeIf(Hero::isOut);
+
+        Collections.shuffle(roster);
+        roster.stream().limit(5).forEach(x -> x.setInTeam(true));
 
         renderer.displayState();
     }

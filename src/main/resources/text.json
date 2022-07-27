@@ -194,6 +194,17 @@
     "%Hint% was spoken by so misterious voice!"
   ],
 
+  "leader_bad_teamwork": [
+    "I saw someone fell asleep instead. Do not know who he was, it was dark.",
+    "I noticed someone sabotaging the effort. But it was dark.",
+    "Looks like we have bad actor in the team."
+  ],
+  "leader_bad_teamwork_hero": [
+    "I saw %hero% doing nothing. Bad attitude.",
+    "I noticed %hero% played dead. Bad-bad actor.",
+    "We could do better if not %hero%. He distracted us."
+  ],
+
   "the_beginning": [
     "@|italic type \"q\" if you don't want to hear the story. Progress with \"Enter\" |@",
     "One moonless night 12 strangers appeared at the door of Heroes Bar, Worchester.",

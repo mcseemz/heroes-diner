@@ -44,6 +44,10 @@ public class Hero {
     boolean isActed;
 
     public void render(StringBuilder builder) {
+        if (isOut()) {
+            builder.append("!!(out)!! ");
+        }
+
         builder.append(this.getName()).append(" ").append(this.power);
         if (this.getDaysToRest() > 0) builder.append(" (rest: !").append(this.getDaysToRest()).append("!)");
 

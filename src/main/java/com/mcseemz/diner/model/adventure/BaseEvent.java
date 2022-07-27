@@ -3,6 +3,7 @@ package com.mcseemz.diner.model.adventure;
 import com.mcseemz.diner.model.Hero;
 import lombok.Getter;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,7 +14,9 @@ public abstract class BaseEvent {
     boolean isLeaderOnly = false;
 
     @Getter
-    Map<Hero, List<HeroUpdateRecord>> heroUpdates = new HashMap<>();
+    List<HeroUpdateRecord> heroUpdates = new ArrayList<>();
+    @Getter
+    List<HeroUpdateRecord> leaderNotes = new ArrayList<>();
 
     enum Type {
         encounter,  //trial done
@@ -23,12 +26,14 @@ public abstract class BaseEvent {
         teamwork, //the team acts
     }
 
+    /** for hero update */
     public enum PropertyType {
         skill_suggest,
         skill_unsuggest,
         isOut,
         needRest,
-        powerup
+        powerup,
+        bad_actor   //we have problem with the team
     }
 
 }

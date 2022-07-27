@@ -157,25 +157,24 @@ public class State {
     public void updateGameState(Location location, List<BaseEvent> events) {
         for (BaseEvent baseEvent : events) {
 
-            for (Map.Entry<Hero, List<HeroUpdateRecord>> update : baseEvent.getHeroUpdates().entrySet()) {
-                Hero hero = update.getKey();
-                for (HeroUpdateRecord record : update.getValue()) {
-                    switch (record.getType()) {
-                        case skill_suggest: hero.getSuggestedSkills().add(
-                                SkillSuggestion.builder().code((String) record.getValue())
-                                        .certainty(SkillSuggestion.Certainty.found).build());
-                            break;
-                        case skill_unsuggest:
-                            break;
-                        case isOut:
-                            break;
-                        case needRest: hero.setDaysToRest((Integer) record.getValue());
-                            break;
-                        case powerup: hero.setPower(hero.getPower() + record.getValue());
-                            break;
-                        default:
-                            throw new IllegalStateException("Unexpected value: " + record.getType());
-                    }
+            for (HeroUpdateRecord update : baseEvent.getHeroUpdates()) {
+                Hero hero = update.getHero();
+
+                switch (update.getType()) {
+                    case skill_suggest: hero.getSuggestedSkills().add(
+                            SkillSuggestion.builder().code((String) update.getValue())
+                                    .certainty(SkillSuggestion.Certainty.found).build());
+                        break;
+                    case skill_unsuggest:
+                        break;
+                    case isOut:
+                        break;
+                    case needRest: hero.setDaysToRest((Integer) update.getValue());
+                        break;
+                    case powerup: hero.setPower(hero.getPower() + update.getValue());
+                        break;
+                    default:
+                        throw new IllegalStateException("Unexpected value: " + update.getType());
                 }
             }
 
@@ -222,6 +221,13 @@ public class State {
                                 Collections.shuffle(strings);
                                 skillsKnown.add(SkillSuggestion.builder().code(strings.get(0)).certainty(SkillSuggestion.Certainty.unsure).build());
                             }
+                        }
+                    }
+
+                    if (event.getTeamWork() == event.getTeam().size()) {
+                        for (Hero hero : event.getTeam()) {
+                            hero.getSuggestedSkills().add(SkillSuggestion.builder().code("teamwork")
+                                    .certainty(SkillSuggestion.Certainty.found).build());
                         }
                     }
                 }
