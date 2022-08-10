@@ -41,7 +41,7 @@
     "%ants% just ignored him."
   ],
   "trial_failed_rats_no_hero": [
-    "Swarm of %rats%!",
+    "Swarm of %rats%! We withdrew.",
     "There were %rats%! And their king!",
     "%rats% attacked from below, we could not manage."
   ],
@@ -205,9 +205,25 @@
     "We could do better if not %hero%. He distracted us."
   ],
 
+  "event_conflict": [
+    "Then %hero1% fought with %hero2% over something.",
+    "Then %hero2% fought with %hero1% over something.",
+    "Then %hero1% and %hero2% conflicted over place at the fire.",
+    "Then %hero2% and %hero1% conflicted over place at the fire.",
+    "Then %hero1% and %hero2% clashed over bad breath.",
+    "Then %hero2% and %hero1% clashed over bad breath."
+  ],
+  "event_sameskill": [
+    "In the evening, %hero1% talked to %hero2% about knife sharpening.",
+    "There was moment when %hero1% explained %hero2% approach for %monster%",
+    "I saw %hero1% and %hero2% argued about roping %monster%."
+  ],
+
+
   "the_beginning": [
     "@|italic type \"q\" if you don't want to hear the story. Progress with \"Enter\" |@",
     "One moonless night 12 strangers appeared at the door of Heroes Bar, Worchester.",
+    "\"Who are you?\" - asked the man by the counter.",
     "\"Oh mighty bartender, \" - they said, - \"help us rest and prepare to win that Sonesta hotels! And we will pay you generously.\"",
     "\"I will mix you a drink that will give you 12 dreams\" - said bartender. \"And in the end you will know the team that is best suited for that. Money first.\"",
     "They paid, they drank, and he went on:\nAs we are in fantasy bar, I send some of you to Paper Oracle first. It will tell you who you really are."
@@ -216,5 +232,11 @@
     "They woke up early, all in the same ward. Officer was kind and smiley.",
     "\"I don't know what you guys drank last night,\" - he said.\n\"I just know that sometimes it's hard to look each other in the eye after such team building parties.\"",
     "They paid their fine and went out."
+  ],
+  "who_are_we": [
+    "Hospitality professionals",
+    "Dragon slayers from the film",
+    "Motor gang",
+    "Office workers"
   ]
 }

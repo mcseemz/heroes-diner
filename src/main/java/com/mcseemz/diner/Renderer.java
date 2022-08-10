@@ -1,15 +1,12 @@
 package com.mcseemz.diner;
 
-import com.jakewharton.fliptables.FlipTable;
 import com.mcseemz.diner.model.Hero;
 import com.mcseemz.diner.model.Location;
-import com.mcseemz.diner.model.Trial;
 import lombok.extern.slf4j.Slf4j;
 import org.fusesource.jansi.Ansi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.text.BreakIterator;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -25,22 +22,6 @@ public class Renderer {
     private State state;
 
     private final int COL1_WIDTH = 85;
-
-
-    public String renderState() {
-        String output = FlipTable.of(new String[] {"Locations", "Roster"}, new String[][]{
-                {
-                        postProcess(renderLocation()),
-                        postProcess(renderRoster())
-                },
-                {
-                        postProcess(renderLatestMessage()),
-                        postProcess(renderStats())
-                }
-        });
-
-        return ansi().eraseScreen().toString() + output;
-    }
 
     public List<String> splitString(String string) {
         Pattern p = Pattern.compile("\\G\\s*(.{1,"+COL1_WIDTH+"})(?=\\s|$|\\|@)", Pattern.DOTALL);
@@ -120,6 +101,7 @@ public class Renderer {
         output = output.replaceAll("\\*(.+?)\\*","@|bold  $1 |@");
         output = output.replaceAll("_(.+?)_","@|italic,underline  $1 |@");
         output = output.replaceAll("%(.+?)%","@|bold,red,underline  $1 |@");
+        output = output.replaceAll(">(.+?)<","@|bold,blue  $1 |@");
         output = output.replaceAll("!!(.+?)!!","@|bold,red  $1 |@");
 
         //skill markup

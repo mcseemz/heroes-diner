@@ -2,13 +2,11 @@ package com.mcseemz.diner.model.adventure;
 
 import com.mcseemz.diner.model.Hero;
 import com.mcseemz.diner.model.Location;
-import com.mcseemz.diner.model.Trial;
 import com.mcseemz.diner.model.adventure.interfaces.EventAfter;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,7 +16,7 @@ import java.util.List;
 @Builder
 @Getter
 @AllArgsConstructor
-public class TeamworkEvent extends BaseEvent implements EventAfter {
+public class TeamworkEvent extends BaseEvent {
 
     Location location;
     List<Hero> team;
@@ -57,6 +55,7 @@ public class TeamworkEvent extends BaseEvent implements EventAfter {
         }
 
         //leader note
+        //todo should the leader report on himself?
         if (leaderHero != null && badHero != null) {
             //weak leader cannot identify bad actor
             switch (leaderHero.getPower().length()) {

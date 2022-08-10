@@ -44,7 +44,7 @@ public class State {
     ObjectMapper objectMapper = new ObjectMapper();
 
     /** what skills we have */
-    private String[] skills;
+    private HashMap<String,String[]> skills;
     private Trial[] trials;
     private Location[] locations;
     private HashMap<String,String[]> texts;
@@ -76,8 +76,6 @@ public class State {
     }
 
     public void newGame() throws IOException {
-        //make them modifiable
-        skills = objectMapper.readValue(resourceLoader.getResource("classpath:skill.json").getInputStream(), String[].class);
         trials = objectMapper.readValue(resourceLoader.getResource("classpath:trial.json").getInputStream(), Trial[].class);
         locations = objectMapper.readValue(resourceLoader.getResource("classpath:location.json").getInputStream(), Location[].class);
         for (Location location : locations) {   //map codes to Trial objects
@@ -90,13 +88,15 @@ public class State {
         //reading json as map, not a class
         TypeReference<HashMap<String,String[]>> typeRef = new TypeReference<>() {};
         texts = objectMapper.readValue(resourceLoader.getResource("classpath:text.json").getInputStream(), typeRef);
+        skills = objectMapper.readValue(resourceLoader.getResource("classpath:skill.json").getInputStream(), typeRef);
+
         //create heroes
         generateRoster();
 
         latestMessage = "@|italic type \"go\" and press Enter. Choose Paper Oracle |@ \n@|italic type \"help\" to see list of available commands|@";
         state = GAME_STATE.waiting;
 
-        log.debug("read {} skills", skills.length);
+        log.debug("read {} skills", skills.size());
     }
 
     /**
@@ -108,7 +108,7 @@ public class State {
     private void generateRoster() {
         List<Hero> heroes = new ArrayList<>();
 
-        for (String skill : skills) {
+        for (String skill : skills.keySet()) {
             for (int i = 0; i < 2; i++) {
                 Faker faker = new Faker();
                 heroes.add(Hero.builder().
@@ -156,6 +156,9 @@ public class State {
      */
     public void updateGameState(Location location, List<BaseEvent> events) {
         for (BaseEvent baseEvent : events) {
+            if (baseEvent == null) {
+                continue;
+            }
 
             for (HeroUpdateRecord update : baseEvent.getHeroUpdates()) {
                 Hero hero = update.getHero();

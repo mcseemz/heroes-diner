@@ -73,35 +73,6 @@ public class Team {
         }
     }
 
-    @ShellMethod(key = "team change", value = "Team management - replace ")
-    public void teamchange(@ShellOption(defaultValue="list") String command) {
-
-            ComponentFlow.ComponentFlowResult run = componentFlowBuilder.clone().reset()
-                    .withSingleItemSelector("hero1")
-                    .selectItems(state.getTeam().stream().collect(Collectors.toMap(Hero::getName, Hero::getName)))
-                    .and()
-                    .withSingleItemSelector("hero2")
-                    .selectItems(Arrays.stream(state.getRoster())
-                            .filter(hero -> !hero.isInTeam())
-                            .filter(hero -> !hero.isOut())
-                            .collect(Collectors.toMap(Hero::getName, Hero::getName)))
-                    .and()
-                    .build().run();
-
-            String result1 = run.getContext().get("hero1");
-            String result2 = run.getContext().get("hero2");
-            for (Hero hero : state.getRoster()) {
-                if (hero.getName().equals(result1)) {
-                    hero.setInTeam(false);
-                }
-                if (hero.getName().equals(result2)) {
-                    hero.setInTeam(true);
-                }
-            }
-
-        renderer.displayState();
-    }
-
     @ShellMethod(key = "team kick", value = "Team management - kick out person")
     public void teamkick(@ShellOption(defaultValue="list") String command) {
 
@@ -130,7 +101,7 @@ public class Team {
                 .selectItems(state.getTeam().stream().collect(Collectors.toMap(Hero::getName, Hero::getName)))
                 .and()
                 .withSingleItemSelector("skill")
-                .selectItems(Arrays.stream(state.getSkills())
+                .selectItems(state.getSkills().keySet().stream()
                         .collect(Collectors.toMap(x -> x, x -> x)))
                 .and()
                 .build().run();
@@ -142,7 +113,60 @@ public class Team {
                 SkillSuggestion skillFound = hero.getSuggestedSkills().stream()
                         .filter(x -> x.getCode().equals(skill)).findFirst().orElse(null);
                 if (skillFound == null)
-                hero.getSuggestedSkills().add(SkillSuggestion.builder().code(skill).certainty(SkillSuggestion.Certainty.unsure).build());
+                    hero.getSuggestedSkills().add(SkillSuggestion.builder().code(skill).certainty(SkillSuggestion.Certainty.unsure).build());
+            }
+        }
+
+        renderer.displayState();
+    }
+
+
+    @ShellMethod(key = "team set", value = "Team management - adjust team")
+    public void teamedit(@ShellOption(defaultValue="list") String command) {
+
+        List<String> result = new ArrayList<>();
+        while (true) {
+            ComponentFlow.ComponentFlowResult run = componentFlowBuilder.clone().reset()
+                    .withMultiItemSelector("heroes")
+                    .max(12)
+                    .selectItems(Arrays.stream(state.getRoster())
+                            .map(x -> new SelectItem() {
+                                @Override
+                                public String name() {
+                                    return x.getName();
+                                }
+
+                                @Override
+                                public String item() {
+                                    return x.getName();
+                                }
+
+                                @Override
+                                public boolean enabled() {
+                                    return !x.isOut() && x.getDaysToRest() == 0;
+                                }
+
+                                @Override
+                                public boolean selected() {
+                                    return x.isInTeam();
+                                }
+                            })
+
+                            .collect(Collectors.toList()))
+                    .and()
+                    .build().run();
+            result = run.getContext().get("heroes");
+            if (result.size() >5 || result.isEmpty()) {
+                System.out.println(ansi().render("@|italic Invalid team size. Should not be empty, should not be more than 5 |@").newline());
+            }
+            else break;
+        }
+        List<Hero> team = state.getTeam();
+        team.forEach(x -> x.setInTeam(false));
+
+        for (Hero hero : state.getRoster()) {
+            if (result.contains(hero.getName())) {
+                hero.setInTeam(true);
             }
         }
 

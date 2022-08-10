@@ -49,7 +49,7 @@ public class Hero {
         }
 
         builder.append(this.getName()).append(" ").append(this.power);
-        if (this.getDaysToRest() > 0) builder.append(" (rest: !").append(this.getDaysToRest()).append("!)");
+        if (this.getDaysToRest() > 0) builder.append(" (rest: !!").append(this.getDaysToRest()).append("!!)");
 
         builder.append(getSuggestedSkills().size() > 0 ? " : " : "");
         for (SkillSuggestion suggestedSkill : this.getSuggestedSkills()) {

@@ -4,7 +4,9 @@ import com.mcseemz.diner.model.Hero;
 import com.mcseemz.diner.model.Location;
 import com.mcseemz.diner.model.SkillSuggestion;
 import com.mcseemz.diner.model.adventure.BaseEvent;
+import com.mcseemz.diner.model.adventure.ConflictEvent;
 import com.mcseemz.diner.model.adventure.HeroUpdateRecord;
+import com.mcseemz.diner.model.adventure.SameskillEvent;
 import com.mcseemz.diner.model.adventure.TeamworkEvent;
 import com.mcseemz.diner.model.adventure.TrialEvent;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,8 +55,8 @@ public class Compiler {
 
                 //post_process
                 if (hero != null) {
-                    outcomeVal = outcomeVal.replace("%hero%", "%" + hero.getName() + "%");
-                    enemyVal = enemyVal.replace("%hero%", "%"+hero.getName()+"%");
+                    outcomeVal = outcomeVal.replace("%hero%", "*" + hero.getName() + "*");
+                    enemyVal = enemyVal.replace("%hero%", "*"+hero.getName()+"*");
                 }
 
                 sb.append(outcomeVal).append(" ").append(enemyVal).append("\n");
@@ -81,7 +83,7 @@ public class Compiler {
                         if (bonus.startsWith("map_")) { //resolve map
                             String locname = bonus.split("_")[1];
                             Location location = Arrays.stream(state.getLocations()).filter(x -> x.getCode().equals(locname)).findFirst().orElseThrow();
-                            bonusVal = bonusVal.replace("%location%", "%" + location.getName() + "%");
+                            bonusVal = bonusVal.replace("%location%", ">" + location.getName() + "<");
                         }
 
                         sb.append(bonusVal).append(" ");
@@ -104,7 +106,7 @@ public class Compiler {
                                 resource += "_hero";
                             }
 
-                            String note = getRandomLine(resource).replace("%hero%", hero != null ? hero.getName() : "");
+                            String note = getRandomLine(resource).replace("%hero%", hero != null ? ("*" + hero.getName() + "*") : "");
                             sb.append("(leader): ").append(note).append("\n");
                             break;
                         }
@@ -115,7 +117,38 @@ public class Compiler {
 
 
             }
-            else {
+            else
+            if (baseEvent instanceof ConflictEvent) {
+                ConflictEvent event = (ConflictEvent) baseEvent;
+                //check if it was attempted by hero, and if failed
+                Hero good = event.getGoodActor();
+                Hero bad = event.getBadActor();
+
+                String resource = "event_conflict";
+                String note = getRandomLine(resource)
+                        .replace("%hero1%", "*" + good.getName() + "*")
+                        .replace("%hero2%", "*" + bad.getName() + "*");
+                sb.append(note).append("\n");
+            }
+            else
+            if (baseEvent instanceof SameskillEvent) {
+                SameskillEvent event = (SameskillEvent) baseEvent;
+                //check if it was attempted by hero, and if failed
+                Hero hero1 = event.getHero1();
+                Hero hero2 = event.getHero2();
+
+                String monster = getRandomMonster(hero1.getSkill());
+                String resource = "event_sameskill";
+                String note = getRandomLine(resource)
+                        .replace("%hero1%", "*" + hero1.getName() + "*")
+                        .replace("%hero2%", "*" + hero2.getName() + "*")
+                        .replace("%monster%", monster);
+                sb.append(note).append("\n");
+            }
+            else
+            if (baseEvent == null) {
+                //do nothing
+            } else {
                 throw new RuntimeException("unexpected event type :" + baseEvent.getClass().getSimpleName());
             }
             isFirst = false;
@@ -129,6 +162,15 @@ public class Compiler {
         String[] bonuses = state.getTexts().get(resource);
         if (bonuses == null) {
             throw new RuntimeException("no resource found for :" + resource);
+        }
+        return bonuses[random.nextInt(bonuses.length)];
+    }
+    /** get random line from resource */
+
+    private String getRandomMonster(String skill) {
+        String[] bonuses = state.getSkills().get(skill);
+        if (bonuses == null) {
+            throw new RuntimeException("no monster found for :" + skill);
         }
         return bonuses[random.nextInt(bonuses.length)];
     }

@@ -36,4 +36,8 @@ public abstract class BaseEvent {
         bad_actor   //we have problem with the team
     }
 
+    public int getProbability() {
+        return 100;
+    }
+
 }

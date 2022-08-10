@@ -1,8 +1,20 @@
-[
-  "insects",
-  "wildlife",
-  "undead",
-  "flyers",
-  "humans",
-  "leadership"
-]
+{
+  "insects": [
+    "ants", "spiders", "termites"
+  ],
+  "wildlife": [
+    "rats", "lizards","bears"," wild cats"
+  ],
+  "undead": [
+    "zombies","ghosts","vampires"
+  ],
+  "flyers": [
+    "bats", "manticores", "dragons"
+  ],
+  "humans": [
+    "thugs", "assassins", "wizards"
+  ],
+  "leadership": [
+    "minibosses", "C-levels", "interns"
+  ]
+}
