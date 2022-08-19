@@ -52,6 +52,14 @@ public class TeamworkEvent extends BaseEvent {
                     }
                 }
             }
+
+//            alternatives for powerups
+//            for (Hero hero : team) {
+//                if (hero.isActed()) {
+//                    heroUpdates.add(HeroUpdateRecord.builder()
+//                            .hero(hero).type(PropertyType.powerup).value("*").build());
+//                }
+//            }
         }
 
         //leader note

@@ -41,7 +41,8 @@ public class Location {
     /** list of skills required to pass this location. Taken from trials */
     Set<SkillSuggestion> skillsKnown = new HashSet<>();
 
-    public String getDifficulty(State state) {
+    @JsonIgnore
+    public String getDifficulty() {
         String hardest = "!";
         for (Trial trial : getTrialsLoaded()) {
             if (trial.getDifficulty().compareTo(hardest) > 0) {
@@ -52,6 +53,7 @@ public class Location {
         return hardest;
     }
 
+    @JsonIgnore
     public Set<String> getSkillsRequired() {
         Set<String> skillsRequired = new HashSet<>();
         for (Trial trial : getTrialsLoaded()) {
@@ -61,9 +63,10 @@ public class Location {
     }
 
     public void render(StringBuilder builder, State state) {
-        String difficulty = getDifficulty(state);
+        String difficulty = getDifficulty();
 
-        builder.append(isPassed() ? ansi().fg(Ansi.Color.GREEN).a("+ ").reset() : "  ").append(getName())
+        builder.append(" ")
+                .append(isPassed() ? "$" + getName() + "$" : " " + getName())
                 .append(" ").append(difficulty)
                 .append(getSkillsKnown().size() > 0 ? " : " : "").append(getSkillsKnown().stream().sorted().map(SkillSuggestion::toString).collect(Collectors.joining(" ")))
                 .append("\n");

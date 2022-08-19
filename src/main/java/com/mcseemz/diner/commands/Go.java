@@ -20,6 +20,8 @@ import org.springframework.shell.standard.ShellMethodAvailability;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 import static org.fusesource.jansi.Ansi.ansi;
@@ -43,24 +45,28 @@ public class Go {
     @Lazy
     LineReader lineReader;
 
+    final String back = "<- Back";
+
     @SneakyThrows
-    @ShellMethod(value = "Adventure start")
+    @ShellMethod(value = "Visit location")
     public void go() {
+
+        Map<String, String> locs = Arrays.stream(state.getLocations())
+                .filter(x -> x.isVisible() && !x.isPassed())    // || !x.isOnlyonce())
+                .collect(Collectors.toMap(Location::getName, Location::getCode));
+        locs.put(back, back);
+
+        locs = new TreeMap<>(locs);
 
         ComponentFlow.ComponentFlowResult run = componentFlowBuilder.clone().reset()
                 .withSingleItemSelector("location")
-                .selectItems(Arrays.stream(state.getLocations()).filter(x -> x.isVisible() && (!x.isPassed() || !x.isOnlyonce()) )
-                        .collect(Collectors.toMap(Location::getName, Location::getCode)))
+                .selectItems(locs)
                 .and()
-//                .withConfirmationInput("confirm")
-//                .defaultValue(true)
-//                .name("Are you sure you want to run this location with this team")
-//                .and()
                 .build().run();
 
-//        Boolean confirmed = run.getContext().get("confirm");
-//        if (confirmed) {
-            String myLocation = run.getContext().get("location");
+        String myLocation = run.getContext().get("location");
+
+        if (!myLocation.equals(back)) {
             Location location = Arrays.stream(state.getLocations()).filter(x -> x.getCode().equals(myLocation)).findFirst().orElseThrow();
             List<Hero> team = Arrays.stream(state.getRoster()).filter(Hero::isInTeam).collect(Collectors.toList());
 
@@ -72,10 +78,8 @@ public class Go {
             state.setLatestMessage(report);
             //update heroes with results when required
             state.updateGameState(location, result);
-//        }
-
+        }
         renderer.displayState();
-//        return ansi().cursorUp(37).eraseScreen(Ansi.Erase.FORWARD).render(renderer.renderState()).toString();
 
         if (state.getState() == State.GAME_STATE.passed) {
             System.out.print(ansi().cursor(1, 1).eraseScreen(Ansi.Erase.FORWARD));

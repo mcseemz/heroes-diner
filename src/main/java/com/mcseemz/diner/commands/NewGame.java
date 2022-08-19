@@ -55,7 +55,7 @@ public class NewGame {
                 ComponentFlow.ComponentFlowResult run = componentFlowBuilder.clone().reset()
                         .withSingleItemSelector("who_are_we")
                         .selectItems(Arrays.stream(state.getTexts().get("who_are_we"))
-                                .collect(Collectors.toMap(x -> x, x -> x)))
+                                .collect(Collectors.toMap(x -> x.split("_")[0], x -> x.split("_")[1])))
                         .and()
                         .build().run();
                 System.out.println();

@@ -21,7 +21,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 import static org.fusesource.jansi.Ansi.ansi;
@@ -38,42 +40,44 @@ public class Team {
     @Autowired
     private ComponentFlow.Builder componentFlowBuilder;
 
+    final String back = "<- Back";
+
     @ShellMethod(key = "team", value = "Team management - list")
     public void team(@ShellOption(defaultValue="list") String command) {
         StringBuilder builder = new StringBuilder();
         Arrays.stream(state.getRoster()).filter(Hero::isInTeam).forEachOrdered( hero -> hero.render(builder) );
         System.out.println(ansi().render(Renderer.postProcess(builder.toString())));
     }
-    @ShellMethod(key = "team add", value = "Team management - add ")
-    public void teamadd(@ShellOption(defaultValue="list") String command) {
-        int teamSize = state.getTeam().size();
+//    @ShellMethod(key = "team add", value = "Team management - add ")
+//    public void teamadd(@ShellOption(defaultValue="list") String command) {
+//        int teamSize = state.getTeam().size();
+//
+//        if (teamSize < 5) {
+//            ComponentFlow.ComponentFlowResult run = componentFlowBuilder.clone().reset()
+//                    .withSingleItemSelector("hero")
+//                    .selectItems(Arrays.stream(state.getRoster())
+//                            .filter(hero -> !hero.isInTeam())
+//                            .filter(hero -> !hero.isOut())
+//                            .collect(Collectors.toMap(Hero::getName, Hero::getName)))
+//                    .and()
+//                    .build().run();
+//
+//            String result = run.getContext().get("hero");
+//            for (Hero hero : state.getRoster()) {
+//                if (hero.getName().equals(result)) {
+//                    hero.setInTeam(true);
+//                }
+//            }
+//        }
+//
+//        renderer.displayState();
+//
+//        if (teamSize > 4) {
+//            System.out.println(ansi().fgRed().a("Team is at max now").reset());
+//        }
+//    }
 
-        if (teamSize < 5) {
-            ComponentFlow.ComponentFlowResult run = componentFlowBuilder.clone().reset()
-                    .withSingleItemSelector("hero")
-                    .selectItems(Arrays.stream(state.getRoster())
-                            .filter(hero -> !hero.isInTeam())
-                            .filter(hero -> !hero.isOut())
-                            .collect(Collectors.toMap(Hero::getName, Hero::getName)))
-                    .and()
-                    .build().run();
-
-            String result = run.getContext().get("hero");
-            for (Hero hero : state.getRoster()) {
-                if (hero.getName().equals(result)) {
-                    hero.setInTeam(true);
-                }
-            }
-        }
-
-        renderer.displayState();
-
-        if (teamSize > 4) {
-            System.out.println(ansi().fgRed().a("Team is at max now").reset());
-        }
-    }
-
-    @ShellMethod(key = "team kick", value = "Team management - kick out person")
+    @ShellMethod(key = "team kick", value = "Team management - kick out person forever")
     public void teamkick(@ShellOption(defaultValue="list") String command) {
 
         ComponentFlow.ComponentFlowResult run = componentFlowBuilder.clone().reset()
@@ -96,13 +100,24 @@ public class Team {
     @ShellMethod(key = "team skill", value = "Team management - suggest skill")
     public void teamsuggest(@ShellOption(defaultValue="list") String command) {
 
+        Map<String, String> skills = state.getSkills().keySet().stream()
+                .collect(Collectors.toMap(x -> x, x -> x));
+        skills.put(back, back);
+
+        Map<String, String> heroes = state.getTeam().stream().collect(Collectors.toMap(Hero::getName, Hero::getName));
+
+        skills = new TreeMap<>(skills);
+
+
         ComponentFlow.ComponentFlowResult run = componentFlowBuilder.clone().reset()
                 .withSingleItemSelector("hero")
-                .selectItems(state.getTeam().stream().collect(Collectors.toMap(Hero::getName, Hero::getName)))
+                .selectItems(heroes)
+                .max(10)
+//                .next(x -> x.getResultItem().get().getName().equals(back) ? null : "skill")
                 .and()
                 .withSingleItemSelector("skill")
-                .selectItems(state.getSkills().keySet().stream()
-                        .collect(Collectors.toMap(x -> x, x -> x)))
+                .selectItems(skills)
+                .max(10)
                 .and()
                 .build().run();
 
@@ -174,7 +189,7 @@ public class Team {
     }
 
 
-    @ShellMethod(key = "team swap", value = "Team management - swap ")
+    @ShellMethod(key = "team swap", value = "Team management - swap to random members")
     public void teamswap(@ShellOption(defaultValue="list") String command) {
         List<Hero> roster = new ArrayList<>(Arrays.asList(state.getRoster()));
         List<Hero> team = state.getTeam();

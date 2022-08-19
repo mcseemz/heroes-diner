@@ -83,19 +83,150 @@
       "min": 2,
       "task": "oracle",
       "bonus": [
-        "hint_target"
+        "hint_target",
+        "map_crossroads"
       ]
     },
     "visible": false,
     "onlyonce": true
   },
   {
+    "code": "crossroads",
+    "name": "Crossroads stone",
+    "description": "It is always hard to decide which path to choose.",
+    "trials": [
+      "bandits",
+      "goblins"
+    ],
+    "teamwork": {
+      "min": 3,
+      "task": "bomb",
+      "bonus": [
+        "powerups",
+        "map_treecastle",
+        "map_labyrinth",
+        "map_porch"
+      ]
+    },
+    "visible": false
+  },
+  {
+    "code": "treecastle",
+    "name": "Castle on a tree",
+    "description": "Everything up there, even drawbridge",
+    "trials": [
+      "pidgeons",
+      "butterflies"
+    ],
+    "teamwork": {
+      "min": 3,
+      "task": "bomb",
+      "bonus": [
+        "powerups"
+      ]
+    },
+    "visible": false
+  },
+  {
+    "code": "labyrinth",
+    "name": "Forgotten Labyrinth",
+    "description": "Right from the imagination of Guillermo Del Toro",
+    "trials": [
+      "keepers",
+      "snakes",
+      "appleghost"
+    ],
+    "teamwork": {
+      "min": 3,
+      "task": "bomb",
+      "bonus": [
+        "powerups"
+      ]
+    },
+    "visible": false
+  },
+  {
+    "code": "porch",
+    "name": "Porch of revelations.",
+    "description": "When you sit there you get some insights. Squirrels included.",
+    "trials": [
+      "porchspirit",
+      "squirrel"
+    ],
+    "teamwork": {
+      "min": 3,
+      "task": "porch",
+      "bonus": [
+        "powerups",
+        "map_MarbleOracle"
+      ]
+    },
+    "visible": false
+  },
+  {
+    "code": "MarbleOracle",
+    "name": "Marble Oracle",
+    "description": "Grotesque statue cut from marble and magic.",
+    "trials": [
+    ],
+    "teamwork": {
+      "leader": true,
+      "min": 4,
+      "task": "oracle",
+      "bonus": [
+        "hint_target",
+        "map_customs",
+        "map_pit"
+      ]
+    },
+    "visible": false,
+    "onlyonce": true
+  },
+  {
+    "code": "customs",
+    "name": "Old customs",
+    "description": "Long time ago this place was alive. Now not so much.",
+    "trials": [
+      "oldofficer",
+      "migrants",
+      "roaches"
+    ],
+    "teamwork": {
+      "min": 3,
+      "task": "bomb",
+      "bonus": [
+        "powerups"
+      ]
+    },
+    "visible": false
+  },
+  {
+    "code": "pit",
+    "name": "Bottomless pit",
+    "description": "Something is looking to you from the bottomless pit.",
+    "trials": [
+      "crows",
+      "eyeinthesky",
+      "speleologists"
+    ],
+    "teamwork": {
+      "min": 3,
+      "task": "bomb",
+      "bonus": [
+        "powerups"
+      ]
+    },
+    "visible": false
+  },
+  {
     "code": "target",
     "name": "Drakula's Castle",
     "description": "That is the target! !!Pass it!!!",
     "trials": [
-      "bats",
-      "ants"
+      "batsboss",
+      "vampireboss",
+      "servants",
+      "bears"
     ],
     "teamwork": {
       "leader": true,

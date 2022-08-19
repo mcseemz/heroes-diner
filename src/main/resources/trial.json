@@ -25,8 +25,122 @@
   },
   {
     "code": "thugs",
-    "description": "Squatters, but mean ones. Unpleasant",
+    "description": "Squatters, but mean ones. Unpleasant.",
     "skill": "humans",
     "difficulty": "*"
+  },
+  {
+    "code": "bandits",
+    "description": "Those guys can wield a knife. And fork!",
+    "skill": "humans",
+    "difficulty": "**"
+  },
+  {
+    "code": "goblins",
+    "description": "Dirty ugly goblins. As usual.",
+    "skill": "wildlife",
+    "difficulty": "**"
+  },
+  {
+    "code": "pidgeons",
+    "description": "Red-fang pidgeons. Never saw them before.",
+    "skill": "flyers",
+    "difficulty": "**"
+  },
+  {
+    "code": "butterflies",
+    "description": "Beautiful butterflies straight out of hell.",
+    "skill": "insects",
+    "difficulty": "*"
+  },
+  {
+    "code": "keepers",
+    "description": "Garden keepers. Very caring.",
+    "skill": "humans",
+    "difficulty": "**"
+  },
+  {
+    "code": "snakes",
+    "description": "Sock-tailed snakes are most smelling species",
+    "skill": "wildlife",
+    "difficulty": "**"
+  },
+  {
+    "code": "appleghost",
+    "description": "You think ghost of an apple is friendly?",
+    "skill": "undead",
+    "difficulty": "*"
+  },
+  {
+    "code": "porchspirit",
+    "description": "Spirit of the Porch wants the Porch all for itself",
+    "skill": "undead",
+    "difficulty": "**"
+  },
+  {
+    "code": "squirrel",
+    "description": "One mad squirrel worth an army.",
+    "skill": "wildlife",
+    "difficulty": "***"
+  },
+  {
+    "code": "oldofficer",
+    "description": "Old customs officer. Too old to be alive.",
+    "skill": "undead",
+    "difficulty": "**"
+  },
+  {
+    "code": "migrants",
+    "description": "Illegal migrants with all their migration fury",
+    "skill": "humans",
+    "difficulty": "**"
+  },
+  {
+    "code": "roaches",
+    "description": "Radioactive roaches. You can see them in the dark. Swarm of them",
+    "skill": "insects",
+    "difficulty": "**"
+  },
+  {
+    "code": "crows",
+    "description": "Messenger crows can defend their messages",
+    "skill": "flyers",
+    "difficulty": "***"
+  },
+  {
+    "code": "eyeinthesky",
+    "description": "Curious eye in the sky. Alone",
+    "skill": "undead",
+    "difficulty": "***"
+  },
+  {
+    "code": "speleologists",
+    "description": "Those speleologists got lost a while ago, so they are hungry.",
+    "skill": "humans",
+    "difficulty": "***"
+  },
+  {
+    "code": "batsboss",
+    "description": "Bulletproof bats are hard to find. Harder to kill.",
+    "skill": "flyers",
+    "difficulty": "****"
+  },
+  {
+    "code": "vampireboss",
+    "description": "Vampire Count, Dracula or not. Who cares?",
+    "skill": "undead",
+    "difficulty": "****"
+  },
+  {
+    "code": "servants",
+    "description": "Servants and cleaners, faithful ones.",
+    "skill": "humans",
+    "difficulty": "****"
+  },
+  {
+    "code": "bears",
+    "description": "Mutant bears, the last time you heard of them.",
+    "skill": "wildlife",
+    "difficulty": "****"
   }
 ]

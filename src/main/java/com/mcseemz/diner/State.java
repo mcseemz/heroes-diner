@@ -1,5 +1,7 @@
 package com.mcseemz.diner;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -19,6 +21,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -39,8 +44,10 @@ import java.util.stream.Collectors;
 public class State {
 
     @Autowired
+    @JsonIgnore
     private ResourceLoader resourceLoader;
 
+    @JsonIgnore
     ObjectMapper objectMapper = new ObjectMapper();
 
     /** what skills we have */
@@ -247,6 +254,39 @@ public class State {
 
         if (location.isPassed() && location.isTarget()) {
             state = GAME_STATE.passed;
+        }
+    }
+
+    public void save() throws IOException {
+        try (FileWriter fileWriter = new FileWriter("./savegame.json")){
+            fileWriter.write(objectMapper.writeValueAsString(this));
+        }
+    }
+    public void load() throws IOException {
+//        objectMapper.configure(DeserializationFeature.USE_JAVA_ARRAY_FOR_JSON_ARRAY, true);
+
+        try (FileReader fileReader = new FileReader("./savegame.json")) {
+            State newState = objectMapper.readValue(fileReader, State.class);
+
+            this.locations = newState.getLocations();
+            this.trials = newState.getTrials();
+            this.roster = newState.getRoster();
+            this.skills = newState.getSkills();
+            if (newState.getTexts() != null) {
+                this.texts = newState.getTexts();
+            }
+            this.turn = newState.getTurn();
+            this.latestTeamwork = newState.getLatestTeamwork();
+            this.latestMessage = newState.getLatestMessage();
+
+            this.state = newState.getState();
+
+            for (Location location : locations) {   //map codes to Trial objects
+                location.setTrialsLoaded(Arrays.stream(location.getTrials()).map(ltr ->
+                                Arrays.stream(trials).filter(tr -> tr.getCode().equals(ltr)).findFirst().orElseThrow()
+                        )
+                        .collect(Collectors.toList()));
+            }
         }
     }
 

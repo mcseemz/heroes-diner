@@ -1,14 +1,19 @@
 package com.mcseemz.diner.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 /**
  * skills and their probability
  */
 @Builder
-@Getter
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode
 public class SkillSuggestion implements Comparable<SkillSuggestion> {
 

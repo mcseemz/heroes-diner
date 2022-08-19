@@ -55,8 +55,8 @@ public class Compiler {
 
                 //post_process
                 if (hero != null) {
-                    outcomeVal = outcomeVal.replace("%hero%", "*" + hero.getName() + "*");
-                    enemyVal = enemyVal.replace("%hero%", "*"+hero.getName()+"*");
+                    outcomeVal = outcomeVal.replace("%hero%", "#" + hero.getName() + "#");
+                    enemyVal = enemyVal.replace("%hero%", "#"+hero.getName()+"#");
                 }
 
                 sb.append(outcomeVal).append(" ").append(enemyVal).append("\n");
@@ -106,7 +106,7 @@ public class Compiler {
                                 resource += "_hero";
                             }
 
-                            String note = getRandomLine(resource).replace("%hero%", hero != null ? ("*" + hero.getName() + "*") : "");
+                            String note = getRandomLine(resource).replace("%hero%", hero != null ? ("#" + hero.getName() + "#") : "");
                             sb.append("(leader): ").append(note).append("\n");
                             break;
                         }
@@ -126,8 +126,8 @@ public class Compiler {
 
                 String resource = "event_conflict";
                 String note = getRandomLine(resource)
-                        .replace("%hero1%", "*" + good.getName() + "*")
-                        .replace("%hero2%", "*" + bad.getName() + "*");
+                        .replace("%hero1%", "#" + good.getName() + "#")
+                        .replace("%hero2%", "#" + bad.getName() + "#");
                 sb.append(note).append("\n");
             }
             else
@@ -140,8 +140,8 @@ public class Compiler {
                 String monster = getRandomMonster(hero1.getSkill());
                 String resource = "event_sameskill";
                 String note = getRandomLine(resource)
-                        .replace("%hero1%", "*" + hero1.getName() + "*")
-                        .replace("%hero2%", "*" + hero2.getName() + "*")
+                        .replace("%hero1%", "#" + hero1.getName() + "#")
+                        .replace("%hero2%", "#" + hero2.getName() + "#")
                         .replace("%monster%", monster);
                 sb.append(note).append("\n");
             }

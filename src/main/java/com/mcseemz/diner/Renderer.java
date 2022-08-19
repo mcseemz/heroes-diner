@@ -98,11 +98,12 @@ public class Renderer {
     }
 
     public static String postProcess(String output) {
-        output = output.replaceAll("\\*(.+?)\\*","@|bold  $1 |@");
+        output = output.replaceAll("#(.+?)#","@|bold  $1 |@");
         output = output.replaceAll("_(.+?)_","@|italic,underline  $1 |@");
         output = output.replaceAll("%(.+?)%","@|bold,red,underline  $1 |@");
         output = output.replaceAll(">(.+?)<","@|bold,blue  $1 |@");
         output = output.replaceAll("!!(.+?)!!","@|bold,red  $1 |@");
+        output = output.replaceAll("\\$(.+?)\\$","@|bold,green  $1 |@");
 
         //skill markup
         output = output.replaceAll("\\+(\\S+?)\\+","@|green  +$1 |@");
