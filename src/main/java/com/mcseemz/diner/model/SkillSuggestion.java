@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 /**
@@ -31,7 +30,8 @@ public class SkillSuggestion implements Comparable<SkillSuggestion> {
         no_data,
         found,  //skill present
         not_found,  //skill not present
-        unsure, // maybe present
+        unsure_yes, // maybe present
+        unsure_no, // maybe not present
     }
 
     @Override
@@ -40,7 +40,8 @@ public class SkillSuggestion implements Comparable<SkillSuggestion> {
             case no_data: return "." + code + ".";
             case found: return  "+" + code + "+";
             case not_found: return "-" + code + "-";
-            case unsure: return "?" + code + "?";
+            case unsure_yes: return "?+" + code + "?";
+            case unsure_no: return "?-" + code + "?";
         }
 
         throw new RuntimeException("Skill with unknown certainty: " + certainty);

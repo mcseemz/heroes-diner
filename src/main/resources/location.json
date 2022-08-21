@@ -42,8 +42,7 @@
     "name": "Mama's kitchen",
     "description": "Strange name for a hot springs of unknown nature.",
     "trials": [
-      "bats",
-      "ants"
+      "bats"
     ],
     "teamwork": {
       "min": 2,
@@ -115,8 +114,7 @@
     "name": "Castle on a tree",
     "description": "Everything up there, even drawbridge",
     "trials": [
-      "pidgeons",
-      "butterflies"
+      "pidgeons"
     ],
     "teamwork": {
       "min": 3,
@@ -188,8 +186,7 @@
     "description": "Long time ago this place was alive. Now not so much.",
     "trials": [
       "oldofficer",
-      "migrants",
-      "roaches"
+      "migrants"
     ],
     "teamwork": {
       "min": 3,

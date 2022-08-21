@@ -24,7 +24,7 @@ public class Renderer {
     private final int COL1_WIDTH = 85;
 
     public List<String> splitString(String string) {
-        Pattern p = Pattern.compile("\\G\\s*(.{1,"+COL1_WIDTH+"})(?=\\s|$|\\|@)", Pattern.DOTALL);
+        Pattern p = Pattern.compile("\\G\\s*(.{1,"+COL1_WIDTH+"})(?=\\s|$)", Pattern.DOTALL); //|\|@
         Matcher m = p.matcher(string);
 
         List<String> processed = new ArrayList<>();
@@ -36,18 +36,22 @@ public class Renderer {
         for (String str : processed) {
             log.debug("processed string: {}", str);
 
-            String target = str;
+            if (!state.isEmpty() && str.trim().startsWith("|@")) {  //remove empty colors in the beginning of the string
+                state = "";
+            }
+
+            String target = (state.isEmpty() ? state : state + " " ) + str.replaceAll("^\\|@","");
+            state = "";
 
             if (str.lastIndexOf("|@") < str.lastIndexOf("@|") && str.lastIndexOf("@|") >= 0) {
-                 target = str + "|@";
-            }
-            if ((!str.contains("@|") || str.indexOf("@|") > str.indexOf("|@")) && str.contains("|@")) {
-                target = state + " " + str;
-            }
-
-            //update state at the end
-            if (str.lastIndexOf("@|") >= 0) {
-                state = str.substring(str.lastIndexOf("@|"), str.indexOf(" ", str.lastIndexOf("@|")));
+                int idx = str.trim().indexOf(" ", str.lastIndexOf("@|"));
+                if (idx < 0) { //no last space
+                    state = str.substring(str.lastIndexOf("@|"));
+                    target = str.substring(0, str.lastIndexOf("@|"));
+                } else {
+                    target = str + "|@";
+                    state = str.substring(str.lastIndexOf("@|"), idx);
+                }
             }
 
             log.debug("target string: {}, state: {}", target, state);
@@ -141,9 +145,8 @@ public class Renderer {
         StringBuilder builder = new StringBuilder().append("Turn: ").append(state.getTurn()).append("\n")
                 .append("Locations: ").append(Arrays.stream(state.getLocations()).filter(Location::isPassed).count()).append("\n");
 
-        if (state.getLatestTeamwork() >= 0) {
-            builder.append("Latest teamwork: ").append(state.getLatestTeamwork()).append("\n");
-        }
+        builder.append("Latest teamwork: ").append(state.getLatestTeamwork()).append("   ("+state.getLatestTeamworkChange()+")").append("\n");
+        builder.append("Powerups: ").append(state.getPowerups()).append("\n");
 
         return postProcess(builder.toString());
     }

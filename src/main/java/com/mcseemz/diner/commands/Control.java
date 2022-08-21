@@ -57,7 +57,7 @@ public class Control {
     public void load() throws IOException {
         state.load();
         renderer.displayState();
-        System.out.println("Game loaded");
+        System.out.println(ansi().render("@|italic Game loaded |@").reset());
     }
 
     public Availability goAvailability() {
