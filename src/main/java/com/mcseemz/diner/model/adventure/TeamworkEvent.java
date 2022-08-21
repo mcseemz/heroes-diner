@@ -33,6 +33,8 @@ public class TeamworkEvent extends BaseEvent {
         Hero badHero = null;
         Hero leaderHero = null;
 
+        location.setPassed(true);    //mark as passed anyway
+
         //leader adds to teamwork
         for (Hero hero : team) {
             teamWork += hero.getTeamWork();
@@ -46,20 +48,23 @@ public class TeamworkEvent extends BaseEvent {
             //update stats for powerups
             for (String bonus : location.getTeamwork().getBonus()) {
                 if (bonus.equals("powerups")) {
-                    for (Hero hero : team) {
-                        heroUpdates.add(HeroUpdateRecord.builder()
-                                .hero(hero).type(PropertyType.powerup).value("*").build());
-                    }
+                    heroUpdates.add(HeroUpdateRecord.builder()
+                            .hero(null).type(PropertyType.powerup).value(1).build());
+
+//                    for (Hero hero : team) {
+//                        heroUpdates.add(HeroUpdateRecord.builder()
+//                                .hero(hero).type(PropertyType.powerup).value("*").build());
+//                    }
                 }
             }
+        }
 
-//            alternatives for powerups
-//            for (Hero hero : team) {
-//                if (hero.isActed()) {
-//                    heroUpdates.add(HeroUpdateRecord.builder()
-//                            .hero(hero).type(PropertyType.powerup).value("*").build());
-//                }
-//            }
+        //anyway powerups for participated heroes
+        for (Hero hero : team) {
+            if (hero.isActed()) {
+                heroUpdates.add(HeroUpdateRecord.builder()
+                        .hero(hero).type(PropertyType.powerup).value(1).build());
+            }
         }
 
         //leader note

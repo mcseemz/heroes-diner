@@ -1,9 +1,7 @@
 package com.mcseemz.diner;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.javafaker.Faker;
 import com.mcseemz.diner.model.Hero;
@@ -17,11 +15,11 @@ import com.mcseemz.diner.model.adventure.TrialEvent;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -31,7 +29,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -62,17 +59,26 @@ public class State {
     /** current turn */
     private int turn = 0;
 
-    /** current stae of the game */
+    /** unmber of powerups team has */
+    @Setter
+    private int powerups = 0;
 
+
+
+    /** current stae of the game */
     private GAME_STATE state = GAME_STATE.idle;
 
     /** latest message in the game, including reports and pre-recorded */
     @Setter
     private String latestMessage;
 
+    /** how teamwork changed this time */
+    @Setter
+    private String latestTeamworkChange = "no change";
+
     /** the latest teamwork that happened on a location */
     @Setter
-    private int latestTeamwork = -1;
+    private int latestTeamwork = 0;
 
     /** what state the game can be in */
     public enum GAME_STATE {
@@ -125,7 +131,7 @@ public class State {
                         .isOut(false)
                         .power("*")
                         .suggestedSkills(new HashSet<>())
-                        .teamWork((int) Math.floor(Math.random() + 0.7))    //increase chance of teamwork
+                        .teamWork(i)
                         .skill(skill)
                         .build());
             }
@@ -134,14 +140,13 @@ public class State {
         Collections.shuffle(heroes);
 
         //let's set 2 heros with negative attitude
-        String  skill1 = heroes.get(0).getSkill();
-        heroes.get(0).setTeamWork(heroes.get(0).getTeamWork() * -1);
-
-        //we have only 2 of each kind, so it's enough to make one check for next hero
-        if (heroes.get(1).getSkill().equals(skill1)) {
-            heroes.get(2).setTeamWork(heroes.get(0).getTeamWork() * -1);
-        } else {
-            heroes.get(1).setTeamWork(heroes.get(0).getTeamWork() * -1);
+        int badActors = 2;
+        for (Hero hero : heroes) {
+            if (hero.getTeamWork() == 0) {
+                hero.setTeamWork(-1);
+                badActors--;
+            }
+            if (badActors == 0) break;
         }
 
         //shuffle again to spread negative effects
@@ -181,8 +186,15 @@ public class State {
                         break;
                     case needRest: hero.setDaysToRest((Integer) update.getValue());
                         break;
-                    case powerup: hero.setPower(hero.getPower() + update.getValue());
+                    case powerup: {
+//                        hero.setPower(hero.getPower() + update.getValue());
+                        if (update.getHero() != null) {
+                            hero.setPower(hero.getPower() + StringUtils.repeat("*", (int)update.getValue()));
+                        }
+                        else { setPowerups(getPowerups() + (int)update.getValue()); }
                         break;
+                    }
+
                     default:
                         throw new IllegalStateException("Unexpected value: " + update.getType());
                 }
@@ -211,6 +223,7 @@ public class State {
             if (baseEvent instanceof TeamworkEvent) {
                 TeamworkEvent event = (TeamworkEvent) baseEvent;
                 location.setPassed(location.isPassed() || event.isPassed());
+                setLatestTeamworkChange(String.valueOf(event.getTeamWork() - getLatestTeamwork()));
                 setLatestTeamwork(event.getTeamWork());
 
                 if (event.isPassed()) { //check if we need a hint
@@ -229,7 +242,7 @@ public class State {
                             if (!skillsRequired.isEmpty()) {
                                 ArrayList<String> strings = new ArrayList<>(skillsRequired);
                                 Collections.shuffle(strings);
-                                skillsKnown.add(SkillSuggestion.builder().code(strings.get(0)).certainty(SkillSuggestion.Certainty.unsure).build());
+                                skillsKnown.add(SkillSuggestion.builder().code(strings.get(0)).certainty(SkillSuggestion.Certainty.unsure_yes).build());
                             }
                         }
                     }
@@ -277,7 +290,9 @@ public class State {
             }
             this.turn = newState.getTurn();
             this.latestTeamwork = newState.getLatestTeamwork();
+            this.latestTeamworkChange = newState.getLatestTeamworkChange();
             this.latestMessage = newState.getLatestMessage();
+            this.powerups = newState.getPowerups();
 
             this.state = newState.getState();
 

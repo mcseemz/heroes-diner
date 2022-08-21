@@ -1,9 +1,6 @@
 {
-  "insects": [
-    "ants", "spiders", "termites"
-  ],
   "wildlife": [
-    "rats", "lizards","bears"," wild cats"
+    "rats", "lizards","bears","wild cats"
   ],
   "undead": [
     "zombies","ghosts","vampires"

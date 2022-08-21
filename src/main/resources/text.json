@@ -37,23 +37,6 @@
     "%bats% had no chance. Clear win."
   ],
 
-
-  "trial_failed_ants_no_hero": [
-    "Wild %ants%!",
-    "Mountain of %ants%!",
-    "Millions of %ants% attacked us"
-  ],
-  "trial_failed_ants_with_hero": [
-    "%ants% carried him out.",
-    "He was bitten by %ants%!",
-    "%ants% just ignored him."
-  ],
-  "trial_succeed_ants_with_hero": [
-    "%ants% were blown away.",
-    "No matter how many %ants%, they are ashes now.",
-    "%ants% were scorched clear."
-  ],
-
   "trial_failed_rats_no_hero": [
     "Swarm of %rats%! We withdrew.",
     "There were %rats%! And their king!",
@@ -136,16 +119,6 @@
     "%pidgeons% were torn apart."
   ],
 
-  "trial_failed_butterflies_no_hero": [
-    "Angry %butterflies% attacked us!"
-  ],
-  "trial_failed_butterflies_with_hero": [
-    "%butterflies% bitten him to nothing."
-  ],
-  "trial_succeed_butterflies_with_hero": [
-    "%butterflies% were torn apart."
-  ],
-
   "trial_failed_keepers_no_hero": [
     "Angry %keepers% attacked us!"
   ],
@@ -216,16 +189,6 @@
     "%migrants% were torn apart."
   ],
 
-  "trial_failed_roaches_no_hero": [
-    "Angry %roaches% attacked us!"
-  ],
-  "trial_failed_roaches_with_hero": [
-    "%roaches% bitten him to nothing."
-  ],
-  "trial_succeed_roaches_with_hero": [
-    "%roaches% were torn apart."
-  ],
-
   "trial_failed_crows_no_hero": [
     "Angry %crows% attacked us!"
   ],
@@ -292,7 +255,7 @@
 
 
   "teamwork_succeed_oracle_paper": [
-    "In a cave we saw a Paper Oracle. It peered through us and said: \nThere are 2 of you who does not play well with the team. \nThere are 2 of you who are leaders. Two leaders in the team means trouble.\nThere are 5 different skills that you are capable of. Only 4 will be required for Sonesta.\nYou can find an old map in the drawer. Go and test your skills and tell everything to bartender."
+    "In a cave we saw a Paper Oracle. It peered through us and said: \nThere are 2 of you who does not play well with the team. \nThere are 2 of you who are leaders. Two leaders in the team means trouble.\nThere are 5 different skills that you are capable of. All will be required to pass your trials.\nYou can find an old map in the drawer. Go and test your skills and tell everything to bartender."
   ],
 
   "teamwork_succeed_wall": [
@@ -415,22 +378,25 @@
 
   "the_beginning": [
     "@|italic type \"q\" if you don't want to hear the story. Progress with \"Enter\" |@",
-    "One moonless night 12 strangers appeared at the door of Heroes Bar, Worchester.",
+    "One moonless night 10 strangers appeared at the door of Heroes Bar, Worchester.",
     "\"Who are you?\" - asked the man by the counter.",
-    "\"Oh mighty bartender, \" - they said, - \"help us rest and prepare to reach our target! And we will pay you generously.\"",
+    "\"Oh mighty bartender, \" - they followed, - \"help us rest and prepare to reach our target! And we will pay you generously.\"",
     "\"I will mix you a drink that will give you 12 dreams\" - said bartender. \"And in the end you will know the team that is best suited for that. Money first.\"",
     "They paid, they drank, and he went on:\nAs we are in fantasy bar, I send some of you to Paper Oracle first. It will tell you who you really are.",
     "If you need help, call for it. @|italic Enter \"help\" to see the list of available commands. |@"
   ],
   "the_end": [
+    "We won! - Cried everyone in great joy.\n\n",
+    "@|italic and then their adventure broke into myriad tiny mirrors @|\n",
     "They woke up early, all in the same ward. Officer was kind and smiley.",
     "\"I don't know what you guys drank last night,\" - he said.\n\"I just know that sometimes it's hard to look each other in the eye after such team building parties.\"",
-    "They paid their fine and went out."
+    "They paid their fine and went out.\n",
+    "@|italic The end. |@"
   ],
   "who_are_we": [
-    "Hospitaliers_We are hospitality professionals, and we are here for Sonesta hotels",
-    "Adventurers_We are Dragon Slayers, just like in the movies",
-    "MotorGang_We are motor gang, and we are going to annual Motor gang convent",
-    "GrayMen_We are office workers, and we need to feel ourselves important"
+    "Hospitaliers_We are hospitality professionals, and we are here for Sonesta hotels. - They said",
+    "Adventurers_We are Dragon Slayers, just like in the movies. - They said",
+    "MotorGang_We are motor gang, and we are going to annual Motor gang convent. - They said",
+    "GrayMen_We are office workers, and we need to feel ourselves important. - They said"
   ]
 }

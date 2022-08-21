@@ -84,14 +84,14 @@ public class Go {
         if (state.getState() == State.GAME_STATE.passed) {
             System.out.print(ansi().cursor(1, 1).eraseScreen(Ansi.Erase.FORWARD));
 
-            System.out.println(ansi().bg(Ansi.Color.GREEN).a("You finished the game! Congrats!").reset());
-            for (String the_beginning : state.getTexts().get("the_end")) {
-                System.out.println(ansi().render(the_beginning));
-
-                int read = lineReader.getTerminal().reader().read();
-                if (read == 'q') {
-                    break;
+            for (String message : renderer.renderLatestMessage().split("\n")) {
+                for (String str : renderer.splitString(message)) {
+                    System.out.print(ansi().cursorToColumn(2).render(str).cursorDownLine());
                 }
+            }
+
+            for (String the_beginning : state.getTexts().get("the_end")) {
+                System.out.println(ansi().render(Renderer.postProcess(the_beginning)));
             }
 
         }

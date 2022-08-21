@@ -4,28 +4,25 @@ import com.mcseemz.diner.Renderer;
 import com.mcseemz.diner.State;
 import com.mcseemz.diner.model.Hero;
 import com.mcseemz.diner.model.SkillSuggestion;
-import org.fusesource.jansi.Ansi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.Availability;
-import org.springframework.shell.component.MultiItemSelector;
 import org.springframework.shell.component.flow.ComponentFlow;
-import org.springframework.shell.component.flow.ResultMode;
 import org.springframework.shell.component.flow.SelectItem;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellMethodAvailability;
 import org.springframework.shell.standard.ShellOption;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 
+import static com.mcseemz.diner.model.SkillSuggestion.Certainty.unsure_no;
+import static com.mcseemz.diner.model.SkillSuggestion.Certainty.unsure_yes;
 import static org.fusesource.jansi.Ansi.ansi;
 
 @ShellComponent
@@ -41,8 +38,10 @@ public class Team {
     private ComponentFlow.Builder componentFlowBuilder;
 
     final String back = "<- Back";
+    final String all = "-> All";
+    final String teamwork = "teamwork";
 
-    @ShellMethod(key = "team", value = "Team management - list")
+    @ShellMethod(key = "team", value = "Team management - list", group = "team")
     public void team(@ShellOption(defaultValue="list") String command) {
         StringBuilder builder = new StringBuilder();
         Arrays.stream(state.getRoster()).filter(Hero::isInTeam).forEachOrdered( hero -> hero.render(builder) );
@@ -77,36 +76,89 @@ public class Team {
 //        }
 //    }
 
-    @ShellMethod(key = "team kick", value = "Team management - kick out person forever")
+    @ShellMethod(key = "kick", value = "Team management - kick out person forever", group = "team")
     public void teamkick(@ShellOption(defaultValue="list") String command) {
+
+        Map<String, String> heroes = state.getTeam().stream().collect(Collectors.toMap(Hero::getName, Hero::getName));
+        heroes.put(back, back);
 
         ComponentFlow.ComponentFlowResult run = componentFlowBuilder.clone().reset()
                 .withSingleItemSelector("hero")
-                .selectItems(state.getTeam().stream().collect(Collectors.toMap(Hero::getName, Hero::getName)))
+                .selectItems(heroes)
                 .and()
                 .build().run();
 
         String result = run.getContext().get("hero");
-        for (Hero hero : state.getRoster()) {
-            if (hero.getName().equals(result)) {
-                hero.setOut(true);
-                hero.setInTeam(false);
+
+        if (!result.equals(back)) {
+            boolean isKicked = false;
+            for (Hero hero : state.getRoster()) {
+                if (hero.getName().equals(result)) {
+                    hero.setOut(true);
+                    hero.setInTeam(false);
+                    isKicked = true;
+                }
+            }
+            //add another hero instead
+            if (isKicked) for (Hero hero : state.getRoster()) {
+                if (!hero.isInTeam() && !hero.isOut()) {
+                    hero.setInTeam(true);
+                    break;
+                }
             }
         }
 
         renderer.displayState();
     }
 
-    @ShellMethod(key = "team skill", value = "Team management - suggest skill")
+    @ShellMethod(key = "skill", value = "Team management - suggest skill", group = "team")
     public void teamsuggest(@ShellOption(defaultValue="list") String command) {
 
         Map<String, String> skills = state.getSkills().keySet().stream()
                 .collect(Collectors.toMap(x -> x, x -> x));
         skills.put(back, back);
+        skills.put(teamwork, teamwork);
+        skills = new TreeMap<>(skills);
 
         Map<String, String> heroes = state.getTeam().stream().collect(Collectors.toMap(Hero::getName, Hero::getName));
+        heroes.put(all, all);
 
+        ComponentFlow.ComponentFlowResult run = componentFlowBuilder.clone().reset()
+                .withSingleItemSelector("hero")
+                .selectItems(heroes)
+                .max(10)
+//                .next(x -> x.getResultItem().get().getName().equals(back) ? null : "skill")
+                .and()
+                .withSingleItemSelector("skill")
+                .selectItems(skills)
+                .max(10)
+                .and()
+                .build().run();
+
+        String result1 = run.getContext().get("hero");
+        String skill = run.getContext().get("skill");
+        if (!skill.equals(back))
+        for (Hero hero : state.getRoster()) {
+            if (hero.getName().equals(result1) || (hero.isInTeam()) && result1.equals(all)) {
+                hero.getSuggestedSkills().removeIf(x -> x.getCode().equals(skill));
+                hero.getSuggestedSkills().add(SkillSuggestion.builder().code(skill).certainty(unsure_yes).build());
+            }
+        }
+
+        renderer.displayState();
+    }
+
+    @ShellMethod(key = "noskill", value = "Team management - suggest skill", group = "team")
+    public void teamnosuggest(@ShellOption(defaultValue="list") String command) {
+
+        Map<String, String> skills = state.getSkills().keySet().stream()
+                .collect(Collectors.toMap(x -> x, x -> x));
+        skills.put(back, back);
+        skills.put(teamwork, teamwork);
         skills = new TreeMap<>(skills);
+
+        Map<String, String> heroes = state.getTeam().stream().collect(Collectors.toMap(Hero::getName, Hero::getName));
+        heroes.put(all, all);
 
 
         ComponentFlow.ComponentFlowResult run = componentFlowBuilder.clone().reset()
@@ -123,12 +175,11 @@ public class Team {
 
         String result1 = run.getContext().get("hero");
         String skill = run.getContext().get("skill");
+        if (!skill.equals(back))
         for (Hero hero : state.getRoster()) {
-            if (hero.getName().equals(result1)) {
-                SkillSuggestion skillFound = hero.getSuggestedSkills().stream()
-                        .filter(x -> x.getCode().equals(skill)).findFirst().orElse(null);
-                if (skillFound == null)
-                    hero.getSuggestedSkills().add(SkillSuggestion.builder().code(skill).certainty(SkillSuggestion.Certainty.unsure).build());
+            if (hero.getName().equals(result1) || (hero.isInTeam()) && result1.equals(all)) {
+                hero.getSuggestedSkills().removeIf(x -> x.getCode().equals(skill));
+                hero.getSuggestedSkills().add(SkillSuggestion.builder().code(skill).certainty(unsure_no).build());
             }
         }
 
@@ -136,7 +187,7 @@ public class Team {
     }
 
 
-    @ShellMethod(key = "team set", value = "Team management - adjust team")
+    @ShellMethod(key = "set", value = "Team management - adjust team", group = "team")
     public void teamedit(@ShellOption(defaultValue="list") String command) {
 
         List<String> result = new ArrayList<>();
@@ -189,7 +240,7 @@ public class Team {
     }
 
 
-    @ShellMethod(key = "team swap", value = "Team management - swap to random members")
+    @ShellMethod(key = "swap", value = "Team management - swap to random members", group = "team")
     public void teamswap(@ShellOption(defaultValue="list") String command) {
         List<Hero> roster = new ArrayList<>(Arrays.asList(state.getRoster()));
         List<Hero> team = state.getTeam();
@@ -205,6 +256,35 @@ public class Team {
         renderer.displayState();
     }
 
+    @ShellMethod(key = "powerup", value = "Team management - add more power to a person", group = "team")
+    public void teampowerup(@ShellOption(defaultValue="list") String command) {
+
+        Map<String, String> heroes = state.getTeam().stream().collect(Collectors.toMap(Hero::getName, Hero::getName));
+        heroes.put(back, back);
+
+        if (state.getPowerups()>0) {
+            ComponentFlow.ComponentFlowResult run = componentFlowBuilder.clone().reset()
+                    .withSingleItemSelector("hero")
+                    .selectItems(heroes)
+                    .and()
+                    .build().run();
+
+            String result = run.getContext().get("hero");
+            for (Hero hero : state.getRoster()) {
+                if (hero.getName().equals(result)) {
+                    hero.setPower(hero.getPower() + "*");
+                    state.setPowerups(state.getPowerups() - 1 );
+                }
+            }
+            renderer.displayState();
+        }
+        else {
+            renderer.displayState();
+            System.out.println(ansi().render("@|italic You have not enough powerups |@").newline());
+        }
+
+
+    }
 
     @ShellMethodAvailability
     public Availability teamAvailability() {
