@@ -2,6 +2,7 @@ package com.mcseemz.diner.model;
 
 import com.mcseemz.diner.model.adventure.BaseEvent;
 import com.mcseemz.diner.model.adventure.ConflictEvent;
+import com.mcseemz.diner.model.adventure.ConflictLeadersEvent;
 import com.mcseemz.diner.model.adventure.LeaderTreatEvent;
 import com.mcseemz.diner.model.adventure.TeamworkEvent;
 import com.mcseemz.diner.model.adventure.TrialEvent;
@@ -25,8 +26,8 @@ public class Adventure {
 
     private List<BaseEvent> adventureEvents = new ArrayList<>();
     private List<EventBefore> eventsBefore = List.of(new LeaderTreatEvent());
-    private List<EventAfterTrial> eventsAfterTrial = List.of(new ConflictEvent());
-    private List<EventAfter> eventsAfter = List.of(new ConflictEvent(), new LeaderTreatEvent());
+    private List<EventAfterTrial> eventsAfterTrial = List.of(new ConflictEvent(), new ConflictLeadersEvent());
+    private List<EventAfter> eventsAfter = List.of(new ConflictEvent(), new LeaderTreatEvent(), new ConflictLeadersEvent());
 
     List<Hero> team;
     Location location;
@@ -63,7 +64,7 @@ public class Adventure {
             Hero hero = team.stream().filter(x -> !x.isActed() && !x.isOut() && x.getSkill().equals(trial.getSkill())).findFirst().orElse(null); //or else nobody
 
             //  run TrialEvent
-            TrialEvent event = TrialEvent.builder().trial(trial).hero(hero).build().run();
+            TrialEvent event = TrialEvent.builder().trial(trial).team(team).hero(hero).build().run();
 
             adventureEvents.add(event);
             if (hero != null) { //mark hero as acted

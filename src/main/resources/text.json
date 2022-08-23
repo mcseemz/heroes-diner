@@ -20,6 +20,12 @@
     "Then %hero% did something wrong."
   ],
 
+  "trial_failed_no_teamwork": [
+    "He needed our help as a team, but we were lazy.",
+    "He needed us as a team, but we lacked it.",
+    "He almost did it, but out team was slow to help him."
+  ],
+
   "-------------- failure ---------------": [],
   "trial_failed_bats_no_hero": [
     "There were %bats%!",
@@ -109,7 +115,7 @@
   "trial_failed_goblins_with_hero": [
     "%Goblins% tickled him, he gave up.",
     "%Goblins% roared, and he gave up.",
-    "He swung his sword at %Goblins%, but missed the all."
+    "He swung his sword at %Goblins%, but missed them all."
   ],
   "trial_succeed_goblins_with_hero": [
     "He predicted every %Goblins'% move and won.",
@@ -218,7 +224,7 @@
   ],
 
   "trial_failed_vampireboss_no_hero": [
-    "%Count Drakula% appeared from nowhere. We screamed and run!"
+    "%Count Dracula% appeared from nowhere. We screamed and run!"
   ],
   "trial_failed_vampireboss_with_hero": [
     "%vampireboss% bitten him to nothing."
@@ -228,7 +234,9 @@
   ],
 
   "trial_failed_servants_no_hero": [
-    "Angry %servants% attacked us!"
+    "Dracula's %Servants% attacked us!",
+    "Loyal %Servants% of Dracula jumped on us and pushed out.",
+    "We had no one to beat %Servants% of Dracula."
   ],
   "trial_failed_servants_with_hero": [
     "%servants% bitten him to nothing."
@@ -263,7 +271,7 @@
 
 
   "teamwork_succeed_oracle_paper": [
-    "In a cave we saw a Paper Oracle. It peered through us and said: \nThere are 2 of you who does not play well with the team. \nThere are 2 of you who are leaders. Two leaders in the team means trouble.\nThere are 5 different skills that you are capable of. All will be required to pass your trials.\nYou can find an old map in the drawer. Go and test your skills and tell everything to bartender."
+    "In a cave we saw a Paper Oracle. It peered through us and said: \nThere are 2 of you who are bad, and 3 who doesn't care. \nThere are 2 of you who are leaders. Two leaders in the team means trouble.\nThere are 5 different skills that you are capable of. All will be required to pass your trials.\nYou can find an old map in the drawer. Go and test your skills and tell everything to bartender."
   ],
 
   "teamwork_succeed_wall": [
@@ -371,9 +379,9 @@
 
   "leader_treat": [
     "I offered them a ride in my van to save energy.",
-    "I took them to bar to treat some good time",
-    "I ordered them pizza, they are good team",
-    "I took them to Disneyland to have some fun"
+    "I took them to bar to treat some good time.",
+    "I ordered them pizza, they are good team.",
+    "I took them to Disneyland to have some fun."
   ],
 
   "event_conflict": [
@@ -383,6 +391,14 @@
     "Then %hero2% and %hero1% conflicted over place at the fire.",
     "Then %hero1% and %hero2% clashed over bad breath.",
     "Then %hero2% and %hero1% clashed over bad breath."
+  ],
+  "event_leader_conflict": [
+    "Then %hero1% fought with %hero2% over management styles.",
+    "Then %hero2% fought with %hero1% over SMART goals.",
+    "Then %hero1% and %hero2% conflicted over who's the boss.",
+    "Then %hero2% and %hero1% conflicted over when to do scrums.",
+    "Then %hero1% and %hero2% clashed over work ethics.",
+    "Then %hero2% and %hero1% clashed over top priorities for the team."
   ],
   "event_sameskill": [
     "In the evening, %hero1% talked to %hero2% about knife sharpening.",
@@ -403,7 +419,7 @@
   "the_end": [
     "We won! - Cried everyone in great joy.\n\n",
     "@|italic and then their adventure broke into myriad tiny mirrors @|\n",
-    "They woke up early, all in the same ward. Officer was kind and smiley.",
+    "They woke up early, all in the same sobering-up station. Officer was kind and smiley.",
     "\"I don't know what you guys drank last night,\" - he said.\n\"I just know that sometimes it's hard to look each other in the eye after such team building parties.\"",
     "They paid their fine and went out.\n",
     "@|italic The end. |@"

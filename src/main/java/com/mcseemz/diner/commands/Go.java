@@ -74,7 +74,7 @@ public class Go {
             Adventure adventure = new Adventure(team, location);
             List<BaseEvent> result = adventure.run();
             //compile results into text
-            String report = compiler.compileReport(result);
+            String report = compiler.compileReport(location, result);
             state.setLatestMessage(report);
             //update heroes with results when required
             state.updateGameState(location, result);
