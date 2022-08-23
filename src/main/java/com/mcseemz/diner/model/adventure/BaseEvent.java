@@ -1,6 +1,7 @@
 package com.mcseemz.diner.model.adventure;
 
 import com.mcseemz.diner.model.Hero;
+import com.mcseemz.diner.model.adventure.interfaces.EventProto;
 import lombok.Getter;
 
 import java.util.ArrayList;
@@ -8,7 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public abstract class BaseEvent {
+public abstract class BaseEvent implements EventProto {
 
     Type type;
     boolean isLeaderOnly = false;
@@ -24,6 +25,7 @@ public abstract class BaseEvent {
         heroes_interaction, //heroes talk to each other
         hero_out, //hero is out of team
         teamwork, //the team acts
+        leadership, //some action from the leader
     }
 
     /** for hero update */
@@ -33,7 +35,8 @@ public abstract class BaseEvent {
         isOut,
         needRest,
         powerup,
-        bad_actor   //we have problem with the team
+        bad_actor,   //we have problem with the team
+        get_a_treat,   //we had some motivation from leader
     }
 
     public int getProbability() {

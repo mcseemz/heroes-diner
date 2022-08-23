@@ -92,21 +92,29 @@
   ],
   "trial_failed_bandits_with_hero": [
     "%Bandits% attacked him all at once. That was unfair.",
-    "%Bandits% got their pistols. Some even fired."
+    "%Bandits% got their pistols. Some even fired.",
+    "%Bandits% attacked him from the dark. Cowards."
   ],
   "trial_succeed_bandits_with_hero": [
     "He took attacking %bandits% one by one.",
-    "With mighty roar he jumped %bandits%, and they run away."
+    "With mighty roar he jumped %bandits%, and they run away.",
+    "%Bandits% attacked him from the dark, but he used night vision goggles."
   ],
 
   "trial_failed_goblins_no_hero": [
-    "Angry %goblins% attacked us!"
+    "%Goblins% attacked us, and we had no skills against them.",
+    "%Goblins% popped up everywhere, we had to give up",
+    "Once we so those %Goblins%, we turned around and retreat"
   ],
   "trial_failed_goblins_with_hero": [
-    "%goblins% bitten him to nothing."
+    "%Goblins% tickled him, he gave up.",
+    "%Goblins% roared, and he gave up.",
+    "He swung his sword at %Goblins%, but missed the all."
   ],
   "trial_succeed_goblins_with_hero": [
-    "%goblins% were torn apart."
+    "He predicted every %Goblins'% move and won.",
+    "He knew a lot about %Goblins%, it turned out.",
+    "He roared at %Goblins%, and they retreated"
   ],
 
   "trial_failed_pidgeons_no_hero": [
@@ -210,7 +218,7 @@
   ],
 
   "trial_failed_vampireboss_no_hero": [
-    "Angry %vampireboss% attacked us!"
+    "%Count Drakula% appeared from nowhere. We screamed and run!"
   ],
   "trial_failed_vampireboss_with_hero": [
     "%vampireboss% bitten him to nothing."
@@ -359,6 +367,13 @@
     "I saw %hero% doing nothing. Bad attitude.",
     "I noticed %hero% played dead. Bad-bad actor.",
     "We could do better if not %hero%. He distracted us."
+  ],
+
+  "leader_treat": [
+    "I offered them a ride in my van to save energy.",
+    "I took them to bar to treat some good time",
+    "I ordered them pizza, they are good team",
+    "I took them to Disneyland to have some fun"
   ],
 
   "event_conflict": [

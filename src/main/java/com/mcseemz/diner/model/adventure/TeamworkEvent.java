@@ -2,7 +2,6 @@ package com.mcseemz.diner.model.adventure;
 
 import com.mcseemz.diner.model.Hero;
 import com.mcseemz.diner.model.Location;
-import com.mcseemz.diner.model.adventure.interfaces.EventAfter;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -82,5 +81,10 @@ public class TeamworkEvent extends BaseEvent {
 
 
         return this;
+    }
+
+    @Override
+    public BaseEvent getInitialized(List<Hero> team) {
+        throw new RuntimeException("Invalid TeamworkEvent initialization. Should not happen");
     }
 }

@@ -2,22 +2,17 @@ package com.mcseemz.diner.model;
 
 import com.mcseemz.diner.model.adventure.BaseEvent;
 import com.mcseemz.diner.model.adventure.ConflictEvent;
-import com.mcseemz.diner.model.adventure.SameskillEvent;
+import com.mcseemz.diner.model.adventure.LeaderTreatEvent;
 import com.mcseemz.diner.model.adventure.TeamworkEvent;
 import com.mcseemz.diner.model.adventure.TrialEvent;
 import com.mcseemz.diner.model.adventure.interfaces.EventAfter;
 import com.mcseemz.diner.model.adventure.interfaces.EventAfterTrial;
 import com.mcseemz.diner.model.adventure.interfaces.EventBefore;
-import com.mcseemz.diner.model.adventure.interfaces.EventProto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -29,10 +24,9 @@ public class Adventure {
     Random random = new Random();
 
     private List<BaseEvent> adventureEvents = new ArrayList<>();
-
+    private List<EventBefore> eventsBefore = List.of(new LeaderTreatEvent());
     private List<EventAfterTrial> eventsAfterTrial = List.of(new ConflictEvent());
-    private List<EventAfter> eventsAfter = List.of(new ConflictEvent());
-    private List<EventBefore> eventsBefore = List.of();
+    private List<EventAfter> eventsAfter = List.of(new ConflictEvent(), new LeaderTreatEvent());
 
     List<Hero> team;
     Location location;
@@ -54,10 +48,11 @@ public class Adventure {
 
         // run EventBefore events. Do we need probabilities?
         if (!eventsBefore.isEmpty()) {
+            log.debug("running eventsBefore. Size: {}", eventsBefore.size());
             EventBefore eventBefore = eventsBefore.get(random.nextInt(eventsBefore.size()));
             if (Math.random() < eventBefore.getProbability()/100F) {
                 //event happened
-                addInitializedEvent(eventBefore);
+                adventureEvents.add(eventBefore.getInitialized(team));
             }
         }
 
@@ -86,7 +81,7 @@ public class Adventure {
 
                 if (Math.random() < eventAfterTrial.getProbability()/100F) {
                     //event happened
-                    addInitializedEvent(eventAfterTrial);
+                    adventureEvents.add(eventAfterTrial.getInitialized(team));
                 }
             }
         }
@@ -101,20 +96,11 @@ public class Adventure {
             EventAfter eventAfter = eventsAfter.get(random.nextInt(eventsAfter.size()));
             if (Math.random() < eventAfter.getProbability()/100F) {
                 //event happened
-                addInitializedEvent(eventAfter);
+                adventureEvents.add(eventAfter.getInitialized(team));
             }
         }
 
         return adventureEvents;
-    }
-
-    private void addInitializedEvent(EventProto event) {
-        if (event instanceof ConflictEvent) {
-            adventureEvents.add(ConflictEvent.builder().team(team).build().run());
-        }
-        if (event instanceof SameskillEvent) {
-            adventureEvents.add(ConflictEvent.builder().team(team).build().run());
-        }
     }
 
 }

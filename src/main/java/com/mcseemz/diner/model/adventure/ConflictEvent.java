@@ -45,6 +45,11 @@ public class ConflictEvent extends BaseEvent implements EventAfterTrial, EventAf
     }
 
     @Override
+    public ConflictEvent getInitialized(List<Hero> team) {
+        return builder().team(team).build().run();
+    }
+
+    @Override
     public int getProbability() {
         return 99;
     }
