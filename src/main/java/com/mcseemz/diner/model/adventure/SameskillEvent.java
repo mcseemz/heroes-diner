@@ -44,4 +44,10 @@ public class SameskillEvent extends BaseEvent implements EventAfterTrial, EventA
     public int getProbability() {
         return 99;
     }
+
+    @Override
+    public SameskillEvent getInitialized(List<Hero> team) {
+        return builder().team(team).build().run();
+    }
+
 }

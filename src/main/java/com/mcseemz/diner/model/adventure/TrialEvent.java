@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.util.List;
+
 @Builder
 @Getter
 @AllArgsConstructor
@@ -33,5 +35,10 @@ public class TrialEvent extends BaseEvent {
         }
 
         return this;
+    }
+
+    @Override
+    public BaseEvent getInitialized(List<Hero> team) {
+        throw new RuntimeException("Invalid TrialEvent initialization. Should not happen");
     }
 }

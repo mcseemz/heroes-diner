@@ -2,10 +2,10 @@ package com.mcseemz.diner;
 
 import com.mcseemz.diner.model.Hero;
 import com.mcseemz.diner.model.Location;
-import com.mcseemz.diner.model.SkillSuggestion;
 import com.mcseemz.diner.model.adventure.BaseEvent;
 import com.mcseemz.diner.model.adventure.ConflictEvent;
 import com.mcseemz.diner.model.adventure.HeroUpdateRecord;
+import com.mcseemz.diner.model.adventure.LeaderTreatEvent;
 import com.mcseemz.diner.model.adventure.SameskillEvent;
 import com.mcseemz.diner.model.adventure.TeamworkEvent;
 import com.mcseemz.diner.model.adventure.TrialEvent;
@@ -114,8 +114,6 @@ public class Compiler {
                             throw new IllegalStateException("Unexpected value: " + update.getType());
                     }
                 }
-
-
             }
             else
             if (baseEvent instanceof ConflictEvent) {
@@ -144,6 +142,25 @@ public class Compiler {
                         .replace("%hero2%", "#" + hero2.getName() + "#")
                         .replace("%monster%", monster);
                 sb.append(note).append("\n");
+            }
+            else
+            if (baseEvent instanceof LeaderTreatEvent) {
+                LeaderTreatEvent event = (LeaderTreatEvent) baseEvent;
+                for (HeroUpdateRecord update : baseEvent.getLeaderNotes()) {
+                    String resource = "---";
+                    switch (update.getType()) {
+                        case get_a_treat: {
+                            resource = "leader_treat";
+
+                            String note = getRandomLine(resource);
+                            sb.append("(leader): ").append(note).append("\n");
+                            break;
+                        }
+                        default:
+                            throw new IllegalStateException("Unexpected value: " + update.getType());
+                    }
+                }
+
             }
             else
             if (baseEvent == null) {
