@@ -15,4 +15,5 @@ public class Trial {
     /** number of stars */
     String difficulty;
 
+    int teamwork;
 }

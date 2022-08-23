@@ -27,7 +27,8 @@
     "code": "thugs",
     "description": "Squatters, but mean ones. Unpleasant.",
     "skill": "humans",
-    "difficulty": "*"
+    "difficulty": "*",
+    "teamwork": 3
   },
   {
     "code": "bandits",

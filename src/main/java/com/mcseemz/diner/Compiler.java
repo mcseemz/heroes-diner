@@ -4,6 +4,7 @@ import com.mcseemz.diner.model.Hero;
 import com.mcseemz.diner.model.Location;
 import com.mcseemz.diner.model.adventure.BaseEvent;
 import com.mcseemz.diner.model.adventure.ConflictEvent;
+import com.mcseemz.diner.model.adventure.ConflictLeadersEvent;
 import com.mcseemz.diner.model.adventure.HeroUpdateRecord;
 import com.mcseemz.diner.model.adventure.LeaderTreatEvent;
 import com.mcseemz.diner.model.adventure.SameskillEvent;
@@ -26,9 +27,12 @@ public class Compiler {
 
     Random random = new Random();
 
-    public String compileReport(List<BaseEvent> events) {
+    public String compileReport(Location location, List<BaseEvent> events) {
 
         StringBuilder sb = new StringBuilder();
+        sb.append("_We went to ").append(location.getName()).append(":_");
+        sb.append("\n");
+
         boolean isFirst = true;
         for (BaseEvent baseEvent : events) {
             if (baseEvent instanceof TrialEvent) {
@@ -59,7 +63,14 @@ public class Compiler {
                     enemyVal = enemyVal.replace("%hero%", "#"+hero.getName()+"#");
                 }
 
-                sb.append(outcomeVal).append(" ").append(enemyVal).append("\n");
+                sb.append(outcomeVal).append(" ").append(enemyVal);
+
+                //trial failed with not enough teamwork
+                if (hero != null && !event.isPassed() && event.isNoTeamwork()) {
+                    String noTeamwork = getRandomLine("trial_failed_no_teamwork");
+                    sb.append(" ").append(noTeamwork);
+                }
+                sb.append("\n");
             } else
             if (baseEvent instanceof TeamworkEvent) {
                 TeamworkEvent event = (TeamworkEvent) baseEvent;
@@ -82,8 +93,8 @@ public class Compiler {
 
                         if (bonus.startsWith("map_")) { //resolve map
                             String locname = bonus.split("_")[1];
-                            Location location = Arrays.stream(state.getLocations()).filter(x -> x.getCode().equals(locname)).findFirst().orElseThrow();
-                            bonusVal = bonusVal.replace("%location%", ">" + location.getName() + "<");
+                            Location bonus_location = Arrays.stream(state.getLocations()).filter(x -> x.getCode().equals(locname)).findFirst().orElseThrow();
+                            bonusVal = bonusVal.replace("%location%", ">" + bonus_location.getName() + "<");
                         }
 
                         sb.append(bonusVal).append(" ");
@@ -126,6 +137,19 @@ public class Compiler {
                 String note = getRandomLine(resource)
                         .replace("%hero1%", "#" + good.getName() + "#")
                         .replace("%hero2%", "#" + bad.getName() + "#");
+                sb.append(note).append("\n");
+            }
+            else
+            if (baseEvent instanceof ConflictLeadersEvent) {
+                ConflictLeadersEvent event = (ConflictLeadersEvent) baseEvent;
+                //check if it was attempted by hero, and if failed
+                Hero leader1 = event.getLeaders().get(0);
+                Hero leader2 = event.getLeaders().get(1);
+
+                String resource = "event_leader_conflict";
+                String note = getRandomLine(resource)
+                        .replace("%hero1%", "#" + leader1.getName() + "#")
+                        .replace("%hero2%", "#" + leader2.getName() + "#");
                 sb.append(note).append("\n");
             }
             else

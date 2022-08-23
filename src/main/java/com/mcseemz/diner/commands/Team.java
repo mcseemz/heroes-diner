@@ -47,39 +47,12 @@ public class Team {
         Arrays.stream(state.getRoster()).filter(Hero::isInTeam).forEachOrdered( hero -> hero.render(builder) );
         System.out.println(ansi().render(Renderer.postProcess(builder.toString())));
     }
-//    @ShellMethod(key = "team add", value = "Team management - add ")
-//    public void teamadd(@ShellOption(defaultValue="list") String command) {
-//        int teamSize = state.getTeam().size();
-//
-//        if (teamSize < 5) {
-//            ComponentFlow.ComponentFlowResult run = componentFlowBuilder.clone().reset()
-//                    .withSingleItemSelector("hero")
-//                    .selectItems(Arrays.stream(state.getRoster())
-//                            .filter(hero -> !hero.isInTeam())
-//                            .filter(hero -> !hero.isOut())
-//                            .collect(Collectors.toMap(Hero::getName, Hero::getName)))
-//                    .and()
-//                    .build().run();
-//
-//            String result = run.getContext().get("hero");
-//            for (Hero hero : state.getRoster()) {
-//                if (hero.getName().equals(result)) {
-//                    hero.setInTeam(true);
-//                }
-//            }
-//        }
-//
-//        renderer.displayState();
-//
-//        if (teamSize > 4) {
-//            System.out.println(ansi().fgRed().a("Team is at max now").reset());
-//        }
-//    }
 
     @ShellMethod(key = "kick", value = "Team management - kick out person forever", group = "team")
     public void teamkick(@ShellOption(defaultValue="list") String command) {
 
-        Map<String, String> heroes = state.getTeam().stream().collect(Collectors.toMap(Hero::getName, Hero::getName));
+        Map<String, String> heroes = Arrays.stream(state.getRoster())
+                .filter(x -> !x.isOut()).collect(Collectors.toMap(Hero::getName, Hero::getName));
         heroes.put(back, back);
 
         ComponentFlow.ComponentFlowResult run = componentFlowBuilder.clone().reset()
@@ -148,7 +121,7 @@ public class Team {
         renderer.displayState();
     }
 
-    @ShellMethod(key = "noskill", value = "Team management - suggest skill", group = "team")
+    @ShellMethod(key = "noskill", value = "Team management - suggest missing skill", group = "team")
     public void teamnosuggest(@ShellOption(defaultValue="list") String command) {
 
         Map<String, String> skills = state.getSkills().keySet().stream()
@@ -187,7 +160,7 @@ public class Team {
     }
 
 
-    @ShellMethod(key = "set", value = "Team management - adjust team", group = "team")
+    @ShellMethod(key = "set", value = "Team management - adjust team members", group = "team")
     public void teamedit(@ShellOption(defaultValue="list") String command) {
 
         List<String> result = new ArrayList<>();
@@ -250,13 +223,15 @@ public class Team {
         roster.removeAll(team);
         roster.removeIf(Hero::isOut);
 
+        roster.addAll(team);    //add to the end
+
         Collections.shuffle(roster);
-        roster.stream().limit(5).forEach(x -> x.setInTeam(true));
+        roster.stream().sequential().limit(5).forEach(x -> x.setInTeam(true));
 
         renderer.displayState();
     }
 
-    @ShellMethod(key = "powerup", value = "Team management - add more power to a person", group = "team")
+    @ShellMethod(key = "powerup", value = "Team management - add more power to a person form available powerups", group = "team")
     public void teampowerup(@ShellOption(defaultValue="list") String command) {
 
         Map<String, String> heroes = state.getTeam().stream().collect(Collectors.toMap(Hero::getName, Hero::getName));
