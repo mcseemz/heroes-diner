@@ -124,13 +124,20 @@
   ],
 
   "trial_failed_pidgeons_no_hero": [
-    "Angry %pidgeons% attacked us!"
+    "Some %Pidgeons% the size of the fridge attacked us! It was unexpected.",
+    "%Red-fanged Pidgeons% fell down on our heads! It was unexpected.",
+    "Birsds attacked us! %Pidgeons%! They carried us away!"
   ],
   "trial_failed_pidgeons_with_hero": [
-    "%pidgeons% bitten him to nothing."
+    "%Red-fanged Pidgeons% almost torn him apart.",
+    "%Red-fanged Pidgeons% attacked him from the sky, and that was the end.",
+    "He saw %Red-fanged Pidgeons% and cried from fear, then crumbled."
+
   ],
   "trial_succeed_pidgeons_with_hero": [
-    "%pidgeons% were torn apart."
+    "He took %Red-fanged Pidgeons% one by one.",
+    "He plucked those %Red-fanged Pidgeons% with his might arm.",
+    "He caught those %Red-fanged Pidgeons% by fangs, then grounded them."
   ],
 
   "trial_failed_keepers_no_hero": [
@@ -234,15 +241,19 @@
   ],
 
   "trial_failed_servants_no_hero": [
-    "Dracula's %Servants% attacked us!",
+    "Dracula's %Servants% attacked us! What should we do with them?",
     "Loyal %Servants% of Dracula jumped on us and pushed out.",
     "We had no one to beat %Servants% of Dracula."
   ],
   "trial_failed_servants_with_hero": [
-    "%servants% bitten him to nothing."
+    "Dracula's %servants% overwhelmed him.",
+    "Dracula's %servants% surprised him with sudden singing, then attacked.",
+    "He shook hands with Dracula's %servants% until he was tired and gave up."
   ],
   "trial_succeed_servants_with_hero": [
-    "%servants% were torn apart."
+    "No matter how many %Servants% of Dracula, he was stronger.",
+    "He fought with %Servants% of Dracula, he won.",
+    "He persuaded %Servants% of Dracula that there is no Dracula."
   ],
 
   "trial_failed_bears_no_hero": [
@@ -418,16 +429,16 @@
   ],
   "the_end": [
     "We won! - Cried everyone in great joy.\n\n",
-    "@|italic and then their adventure broke into myriad tiny mirrors @|\n",
+    "@|italic and then their adventure broke into myriad tiny mirrors |@\n",
     "They woke up early, all in the same sobering-up station. Officer was kind and smiley.",
     "\"I don't know what you guys drank last night,\" - he said.\n\"I just know that sometimes it's hard to look each other in the eye after such team building parties.\"",
     "They paid their fine and went out.\n",
     "@|italic The end. |@"
   ],
   "who_are_we": [
-    "Hospitaliers_We are hospitality professionals, and we are here for Sonesta hotels. - They said",
-    "Adventurers_We are Dragon Slayers, just like in the movies. - They said",
-    "MotorGang_We are motor gang, and we are going to annual Motor gang convent. - They said",
-    "GrayMen_We are office workers, and we need to feel ourselves important. - They said"
+    "We are hospitality professionals_We are hospitality professionals, and we are here for Sonesta hotels. - They said",
+    "We are adventurers_We are Dragon Slayers, just like in the movies. - They said",
+    "We are Hell's Angels_We are motor gang, and we are going to annual Motor gang convent. - They said",
+    "We are Gray Men_We are humble office workers, and we need to feel ourselves important. - They said"
   ]
 }

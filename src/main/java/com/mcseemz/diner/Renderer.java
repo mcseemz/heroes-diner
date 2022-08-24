@@ -145,7 +145,8 @@ public class Renderer {
         StringBuilder builder = new StringBuilder().append("Turn: ").append(state.getTurn()).append("\n")
                 .append("Locations: ").append(Arrays.stream(state.getLocations()).filter(Location::isPassed).count()).append("\n");
 
-        builder.append("Latest teamwork: ").append(state.getLatestTeamwork()).append("   ("+state.getLatestTeamworkChange()+")").append("\n");
+        builder.append("Latest teamwork: ").append(state.getLatestTeamwork())
+                .append("   (").append(state.getLatestTeamworkChange()).append(")").append("\n");
         builder.append("Powerups: ").append(state.getPowerups()).append("\n");
 
         return postProcess(builder.toString());
