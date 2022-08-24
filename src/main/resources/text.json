@@ -141,13 +141,19 @@
   ],
 
   "trial_failed_keepers_no_hero": [
-    "Angry %keepers% attacked us!"
+    "%Garden Keepers% were not like we expected. They were armed, so we retreated.",
+    "%Garden Keepers% hid in the garden and shoot with salt. We gave up.",
+    "%Garden Keepers% wore camouflage so we could not find them."
   ],
   "trial_failed_keepers_with_hero": [
-    "%keepers% bitten him to nothing."
+    "He attacked %Garden Keepers%, but fell into a trap.",
+    "The %Garden Keepers% pushed him into a pit.",
+    "He tracked %Garden Keepers%, but they tracked him first."
   ],
   "trial_succeed_keepers_with_hero": [
-    "%keepers% were torn apart."
+    "He found %Garden Keepers% while they slept. And called the police.",
+    "%Garden Keepers% had only pitchforks against him.",
+    "He fought %Garden Keepers% with all he had: a kettle. And he won!"
   ],
 
   "trial_failed_snakes_no_hero": [
@@ -427,12 +433,20 @@
     "They paid, they drank, and he went on:\nAs we are in fantasy bar, I send some of you to Paper Oracle first. It will tell you who you really are.",
     "If you need help, call for it. @|italic Enter \"help\" to see the list of available commands. |@"
   ],
-  "the_end": [
-    "We won! - Cried everyone in great joy.\n\n",
+  "the_end_win": [
+    "\nWe won! - Cried everyone in great joy.\n",
     "@|italic and then their adventure broke into myriad tiny mirrors |@\n",
     "They woke up early, all in the same sobering-up station. Officer was kind and smiley.",
     "\"I don't know what you guys drank last night,\" - he said.\n\"I just know that sometimes it's hard to look each other in the eye after such team building parties.\"",
     "They paid their fine and went out.\n",
+    "@|italic The end. |@"
+  ],
+  "the_end_loose": [
+    "\nWe have no more dreams left! - They said in great sorrow.\n",
+    "@|italic and then their adventure fade out to darkest night |@\n",
+    "They woke up early, in a bus from Los Angeles to Philadelphia. Bus driver was grumpy.",
+    "\"I don't know what you guys drank last night,\" - he said.\n\"I just know that you are not the perfect team. You left your belongings at bus station.\"",
+    "They closed their eyes and kept silent.\n",
     "@|italic The end. |@"
   ],
   "who_are_we": [
