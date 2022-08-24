@@ -57,7 +57,7 @@ public class State {
     private Hero[] roster;
 
     /** current turn */
-    private int turn = 0;
+    private int turn = 13;
 
     /** unmber of powerups team has */
     @Setter
@@ -86,6 +86,7 @@ public class State {
         waiting,    //waiting for use command
         editProfile,
         passed, //game finished
+        lost, //game finished
     }
 
     public void newGame() throws IOException {
@@ -260,7 +261,7 @@ public class State {
         }
 
         //run passed
-        turn++;
+        turn--;
 
         //if this is oracle it is cannot be passed twice, should go invisible
         if (location.isPassed() && location.isOnlyonce()) {
@@ -269,6 +270,10 @@ public class State {
 
         if (location.isPassed() && location.isTarget()) {
             state = GAME_STATE.passed;
+        }
+        else    //win on a last step
+        if (turn <= 0) {
+            state = GAME_STATE.lost;
         }
     }
 

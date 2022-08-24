@@ -142,7 +142,7 @@ public class Renderer {
         return postProcess(state.getLatestMessage());
     }
     public String renderStats() {
-        StringBuilder builder = new StringBuilder().append("Turn: ").append(state.getTurn()).append("\n")
+        StringBuilder builder = new StringBuilder().append("Dreams left: ").append(state.getTurn()).append("\n")
                 .append("Locations: ").append(Arrays.stream(state.getLocations()).filter(Location::isPassed).count()).append("\n");
 
         builder.append("Latest teamwork: ").append(state.getLatestTeamwork())

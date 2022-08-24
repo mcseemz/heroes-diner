@@ -90,10 +90,22 @@ public class Go {
                 }
             }
 
-            for (String the_beginning : state.getTexts().get("the_end")) {
+            for (String the_beginning : state.getTexts().get("the_end_win")) {
                 System.out.println(ansi().render(Renderer.postProcess(the_beginning)));
             }
+        }
+        if (state.getState() == State.GAME_STATE.lost) {
+            System.out.print(ansi().cursor(1, 1).eraseScreen(Ansi.Erase.FORWARD));
 
+            for (String message : renderer.renderLatestMessage().split("\n")) {
+                for (String str : renderer.splitString(message)) {
+                    System.out.print(ansi().cursorToColumn(2).render(str).cursorDownLine());
+                }
+            }
+
+            for (String the_beginning : state.getTexts().get("the_end_loose")) {
+                System.out.println(ansi().render(Renderer.postProcess(the_beginning)));
+            }
         }
     }
 
