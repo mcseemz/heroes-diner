@@ -224,6 +224,8 @@ public class State {
                 TeamworkEvent event = (TeamworkEvent) baseEvent;
                 location.setPassed(location.isPassed() || event.isPassed());
                 setLatestTeamworkChange(String.valueOf(event.getTeamWork() - getLatestTeamwork()));
+                if (event.getTeamWork() - getLatestTeamwork() > 0) setLatestTeamworkChange("+" + getLatestTeamworkChange());
+
                 setLatestTeamwork(event.getTeamWork());
 
                 if (event.isPassed()) { //check if we need a hint

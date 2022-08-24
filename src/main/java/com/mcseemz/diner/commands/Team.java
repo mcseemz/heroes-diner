@@ -57,6 +57,7 @@ public class Team {
 
         ComponentFlow.ComponentFlowResult run = componentFlowBuilder.clone().reset()
                 .withSingleItemSelector("hero")
+                .max(11)
                 .selectItems(heroes)
                 .and()
                 .build().run();
@@ -65,19 +66,23 @@ public class Team {
 
         if (!result.equals(back)) {
             boolean isKicked = false;
+            boolean wasInTeam = false;
             for (Hero hero : state.getRoster()) {
                 if (hero.getName().equals(result)) {
+                    wasInTeam = hero.isInTeam();
+
                     hero.setOut(true);
                     hero.setInTeam(false);
                     isKicked = true;
                 }
             }
-            //add another hero instead
-            if (isKicked) for (Hero hero : state.getRoster()) {
-                if (!hero.isInTeam() && !hero.isOut()) {
-                    hero.setInTeam(true);
-                    break;
-                }
+            //add another hero instead (if the last one was in the team
+            if (isKicked && wasInTeam)
+                for (Hero hero : state.getRoster()) {
+                    if (!hero.isInTeam() && !hero.isOut()) {
+                        hero.setInTeam(true);
+                        break;
+                    }
             }
         }
 
@@ -99,24 +104,24 @@ public class Team {
         ComponentFlow.ComponentFlowResult run = componentFlowBuilder.clone().reset()
                 .withSingleItemSelector("hero")
                 .selectItems(heroes)
-                .max(10)
+                .max(11)
 //                .next(x -> x.getResultItem().get().getName().equals(back) ? null : "skill")
                 .and()
                 .withSingleItemSelector("skill")
                 .selectItems(skills)
-                .max(10)
+                .max(11)
                 .and()
                 .build().run();
 
         String result1 = run.getContext().get("hero");
         String skill = run.getContext().get("skill");
         if (!skill.equals(back))
-        for (Hero hero : state.getRoster()) {
-            if (hero.getName().equals(result1) || (hero.isInTeam()) && result1.equals(all)) {
-                hero.getSuggestedSkills().removeIf(x -> x.getCode().equals(skill));
-                hero.getSuggestedSkills().add(SkillSuggestion.builder().code(skill).certainty(unsure_yes).build());
+            for (Hero hero : state.getRoster()) {
+                if (hero.getName().equals(result1) || (hero.isInTeam()) && result1.equals(all)) {
+                    hero.getSuggestedSkills().removeIf(x -> x.getCode().equals(skill));
+                    hero.getSuggestedSkills().add(SkillSuggestion.builder().code(skill).certainty(unsure_yes).build());
+                }
             }
-        }
 
         renderer.displayState();
     }
@@ -137,24 +142,24 @@ public class Team {
         ComponentFlow.ComponentFlowResult run = componentFlowBuilder.clone().reset()
                 .withSingleItemSelector("hero")
                 .selectItems(heroes)
-                .max(10)
+                .max(11)
 //                .next(x -> x.getResultItem().get().getName().equals(back) ? null : "skill")
                 .and()
                 .withSingleItemSelector("skill")
                 .selectItems(skills)
-                .max(10)
+                .max(11)
                 .and()
                 .build().run();
 
         String result1 = run.getContext().get("hero");
         String skill = run.getContext().get("skill");
         if (!skill.equals(back))
-        for (Hero hero : state.getRoster()) {
-            if (hero.getName().equals(result1) || (hero.isInTeam()) && result1.equals(all)) {
-                hero.getSuggestedSkills().removeIf(x -> x.getCode().equals(skill));
-                hero.getSuggestedSkills().add(SkillSuggestion.builder().code(skill).certainty(unsure_no).build());
+            for (Hero hero : state.getRoster()) {
+                if (hero.getName().equals(result1) || (hero.isInTeam()) && result1.equals(all)) {
+                    hero.getSuggestedSkills().removeIf(x -> x.getCode().equals(skill));
+                    hero.getSuggestedSkills().add(SkillSuggestion.builder().code(skill).certainty(unsure_no).build());
+                }
             }
-        }
 
         renderer.displayState();
     }
@@ -241,6 +246,7 @@ public class Team {
             ComponentFlow.ComponentFlowResult run = componentFlowBuilder.clone().reset()
                     .withSingleItemSelector("hero")
                     .selectItems(heroes)
+                    .max(11)
                     .and()
                     .build().run();
 

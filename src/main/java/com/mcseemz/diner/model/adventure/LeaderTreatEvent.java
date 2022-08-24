@@ -24,10 +24,13 @@ public class LeaderTreatEvent extends BaseEvent implements EventBefore, EventAft
     }
 
     public LeaderTreatEvent run() {
-        //find all bad actors, take random
-        leaderNotes.add(HeroUpdateRecord.builder().type(PropertyType.get_a_treat).build());
 
-        return this;
+        Hero leader = team.stream().filter(x -> x.getSkill().equals("leadership")).findFirst().orElse(null);
+        if (leader != null) {
+            leaderNotes.add(HeroUpdateRecord.builder().type(PropertyType.get_a_treat).build());
+            return this;
+        }
+        return null;
     }
 
     @Override
