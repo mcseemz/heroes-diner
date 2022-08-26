@@ -5,10 +5,11 @@ import com.mcseemz.diner.model.Trial;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.experimental.SuperBuilder;
 
 import java.util.List;
 
-@Builder
+@SuperBuilder
 @Getter
 @AllArgsConstructor
 public class TrialEvent extends BaseEvent {
@@ -16,7 +17,9 @@ public class TrialEvent extends BaseEvent {
     Trial trial;
     Hero hero;
 
-    List<Hero> team;
+    /** if someone helped him to win the trial */
+    Hero helper;
+
     boolean isPassed;
     int needRest = 0;
 
@@ -26,26 +29,37 @@ public class TrialEvent extends BaseEvent {
     }
 
     public TrialEvent run() {
-        //todo can pass one difficulty more but needs rest. Or rest is random?
+
+        if (hero == null) {
+            return this;
+        }
+
+        Hero leader = getLeader();
+        Hero sameSkill = getSameSkill(hero);
+
         //todo leader can share their power (all but one *)
         //or if the win is due to teamwork boost then rest is required
-        int teamWork = 0;
 
-        for (Hero hero : team) {
-            teamWork += hero.getTeamWork();
-        }
+        heroUpdates.add(HeroUpdateRecord.builder()
+                .hero(hero).type(PropertyType.skill_suggest).value(trial.getSkill()).build());
 
-        if (hero != null) {
-            heroUpdates.add(HeroUpdateRecord.builder()
-                    .hero(hero).type(PropertyType.skill_suggest).value(trial.getSkill()).build());
-        }
-
-        if (teamWork < trial.getTeamwork()) {
+        if (getTeamwork() < trial.getTeamwork()) {
             noTeamwork = true;
         }
         else
-        if (hero != null && hero.getPower().compareTo(trial.getDifficulty()) >= 0) {
+        if (hero.getPower().compareTo(trial.getDifficulty()) >= 0) {
             isPassed = true;
+        }
+        else
+        if (trial.getDifficulty().length() - hero.getPower().length() == 1) {   //lack 1 power, check for helper
+            if (leader != null && leader.getPower().length() > 1) {
+                helper = leader;
+                isPassed = true;
+            }
+            if (sameSkill != null) {
+                helper = sameSkill;
+                isPassed = true;
+            }
         }
 
         return this;

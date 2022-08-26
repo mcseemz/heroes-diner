@@ -64,7 +64,7 @@ public class Adventure {
             Hero hero = team.stream().filter(x -> !x.isActed() && !x.isOut() && x.getSkill().equals(trial.getSkill())).findFirst().orElse(null); //or else nobody
 
             //  run TrialEvent
-            TrialEvent event = TrialEvent.builder().trial(trial).team(team).hero(hero).build().run();
+            TrialEvent event = TrialEvent.builder().trial(trial).team(team).heroUpdates(new ArrayList<>()).hero(hero).build().run();
 
             adventureEvents.add(event);
             if (hero != null) { //mark hero as acted
@@ -89,7 +89,8 @@ public class Adventure {
 
         if (isPassed && !location.isPassed()) { //only once per location
             //time to run teamwork
-            TeamworkEvent event = TeamworkEvent.builder().location(location).team(team).build().run();
+            TeamworkEvent event = TeamworkEvent.builder().location(location).leaderNotes(new ArrayList<>())
+                    .heroUpdates(new ArrayList<>()).team(team).build().run();
             adventureEvents.add(event);
         }
         // run EventAfter with probability

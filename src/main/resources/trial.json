@@ -12,12 +12,6 @@
     "difficulty": "*"
   },
   {
-    "code": "ants",
-    "description": "Ants! So many you breath them!",
-    "skill": "insects",
-    "difficulty": "*"
-  },
-  {
     "code": "zombie2",
     "description": "Couple of real zombies. Funny they are so clumsy",
     "skill": "undead",
@@ -49,12 +43,6 @@
     "difficulty": "**"
   },
   {
-    "code": "butterflies",
-    "description": "Beautiful butterflies straight out of hell.",
-    "skill": "insects",
-    "difficulty": "*"
-  },
-  {
     "code": "keepers",
     "description": "Garden keepers. Very caring.",
     "skill": "humans",
@@ -73,8 +61,8 @@
     "difficulty": "*"
   },
   {
-    "code": "porchspirit",
-    "description": "Spirit of the Porch wants the Porch all for itself",
+    "code": "benchspirit",
+    "description": "Spirit of the Bench wants the Bench all for itself",
     "skill": "undead",
     "difficulty": "**"
   },
@@ -82,7 +70,8 @@
     "code": "squirrel",
     "description": "One mad squirrel worth an army.",
     "skill": "wildlife",
-    "difficulty": "***"
+    "difficulty": "***",
+    "teamwork": 3
   },
   {
     "code": "oldofficer",
@@ -94,12 +83,6 @@
     "code": "migrants",
     "description": "Illegal migrants with all their migration fury",
     "skill": "humans",
-    "difficulty": "**"
-  },
-  {
-    "code": "roaches",
-    "description": "Radioactive roaches. You can see them in the dark. Swarm of them",
-    "skill": "insects",
     "difficulty": "**"
   },
   {
@@ -127,9 +110,9 @@
     "difficulty": "****"
   },
   {
-    "code": "vampireboss",
-    "description": "Vampire Count, Dracula or not. Who cares?",
-    "skill": "undead",
+    "code": "bears",
+    "description": "Mutant bears, the last time you heard of them.",
+    "skill": "wildlife",
     "difficulty": "****"
   },
   {
@@ -139,9 +122,10 @@
     "difficulty": "****"
   },
   {
-    "code": "bears",
-    "description": "Mutant bears, the last time you heard of them.",
-    "skill": "wildlife",
-    "difficulty": "****"
+    "code": "vampireboss",
+    "description": "Vampire Count, Dracula or not. Who cares?",
+    "skill": "undead",
+    "difficulty": "****",
+    "teamwork": 4
   }
 ]

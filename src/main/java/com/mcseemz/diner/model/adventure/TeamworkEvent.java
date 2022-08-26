@@ -3,8 +3,8 @@ package com.mcseemz.diner.model.adventure;
 import com.mcseemz.diner.model.Hero;
 import com.mcseemz.diner.model.Location;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
+import lombok.experimental.SuperBuilder;
 
 import java.util.List;
 
@@ -12,13 +12,12 @@ import java.util.List;
  * here we do the check on team teamwork and location requirements.
  * When succeed, we dd the power to everyone's skill
  */
-@Builder
+@SuperBuilder
 @Getter
 @AllArgsConstructor
 public class TeamworkEvent extends BaseEvent {
 
     Location location;
-    List<Hero> team;
     int teamWork = 0;
 
     boolean isPassed = false;
@@ -29,17 +28,12 @@ public class TeamworkEvent extends BaseEvent {
 
     public TeamworkEvent run() {
 
-        Hero badHero = null;
-        Hero leaderHero = null;
+        Hero badHero = getBadTeamwork();
+        Hero leaderHero = getLeader();
 
         location.setPassed(true);    //mark as passed anyway
 
-        //leader adds to teamwork
-        for (Hero hero : team) {
-            teamWork += hero.getTeamWork();
-            if (hero.getTeamWork()<1) badHero = hero;
-            if (hero.getSkill().equals("leadership")) leaderHero = hero;
-        }
+        teamWork = getTeamwork();
 
         if (teamWork >= location.getTeamwork().getMin()) {
             isPassed = true;
@@ -49,11 +43,6 @@ public class TeamworkEvent extends BaseEvent {
                 if (bonus.equals("powerups")) {
                     heroUpdates.add(HeroUpdateRecord.builder()
                             .hero(null).type(PropertyType.powerup).value(1).build());
-
-//                    for (Hero hero : team) {
-//                        heroUpdates.add(HeroUpdateRecord.builder()
-//                                .hero(hero).type(PropertyType.powerup).value("*").build());
-//                    }
                 }
             }
         }
@@ -78,7 +67,6 @@ public class TeamworkEvent extends BaseEvent {
                         break;
             }
         }
-
 
         return this;
     }

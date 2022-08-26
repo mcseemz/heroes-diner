@@ -6,6 +6,7 @@ import com.mcseemz.diner.model.adventure.interfaces.EventAfterTrial;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.experimental.SuperBuilder;
 
 import java.util.Collections;
 import java.util.List;
@@ -14,12 +15,10 @@ import java.util.stream.Collectors;
 /**
  * when two leaders are in the team
  */
-@Builder
+@SuperBuilder
 @Getter
 @AllArgsConstructor
 public class ConflictLeadersEvent extends BaseEvent implements EventAfterTrial, EventAfter {
-
-    List<Hero> team;
 
     List<Hero> leaders;
 

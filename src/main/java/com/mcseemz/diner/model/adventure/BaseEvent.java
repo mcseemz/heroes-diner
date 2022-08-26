@@ -3,21 +3,31 @@ package com.mcseemz.diner.model.adventure;
 import com.mcseemz.diner.model.Hero;
 import com.mcseemz.diner.model.adventure.interfaces.EventProto;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-public abstract class BaseEvent implements EventProto {
+@SuperBuilder
+@NoArgsConstructor
+public class BaseEvent implements EventProto {
 
     Type type;
     boolean isLeaderOnly = false;
 
     @Getter
+    List<Hero> team;
+
+    @Getter
     List<HeroUpdateRecord> heroUpdates = new ArrayList<>();
     @Getter
     List<HeroUpdateRecord> leaderNotes = new ArrayList<>();
+
+    @Override
+    public BaseEvent getInitialized(List<Hero> team) {
+        throw new RuntimeException("initializing BaseEvent forbidden");
+    }
 
     enum Type {
         encounter,  //trial done
@@ -43,4 +53,32 @@ public abstract class BaseEvent implements EventProto {
         return 100;
     }
 
+    public int getTeamwork() {
+        int teamWork = 0;
+        for (Hero hero : team) {
+            teamWork += hero.getTeamWork();
+        }
+        return teamWork;
+    }
+
+    public Hero getLeader() {
+        for (Hero hero : team) {
+            if (hero.getSkill().equals("leadership")) return hero;
+        }
+        return null;
+    }
+
+    public Hero getSameSkill(Hero hero1) {
+        for (Hero hero : team) {
+            if (!hero1.equals(hero) && hero.getSkill().equals(hero1.getSkill())) return hero;
+        }
+        return null;
+    }
+
+    public Hero getBadTeamwork() {
+        for (Hero hero : team) {
+            if (hero.getTeamWork()<1) return hero;
+        }
+        return null;
+    }
 }

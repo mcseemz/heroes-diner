@@ -173,33 +173,34 @@ public class State {
                 continue;
             }
 
-            for (HeroUpdateRecord update : baseEvent.getHeroUpdates()) {
-                Hero hero = update.getHero();
+            if (baseEvent.getHeroUpdates() != null)
+                for (HeroUpdateRecord update : baseEvent.getHeroUpdates()) {
+                    Hero hero = update.getHero();
 
-                switch (update.getType()) {
-                    case skill_suggest: hero.getSuggestedSkills().add(
-                            SkillSuggestion.builder().code((String) update.getValue())
-                                    .certainty(SkillSuggestion.Certainty.found).build());
-                        break;
-                    case skill_unsuggest:
-                        break;
-                    case isOut:
-                        break;
-                    case needRest: hero.setDaysToRest((Integer) update.getValue());
-                        break;
-                    case powerup: {
-//                        hero.setPower(hero.getPower() + update.getValue());
-                        if (update.getHero() != null) {
-                            hero.setPower(hero.getPower() + StringUtils.repeat("*", (int)update.getValue()));
+                    switch (update.getType()) {
+                        case skill_suggest: hero.getSuggestedSkills().add(
+                                SkillSuggestion.builder().code((String) update.getValue())
+                                        .certainty(SkillSuggestion.Certainty.found).build());
+                            break;
+                        case skill_unsuggest:
+                            break;
+                        case isOut:
+                            break;
+                        case needRest: hero.setDaysToRest((Integer) update.getValue());
+                            break;
+                        case powerup: {
+    //                        hero.setPower(hero.getPower() + update.getValue());
+                            if (update.getHero() != null) {
+                                hero.setPower(hero.getPower() + StringUtils.repeat("*", (int)update.getValue()));
+                            }
+                            else { setPowerups(getPowerups() + (int)update.getValue()); }
+                            break;
                         }
-                        else { setPowerups(getPowerups() + (int)update.getValue()); }
-                        break;
-                    }
 
-                    default:
-                        throw new IllegalStateException("Unexpected value: " + update.getType());
+                        default:
+                            throw new IllegalStateException("Unexpected value: " + update.getType());
+                    }
                 }
-            }
 
             if (baseEvent instanceof TrialEvent) {
                 TrialEvent event = (TrialEvent) baseEvent;
