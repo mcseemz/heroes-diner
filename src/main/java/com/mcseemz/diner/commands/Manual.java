@@ -17,7 +17,8 @@ public class Manual {
         System.out.print(ansi().cursor(1, 1).eraseScreen(Ansi.Erase.FORWARD));
         String sb = "  The game itself is a mix of Mafia and Wordle.\n" +
                 "  This is a prototype, so it's in the text mode.\n" +
-                "  You have to enter commands with keyboard.\n\n" +
+                "  There are bugs and missing parts (e.g. heroes gender pronouns.)\n" +
+                "  And you have to enter commands with keyboard.\n\n" +
                 "  The task of the game is to pass the toughest location, Dracula's Castle.\n" +
                 "  For that you should have properly compiled team of 5, with 4 different adventurers skills, and one leader.\n" +
                 "  The leader is a special type that rarely participates, but can empower others, or make a note of their behaviour.\n\n" +

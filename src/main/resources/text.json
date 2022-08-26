@@ -28,67 +28,67 @@
 
   "-------------- failure ---------------": [],
   "trial_failed_bats_no_hero": [
-    "There were %bats%!",
-    "Many-many %bats%!",
-    "Thousands of %bats% attacked us"
+    "There were %bats%, dark and scary!",
+    "Many-many %bats% surrounded us, like in a Batman movie. We run.",
+    "Thousands of %bats% attacked us. We were not ready."
   ],
   "trial_failed_bats_with_hero": [
-    "%bats% put him down.",
+    "%Bats% put him down from above. We took him back.",
     "He was overwhelmed by %bats%!",
-    "%bats% just kicked him."
+    "%Bats% just kicked him. Not literally, but still."
   ],
   "trial_succeed_bats_with_hero": [
-    "%bats% tried, but no chance.",
-    "He just swiped those %bats%!",
+    "%Bats% tried, but no chance.",
+    "With his mighty hand he torn those %bats%! Phew!",
     "%bats% had no chance. Clear win."
   ],
 
   "trial_failed_rats_no_hero": [
     "Swarm of %rats%! We withdrew.",
     "There were %rats%! And their king!",
-    "%rats% attacked from below, we could not manage."
+    "%Rats% attacked from below, we could not manage."
   ],
   "trial_failed_rats_with_hero": [
-    "%rats% ate his sword. That was the end.",
+    "%Rats% ate his sword. That was the end.",
     "He was taken by %rats%!",
     "He afraids %rats%, actually."
   ],
   "trial_succeed_rats_with_hero": [
-    "%rats% afraid of fire.",
+    "%Rats% afraid of fire.",
     "He has proper skills for %rats%.",
-    "%rats% are for beginners, he said."
+    "%Rats% are for beginners, he said."
   ],
 
   "trial_failed_thugs_no_hero": [
     "Angry %thugs% attacked us!",
     "There were %thugs% with their leader!",
-    "%thugs% pushed us out, we could not resist."
+    "%Thugs% pushed us out, we could not resist."
   ],
   "trial_failed_thugs_with_hero": [
-    "%thugs% broke sword. And his nose.",
+    "%Thugs% broke sword. And his nose.",
     "He was captured by %thugs%!",
     "He tried to negotiate with %thugs%, and failed."
   ],
   "trial_succeed_thugs_with_hero": [
-    "%thugs% never saw such fury.",
+    "%Thugs% never saw such fury.",
     "He knows how to deal with thugs %thugs%.",
-    "%thugs% can feel the pain, too."
+    "%Thugs% can feel the pain, too."
   ],
 
   "trial_failed_zombie2_no_hero": [
     "Angry %zombies% attacked us!",
     "Some %zombies% appeared of nowhere!",
-    "%zombies% came and kicked us hard."
+    "%Zombies% came and kicked us hard."
   ],
   "trial_failed_zombie2_with_hero": [
-    "%zombies% bitten him to nothing.",
+    "%Zombies% bitten him to nothing.",
     "He fightened so much of %zombies%, he cried",
     "He tried to mimic %zombies%, but failed."
   ],
   "trial_succeed_zombie2_with_hero": [
-    "%zombies% were torn apart.",
+    "%Zombies% were torn apart.",
     "He cut through %zombies% like a knife on butter.",
-    "%zombies% can feel the fear, you know."
+    "%Zombies% can feel the fear, you know."
   ],
 
   "trial_failed_bandits_no_hero": [
@@ -157,43 +157,67 @@
   ],
 
   "trial_failed_snakes_no_hero": [
-    "Angry %snakes% attacked us!"
+    "%Snakes%, they were everywhere, they hissed, we run!",
+    "We heard hisses, and then %Snakes% appeared from the dark. We run!",
+    "%Snakes%, big and small, fell on us. We had noone to help."
   ],
   "trial_failed_snakes_with_hero": [
-    "%snakes% bitten him to nothing."
+    "%Snakes% bitten him everywhere, he run bleeding.",
+    "Some %Snakes% attacked him, and poisoned a lot.",
+    "%Snakes% can jump, and can bite. They did both on him, he withdrew."
   ],
   "trial_succeed_snakes_with_hero": [
-    "%snakes% were torn apart."
+    "He halved attacking %Snakes% with his sword.",
+    "%Snakes% tried to attack him, but he had flamethrower.",
+    "He knows how to treat %Snakes%, he gave them burgers."
   ],
 
   "trial_failed_appleghost_no_hero": [
-    "Angry %appleghost% attacked us!"
+    "Have you heard of %Apple Ghost%? Neither do we. So we run.",
+    "%Apple Ghost%, whatever it is, scared us.",
+    "%Apple Ghost% needs Ghost Busters, not us. We flew."
   ],
   "trial_failed_appleghost_with_hero": [
-    "%appleghost% bitten him to nothing."
+    "%Apple Ghost% spat seeds to him, and won.",
+    "He fought with %Apple Ghost% trying to eat it. Failure.",
+    "%Apple Ghost% cannot be cut, so he gave up."
   ],
   "trial_succeed_appleghost_with_hero": [
-    "%appleghost% were torn apart."
+    "He used Holy Water on %Apple Ghost% and it worked.",
+    "%Apple Ghost% lost to his magic",
+    "He kept fighting %Apple Ghost% till sunrise, and won."
   ],
 
-  "trial_failed_porchspirit_no_hero": [
-    "Angry %porchspirit% attacked us!"
+  "trial_failed_benchspirit_no_hero": [
+    "%Spirit of the Bench% was angry at us. He made us go.",
+    "We saw the %Spirit of the Bench% in the flesh, and we were done.",
+    "Wrath of the %Spirit of the Bench% is unmeasurable. We withdrew."
   ],
-  "trial_failed_porchspirit_with_hero": [
-    "%porchspirit% bitten him to nothing."
+  "trial_failed_benchspirit_with_hero": [
+    "%Spirit of the Bench% split him to slivers.",
+    "%Spirit of the Bench% kicked him with a bench.",
+    "%Spirit of the Bench% ignored him completely. He could not win."
   ],
-  "trial_succeed_porchspirit_with_hero": [
-    "%porchspirit% were torn apart."
+  "trial_succeed_benchspirit_with_hero": [
+    "He persuaded %Spirit of the Bench% to leave.",
+    "He burned the bench along with its dangerous %Spirit%.",
+    "He moved %Spirit of the Bench% to Trash nearby."
   ],
 
   "trial_failed_squirrel_no_hero": [
-    "Angry %squirrel% attacked us!"
+    "On a bench sat sweet %Squirrel%. We could not fight it, we just fed it!",
+    "Angry %Squirrel% jumped to us from the bench. Such a claws!",
+    "We had no specialist to deal with mad %Squirrel%. Call the police!"
   ],
   "trial_failed_squirrel_with_hero": [
-    "%squirrel% bitten him to nothing."
+    "He grabbed %Mad Squirrel%, but was bitten and fled.",
+    "He run from %Mad Squirrel% around the bench. 30 loops.",
+    "He foungh with %Mad Squirrel% by bare hands, and that was a mistake."
   ],
   "trial_succeed_squirrel_with_hero": [
-    "%squirrel% were torn apart."
+    "He grabbed %Mad Squirrel% by tail and handed to police.",
+    "He made a tricky trap to catch %Mad Squirrel%.",
+    "He was confident enough to persuade %Mad Squirrel% to get a treatment."
   ],
 
   "trial_failed_oldofficer_no_hero": [
@@ -236,14 +260,14 @@
     "%batsboss% were torn apart."
   ],
 
-  "trial_failed_vampireboss_no_hero": [
-    "%Count Dracula% appeared from nowhere. We screamed and run!"
+  "trial_failed_bears_no_hero": [
+    "Angry %bears% attacked us!"
   ],
-  "trial_failed_vampireboss_with_hero": [
-    "%vampireboss% bitten him to nothing."
+  "trial_failed_bears_with_hero": [
+    "%bears% bitten him to nothing."
   ],
-  "trial_succeed_vampireboss_with_hero": [
-    "%vampireboss% were torn apart."
+  "trial_succeed_bears_with_hero": [
+    "%bears% were torn apart."
   ],
 
   "trial_failed_servants_no_hero": [
@@ -262,27 +286,37 @@
     "He persuaded %Servants% of Dracula that there is no Dracula."
   ],
 
-  "trial_failed_bears_no_hero": [
-    "Angry %bears% attacked us!"
+  "trial_failed_vampireboss_no_hero": [
+    "%Count Dracula% appeared from nowhere. We screamed and run!",
+    "Only vampire hunter can fight %Dracula%. We had none.",
+    "%Count Dracula% gave us his mercy and some bananas. We retreated."
   ],
-  "trial_failed_bears_with_hero": [
-    "%bears% bitten him to nothing."
+  "trial_failed_vampireboss_with_hero": [
+    "%Count Dracula% was much stronger than expected.",
+    "He turned out to be weak against %Count Dracula%.",
+    "He was brave, but %Count Dracula% smeared him."
   ],
-  "trial_succeed_bears_with_hero": [
-    "%bears% were torn apart."
+  "trial_succeed_vampireboss_with_hero": [
+    "%Count Dracula% was finally put to rest."
   ],
-
 
   "-------------- success ---------------": [],
   "first_trial_succeed_with_hero": [
     "From the start %hero% showed us his class.",
     "It started with %hero% totally win.",
-    "%hero% just kicked their asses."
+    "%hero% just kicked their asses.",
+    "%hero% wanted to go first."
   ],
   "trial_succeed_with_hero": [
     "And then %hero% joined.",
     "Then %hero% called up.",
-    "Then %hero% ripped them."
+    "Then %hero% ripped them.",
+    "After that %hero% joined the show."
+  ],
+  "trial_succeed_with_helper": [
+    "He would not do it without help of %helper%.",
+    "Actually, he won thanks to %helper%.",
+    "It happened only when %helper% joined."
   ],
 
 
@@ -333,15 +367,15 @@
     "I noticed that %hero% slept all the time"
   ],
 
-  "teamwork_succeed_porch": [
-    "Porch suddenly transformed into a Terminator. Luckily, we had a melting metal pit nearby."
+  "teamwork_succeed_bench": [
+    "Bench suddenly transformed into a Terminator. Luckily, we had a melting metal pit nearby."
   ],
-  "teamwork_failed_porch": [
-    "Porch suddenly transformed into a Terminator. We tried to run and were lucky. But we lost the fight."
+  "teamwork_failed_bench": [
+    "Bench suddenly transformed into a Terminator. We tried to run and were lucky. But we lost the fight."
   ],
-  "teamwork_failed_porch_leader_notice": [
-    "I noticed that %hero% hid under the Porch",
-    "I noticed that %hero% slept on the Porch all the time"
+  "teamwork_failed_bench_leader_notice": [
+    "I noticed that %hero% hid under the Bench",
+    "I noticed that %hero% slept on the Bench all the time"
   ],
 
   "first_teamwork_found_powerups": [
@@ -429,7 +463,7 @@
     "One moonless night 10 strangers appeared at the door of Heroes Bar, Worchester.",
     "\"Who are you?\" - asked the man by the counter.",
     "\"Oh mighty bartender, \" - they followed, - \"help us rest and prepare to reach our target! And we will pay you generously.\"",
-    "\"I will mix you a drink that will give you 12 dreams\" - said bartender. \"And in the end you will know the team that is best suited for that. Money first.\"",
+    "\"I will mix you a drink that will give you 13 dreams\" - said bartender. \"And in the end you will know the team that is best suited for that. Money first.\"",
     "They paid, they drank, and he went on:\nAs we are in fantasy bar, I send some of you to Paper Oracle first. It will tell you who you really are.",
     "If you need help, call for it. @|italic Enter \"help\" to see the list of available commands. |@"
   ],
@@ -450,8 +484,8 @@
     "@|italic The end. |@"
   ],
   "who_are_we": [
-    "We are hospitality professionals_We are hospitality professionals, and we are here for Sonesta hotels. - They said",
-    "We are adventurers_We are Dragon Slayers, just like in the movies. - They said",
+    "We are Hospitaliers_We are hospitality professionals, and we are here for Sonesta hotels. - They said",
+    "We are Adventurers_We are Dragon Slayers, just like in the movies. - They said",
     "We are Hell's Angels_We are motor gang, and we are going to annual Motor gang convent. - They said",
     "We are Gray Men_We are humble office workers, and we need to feel ourselves important. - They said"
   ]

@@ -65,6 +65,12 @@ public class Compiler {
 
                 sb.append(outcomeVal).append(" ").append(enemyVal);
 
+                if (event.isPassed() && event.getHelper() != null) {
+                    String helperVal = getRandomLine("trial_succeed_with_helper")
+                            .replace("%helper%", "#"+event.getHelper().getName()+"#");
+                    sb.append(" ").append(helperVal);
+                }
+
                 //trial failed with not enough teamwork
                 if (hero != null && !event.isPassed() && event.isNoTeamwork()) {
                     String noTeamwork = getRandomLine("trial_failed_no_teamwork");

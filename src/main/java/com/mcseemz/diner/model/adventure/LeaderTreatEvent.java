@@ -6,15 +6,15 @@ import com.mcseemz.diner.model.adventure.interfaces.EventBefore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.experimental.SuperBuilder;
 
+import java.util.ArrayList;
 import java.util.List;
 
-@Builder
+@SuperBuilder
 @Getter
 @AllArgsConstructor
 public class LeaderTreatEvent extends BaseEvent implements EventBefore, EventAfter {
-
-    List<Hero> team;
 
     Hero badActor;
     Hero goodActor;
@@ -25,8 +25,7 @@ public class LeaderTreatEvent extends BaseEvent implements EventBefore, EventAft
 
     public LeaderTreatEvent run() {
 
-        Hero leader = team.stream().filter(x -> x.getSkill().equals("leadership")).findFirst().orElse(null);
-        if (leader != null) {
+        if (getLeader() != null) {
             leaderNotes.add(HeroUpdateRecord.builder().type(PropertyType.get_a_treat).build());
             return this;
         }
@@ -40,6 +39,6 @@ public class LeaderTreatEvent extends BaseEvent implements EventBefore, EventAft
 
     @Override
     public LeaderTreatEvent getInitialized(List<Hero> team) {
-        return builder().team(team).build().run();
+        return builder().team(team).leaderNotes(new ArrayList<>()).build().run();
     }
 }

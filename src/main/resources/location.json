@@ -98,13 +98,13 @@
       "goblins"
     ],
     "teamwork": {
-      "min": 3,
+      "min": 0,
       "task": "bomb",
       "bonus": [
         "powerups",
         "map_treecastle",
         "map_labyrinth",
-        "map_porch"
+        "map_bench"
       ]
     },
     "visible": false
@@ -144,16 +144,16 @@
     "visible": false
   },
   {
-    "code": "porch",
-    "name": "Porch of revelations.",
+    "code": "bench",
+    "name": "Bench of revelations.",
     "description": "When you sit there you get some insights. Squirrels included.",
     "trials": [
-      "porchspirit",
+      "benchspirit",
       "squirrel"
     ],
     "teamwork": {
       "min": 3,
-      "task": "porch",
+      "task": "bench",
       "bonus": [
         "powerups",
         "map_MarbleOracle"
@@ -169,7 +169,7 @@
     ],
     "teamwork": {
       "leader": true,
-      "min": 4,
+      "min": 3,
       "task": "oracle",
       "bonus": [
         "hint_target",
@@ -221,9 +221,9 @@
     "description": "That is the target! !!Pass it!!!",
     "trials": [
       "batsboss",
-      "vampireboss",
+      "bears",
       "servants",
-      "bears"
+      "vampireboss"
     ],
     "teamwork": {
       "leader": true,

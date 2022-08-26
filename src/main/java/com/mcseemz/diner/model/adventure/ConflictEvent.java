@@ -8,17 +8,16 @@ import com.mcseemz.diner.model.adventure.interfaces.EventBefore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.experimental.SuperBuilder;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Builder
+@SuperBuilder
 @Getter
 @AllArgsConstructor
 public class ConflictEvent extends BaseEvent implements EventAfterTrial, EventAfter {
-
-    List<Hero> team;
 
     Hero badActor;
     Hero goodActor;
