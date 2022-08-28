@@ -210,6 +210,7 @@ public class State {
 
                 //check if it was attempted by hero, and if failed
                 if (event.getHero() != null) {
+                    event.getHero().getSuggestedSkills().removeIf(x -> skills.containsKey(x.getCode()));   //clean all suggested
                     event.getHero().getSuggestedSkills().add(SkillSuggestion.builder().code(event.getTrial().getSkill())
                             .certainty(SkillSuggestion.Certainty.found).build());
                 } else {

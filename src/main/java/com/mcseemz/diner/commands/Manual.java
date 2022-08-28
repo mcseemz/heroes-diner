@@ -29,7 +29,7 @@ public class Manual {
                 "  Trials are mandatory, while winning teamwork will give you bonuses.\n" +
                 "  Although there are also trials requiring enough teamwork to pass.\n\n" +
                 "  Passing trial will make heroes more powerful.\n" +
-                "  You can also powerups from bonuses to assign more powers to a hero.\n" +
+                "  You can also use powerups from bonuses to assign more powers to a hero.\n" +
                 "  Powered Leader can identify bad actors.\n\n" +
                 "  The report you get at the end of visiting location, it might contain multiple events.\n" +
                 "  Read it carefully, and check for the hints.\n" +
