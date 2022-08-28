@@ -34,7 +34,7 @@ public class LeaderTreatEvent extends BaseEvent implements EventBefore, EventAft
 
     @Override
     public int getProbability() {
-        return 50;
+        return 30;
     }
 
     @Override

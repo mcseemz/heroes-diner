@@ -228,9 +228,10 @@ public class Team {
         roster.removeAll(team);
         roster.removeIf(Hero::isOut);
 
+        Collections.shuffle(roster);
+
         roster.addAll(team);    //add to the end
 
-        Collections.shuffle(roster);
         roster.stream().sequential().limit(5).forEach(x -> x.setInTeam(true));
 
         renderer.displayState();

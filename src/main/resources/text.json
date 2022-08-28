@@ -2,21 +2,30 @@
   "first_trial_failed_no_hero": [
     "Things went south.",
     "I am disappointed.",
-    "Something went wrong."
+    "Something went wrong.",
+    "We managed to fail.",
+    "They say we are learning by mistakes."
   ],
   "first_trial_failed_with_hero": [
     "From the start %hero% did not pay attention, and voila.",
     "It started with %hero% screwing up.",
-    "%hero% tried to fight, but failed."
+    "%hero% tried to fight, but failed.",
+    "From the start %hero% made a childish mistake."
   ],
   "trial_failed_no_hero": [
     "And then we failed.",
+    "And then disaster came.",
     "Then we run out of luck.",
+    "Then something happened.",
+    "Then someone screwed up.",
     "Then Boom!"
   ],
   "trial_failed_with_hero": [
     "And then %hero% failed.",
     "Then %hero% screwed up.",
+    "Then luck run dry for %hero%.",
+    "Then obvious mistake from %hero%.",
+    "Then %hero% made a childish mistake.",
     "Then %hero% did something wrong."
   ],
 
@@ -34,34 +43,34 @@
   ],
   "trial_failed_bats_with_hero": [
     "%Bats% put him down from above. We took him back.",
-    "He was overwhelmed by %bats%!",
+    "He was overwhelmed by %bats%! We barely took him out.",
     "%Bats% just kicked him. Not literally, but still."
   ],
   "trial_succeed_bats_with_hero": [
-    "%Bats% tried, but no chance.",
+    "%Bats% tried to use claws, but they had no chance.",
     "With his mighty hand he torn those %bats%! Phew!",
-    "%bats% had no chance. Clear win."
+    "%Bats% had no chance against the net. Clear win."
   ],
 
   "trial_failed_rats_no_hero": [
-    "Swarm of %rats%! We withdrew.",
-    "There were %rats%! And their king!",
-    "%Rats% attacked from below, we could not manage."
+    "We saw a swarm of %rats%! We withdrew.",
+    "There were %rats%! And their king! All white!",
+    "%Rats% attacked from the sewers, we could not manage."
   ],
   "trial_failed_rats_with_hero": [
     "%Rats% ate his sword. That was the end.",
-    "He was taken by %rats%!",
-    "He afraids %rats%, actually."
+    "He was taken by %rats%! Then returned!",
+    "He afraids %rats%, actually. We learned that afterwards."
   ],
   "trial_succeed_rats_with_hero": [
-    "%Rats% afraid of fire.",
-    "He has proper skills for %rats%.",
-    "%Rats% are for beginners, he said."
+    "%Rats% are afraid of fire. And of napalm!",
+    "He has proper skills for %rats%, we are lucky to have him.",
+    "%Rats% are for beginners, he said. Real macho."
   ],
 
   "trial_failed_thugs_no_hero": [
-    "Angry %thugs% attacked us!",
-    "There were %thugs% with their leader!",
+    "Angry %thugs% attacked us! They are always angry, turns out.",
+    "There were %thugs% with their leader! We were not welcomed.",
     "%Thugs% pushed us out, we could not resist."
   ],
   "trial_failed_thugs_with_hero": [
@@ -70,9 +79,9 @@
     "He tried to negotiate with %thugs%, and failed."
   ],
   "trial_succeed_thugs_with_hero": [
-    "%Thugs% never saw such fury.",
-    "He knows how to deal with thugs %thugs%.",
-    "%Thugs% can feel the pain, too."
+    "%Thugs% never saw such fists of fury.",
+    "He knows how to deal with %thugs%. Play dice!",
+    "%Thugs% can feel the pain, too. "
   ],
 
   "trial_failed_zombie2_no_hero": [
@@ -81,14 +90,14 @@
     "%Zombies% came and kicked us hard."
   ],
   "trial_failed_zombie2_with_hero": [
-    "%Zombies% bitten him to nothing.",
-    "He fightened so much of %zombies%, he cried",
+    "%Zombies% bit him all over.",
+    "He was scared of %zombies% so much, he cried",
     "He tried to mimic %zombies%, but failed."
   ],
   "trial_succeed_zombie2_with_hero": [
     "%Zombies% were torn apart.",
     "He cut through %zombies% like a knife on butter.",
-    "%Zombies% can feel the fear, you know."
+    "%Zombies% can feel the fear of dying, you know. "
   ],
 
   "trial_failed_bandits_no_hero": [
@@ -221,53 +230,85 @@
   ],
 
   "trial_failed_oldofficer_no_hero": [
-    "Angry %oldofficer% attacked us!"
+    "%Old Customs Officer% told us we are not in the list. We had to return.",
+    "%Old Customs Officer% told us to wait forever. We gave up.",
+    "%Old Customs Officer% told us we do not exist. Please doublecheck."
   ],
   "trial_failed_oldofficer_with_hero": [
-    "%oldofficer% bitten him to nothing."
+    "%Old Customs Officer% told him to fill papers. That was 4 days ago...",
+    "%Old Customs Officer% made him an search with a predilection.",
+    "%Old Customs Officer% accidentally sat on him with all his weight."
   ],
   "trial_succeed_oldofficer_with_hero": [
-    "%oldofficer% were torn apart."
+    "%Old Customs Officer% was in the good mood and let us pass.",
+    "He bried %Old Customs Officer% to get what we want.",
+    "He persuaded %Old Customs Officer% the customs does not exist anymore."
+
   ],
 
   "trial_failed_migrants_no_hero": [
-    "Angry %migrants% attacked us!"
+    "Mob of %illegal migrants% attacked us for some reason!",
+    "One container popped and the wave of %illegal migrants% swallowed us up!",
+    "%Illegal migrants% blocked us and asked for a money. We had none!"
   ],
   "trial_failed_migrants_with_hero": [
-    "%migrants% bitten him to nothing."
+    "He found %Illegal migrants% and fought, but was overwhelmed.",
+    "He fought %Illegal migrants% with lawyers, and lost.",
+    "%Illegal migrants% sold him fake vodka, and he's got poisoned."
   ],
   "trial_succeed_migrants_with_hero": [
-    "%migrants% were torn apart."
+    "%Illegal migrants% surrounded us but he speaks their language. We won.",
+    "He helped %Illegal migrants% to fill proper forms, and they let us go.",
+    "%Illegal migrants% asked us for directions, knives out. We helped them."
   ],
 
   "trial_failed_crows_no_hero": [
-    "Angry %crows% attacked us!"
+    "Flock of %Crows% surrounded us, we could not leave the car!",
+    "%Crows% black as night croaked to our faces. We flew!",
+    "%Messenger Crows% croaked us a message: Die! Die! Die! We run away."
   ],
   "trial_failed_crows_with_hero": [
-    "%crows% bitten him to nothing."
+    "%Crows% attacked him from the pit, rising like tornado. He fell.",
+    "%Crows% gave him no chance, attacking from all directions.",
+    "He sung a sword against the %Crows%, but it was like cutting a water."
   ],
   "trial_succeed_crows_with_hero": [
-    "%crows% were torn apart."
+    "He used a flamethrower against %Crows%, smiling.",
+    "He jumped to %Flock of Crows%, then scattered it.",
+    "%Crows% attacked in swarms, he used anti-air gun."
   ],
 
   "trial_failed_batsboss_no_hero": [
-    "Angry %batsboss% attacked us!"
+    "%Bats King% with red eyes gather his army! So we retreated.",
+    "No one can withstand %Bats King% with his army!",
+    "Go away - told us %Bats King% with deep voice. So we went away."
   ],
   "trial_failed_batsboss_with_hero": [
-    "%batsboss% bitten him to nothing."
+    "%Bats King% throw the army against him. And won!",
+    "%Bats King% jumped off his throne to fight! Alas, he won.",
+    "He fought %Bats King% with machine gun, that that was bulletproof."
   ],
   "trial_succeed_batsboss_with_hero": [
-    "%batsboss% were torn apart."
+    "He caught %Bats King% with the net, then forced to surrender.",
+    "%Bats King% had an army, but now they are all dead.",
+    "He was smart to wait for daylight, then take %Bats King% with bare hands."
   ],
 
   "trial_failed_bears_no_hero": [
-    "Angry %bears% attacked us!"
+    "%Mutant bears% were unleashed to us! Those are real beasts...",
+    "%Mutant bears% fear only one thing, and we do not know what it is.",
+    "%Mutant bears% were unleashed to us! Those are real beasts..."
+
   ],
   "trial_failed_bears_with_hero": [
-    "%bears% bitten him to nothing."
+    "He attacked %Mutant bears% with the sword and shield. That was lame, he lost.",
+    "%Mutant bears% played with him their favorite game - dismembering.",
+    "He crept %Mutant bears% unnoticed, but he was noticed at the end."
   ],
   "trial_succeed_bears_with_hero": [
-    "%bears% were torn apart."
+    "%Mutant bears% love mutant raspberry, and he used that to win.",
+    "%Mutant bears% eat everything, so he gave them the bomb.",
+    "He won over %Mutant bears% in a \"dance with a sword\" competition."
   ],
 
   "trial_failed_servants_no_hero": [
@@ -297,7 +338,9 @@
     "He was brave, but %Count Dracula% smeared him."
   ],
   "trial_succeed_vampireboss_with_hero": [
-    "%Count Dracula% was finally put to rest."
+    "%Count Dracula% was finally put to rest.",
+    "He ruined the castle but %Count Dracula% was defeated.",
+    "He fought %Count Dracula% till the dawn, then old vampire turned to dust."
   ],
 
   "-------------- success ---------------": [],
@@ -414,7 +457,7 @@
   "first_teamwork_found_hint_target": [
     "So we got a %hint%!",
     "We were gifted a %hint%!",
-    "%Hint% was spoken by so misterious voice!"
+    "%Hint% was spoken by so mysterious voice!"
   ],
 
   "leader_bad_teamwork": [
