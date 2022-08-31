@@ -1,7 +1,5 @@
 # Heroes bar, Worchester
 
-[![Maven Package](https://github.com/mcseemz/heroes-diner/actions/workflows/maven-publish.yml/badge.svg)](https://github.com/mcseemz/heroes-diner/actions/workflows/maven-publish.yml)
-
 ### PoC for mobile game
 
 The game itself is a mix of Mafia and Wordle.<br>
